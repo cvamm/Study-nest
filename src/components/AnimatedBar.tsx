@@ -1,0 +1,29 @@
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+
+/** Progress bar that animates from 0 to `pct` on mount. */
+export default function AnimatedBar({
+  pct,
+  barClass,
+  className,
+  trackClass = "bg-navy-50",
+}: {
+  pct: number;
+  barClass: string;
+  className?: string;
+  trackClass?: string;
+}) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
+  return (
+    <div className={cn("overflow-hidden rounded-full", trackClass, className)}>
+      <div
+        className={cn("h-full rounded-full transition-[width] duration-1000 ease-out", barClass)}
+        style={{ width: mounted ? `${Math.min(pct, 100)}%` : "0%" }}
+      />
+    </div>
+  );
+}

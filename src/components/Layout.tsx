@@ -196,9 +196,6 @@ export default function Layout() {
                       <Link to="/dashboard" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-navy-700 transition-colors hover:bg-navy-50">
                         <LayoutDashboard className="h-4 w-4 text-navy-400" /> Study dashboard
                       </Link>
-                      <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-navy-700 transition-colors hover:bg-navy-50">
-                        <Shield className="h-4 w-4 text-navy-400" /> Admin panel
-                      </Link>
                       <button
                         type="button"
                         onClick={() => {
@@ -313,7 +310,6 @@ function Footer() {
     { to: "/subjects", label: "Browse subjects" },
     { to: "/resources", label: "Resource directory" },
     { to: "/dashboard", label: "Study dashboard" },
-    { to: "/admin", label: "Admin panel" },
     { to: "/about", label: "About StudyNest 12" },
   ];
   const subjects = [

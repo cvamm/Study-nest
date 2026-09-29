@@ -24,6 +24,7 @@ import Reveal from "@/components/Reveal";
 import ResourceCard from "@/components/ResourceCard";
 import PhysicsPyqSection from "@/components/PhysicsPyqSection";
 import ChemistryPyqSection from "@/components/ChemistryPyqSection";
+import MathPyqSection from "@/components/MathPyqSection";
 import { useApp } from "@/context/AppContext";
 import { subjectById } from "@/data/subjects";
 import type { ResourceType } from "@/lib/types";
@@ -235,6 +236,18 @@ export function SubjectPage() {
                 <FileCheck2 className="h-3.5 w-3.5 text-teal-700" />
                 Chapterwise PYQ Bank (500 Qs)
                 <span className="rounded-full bg-teal-200 px-1.5 py-0.2 text-[10px] font-extrabold text-teal-800">
+                  50 Qs / Ch
+                </span>
+              </a>
+            ) : null}
+            {subject.id === "math" ? (
+              <a
+                href="#math-pyqs"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-indigo-300 bg-gradient-to-r from-indigo-50 to-blue-100/80 px-3.5 py-1.5 text-xs font-extrabold text-indigo-950 shadow-sm transition-all hover:border-indigo-400 hover:from-indigo-100 hover:to-blue-200"
+              >
+                <FileCheck2 className="h-3.5 w-3.5 text-indigo-700" />
+                Chapterwise PYQ Bank (650 Qs)
+                <span className="rounded-full bg-indigo-200 px-1.5 py-0.2 text-[10px] font-extrabold text-indigo-800">
                   50 Qs / Ch
                 </span>
               </a>
@@ -568,6 +581,15 @@ export function SubjectPage() {
         </section>
       ) : null}
 
+      {/* ===================== MATHEMATICS MASTER PYQ BANK ===================== */}
+      {subject.id === "math" ? (
+        <section id="math-pyqs" className="container-x py-12 border-t border-inkline">
+          <Reveal>
+            <MathPyqSection />
+          </Reveal>
+        </section>
+      ) : null}
+
       {/* ======================= FULL SUBJECT RESOURCES ======================= */}
       {topLevel.length > 0 ? (
         <section id="full-subject" className="container-x pb-16 pt-8">
@@ -702,6 +724,12 @@ export function ChapterPage() {
         {subject.id === "chem" ? (
           <div className="mb-12">
             <ChemistryPyqSection initialChapterNum={index + 1} lockChapter={true} />
+          </div>
+        ) : null}
+
+        {subject.id === "math" ? (
+          <div className="mb-12">
+            <MathPyqSection initialChapterNum={index + 1} lockChapter={true} />
           </div>
         ) : null}
 

@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Circle,
   Clock,
+  FileCheck2,
   Layers,
   Library,
   PlayCircle,
@@ -21,6 +22,7 @@ import AnimatedBar from "@/components/AnimatedBar";
 import EmptyState from "@/components/EmptyState";
 import Reveal from "@/components/Reveal";
 import ResourceCard from "@/components/ResourceCard";
+import PhysicsPyqSection from "@/components/PhysicsPyqSection";
 import { useApp } from "@/context/AppContext";
 import { subjectById } from "@/data/subjects";
 import type { ResourceType } from "@/lib/types";
@@ -209,6 +211,18 @@ export function SubjectPage() {
                 Video Lectures Hub
                 <span className="rounded-full bg-gold-200 px-1.5 py-0.2 text-[10px] font-extrabold text-gold-800">
                   {coveredChaptersCount}/{subject.chapters.length} Chapters
+                </span>
+              </a>
+            ) : null}
+            {subject.id === "phy" ? (
+              <a
+                href="#physics-pyqs"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-gradient-to-r from-emerald-50 to-emerald-100/80 px-3.5 py-1.5 text-xs font-extrabold text-emerald-900 shadow-sm transition-all hover:border-emerald-400 hover:from-emerald-100 hover:to-emerald-200"
+              >
+                <FileCheck2 className="h-3.5 w-3.5 text-emerald-700" />
+                Chapterwise PYQ Bank (700 Qs)
+                <span className="rounded-full bg-emerald-200 px-1.5 py-0.2 text-[10px] font-extrabold text-emerald-800">
+                  50 Qs / Ch
                 </span>
               </a>
             ) : null}
@@ -523,6 +537,15 @@ export function SubjectPage() {
         </section>
       ) : null}
 
+      {/* ===================== PHYSICS MASTER PYQ BANK ===================== */}
+      {subject.id === "phy" ? (
+        <section id="physics-pyqs" className="container-x py-12 border-t border-inkline">
+          <Reveal>
+            <PhysicsPyqSection />
+          </Reveal>
+        </section>
+      ) : null}
+
       {/* ======================= FULL SUBJECT RESOURCES ======================= */}
       {topLevel.length > 0 ? (
         <section id="full-subject" className="container-x pb-16 pt-8">
@@ -648,6 +671,12 @@ export function ChapterPage() {
       </section>
 
       <section className="container-x py-12">
+        {subject.id === "phy" ? (
+          <div className="mb-12">
+            <PhysicsPyqSection initialChapterNum={index + 1} lockChapter={true} />
+          </div>
+        ) : null}
+
         {groups.length === 0 ? (
           <EmptyState
             title={`No resources for this chapter yet`}

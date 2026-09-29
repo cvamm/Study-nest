@@ -29,6 +29,9 @@ export default function Resources() {
 
   const apply = (patch: Partial<Filters>) => {
     const next = { ...filters, ...patch };
+    if (patch.subject !== undefined && patch.subject !== filters.subject && patch.chapter === undefined) {
+      next.chapter = "";
+    }
     const p = new URLSearchParams();
     if (next.q) p.set("q", next.q);
     if (next.subject) p.set("subject", next.subject);
@@ -93,10 +96,10 @@ export default function Resources() {
   }) {
     const chips: Array<{ label: string; onRemove: () => void }> = [];
     if (filters.q) chips.push({ label: `“${filters.q}”`, onRemove: () => apply({ q: "" }) });
-    if (filters.subject && subjectName)
-      chips.push({ label: subjectName, onRemove: () => apply({ subject: "", chapter: "" }) });
-    if (filters.chapter && chapterName)
-      chips.push({ label: chapterName, onRemove: () => apply({ chapter: "" }) });
+    if (filters.subject)
+      chips.push({ label: subjectName ?? filters.subject, onRemove: () => apply({ subject: "", chapter: "" }) });
+    if (filters.chapter)
+      chips.push({ label: chapterName ?? filters.chapter, onRemove: () => apply({ chapter: "" }) });
     filters.types.forEach((t) =>
       chips.push({
         label: typeMeta(t as ResourceType).short,

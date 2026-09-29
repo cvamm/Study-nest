@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   ArrowRight,
@@ -10,6 +10,12 @@ import {
   Clock,
   Layers,
   Library,
+  PlayCircle,
+  Search,
+  Sparkles,
+  Video,
+  X,
+  Zap,
 } from "lucide-react";
 import AnimatedBar from "@/components/AnimatedBar";
 import EmptyState from "@/components/EmptyState";
@@ -17,6 +23,7 @@ import Reveal from "@/components/Reveal";
 import ResourceCard from "@/components/ResourceCard";
 import { useApp } from "@/context/AppContext";
 import { subjectById } from "@/data/subjects";
+import type { ResourceType } from "@/lib/types";
 import { cn, fmtDuration, RESOURCE_TYPES, subjectIcon, TONES } from "@/lib/utils";
 
 function Crumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
@@ -45,6 +52,11 @@ export function SubjectPage() {
   const { resources, completed, isChapterDone, toggleChapter } = useApp();
   const subject = subjectById(subjectId);
 
+  const [lectureSearch, setLectureSearch] = useState("");
+  const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>("all");
+  const [selectedFormatFilter, setSelectedFormatFilter] = useState<string>("all");
+  const [selectedEducatorFilter, setSelectedEducatorFilter] = useState<string>("all");
+
   const subjectResources = useMemo(
     () => resources.filter((r) => r.subjectId === subjectId),
     [resources, subjectId],
@@ -64,6 +76,56 @@ export function SubjectPage() {
     () => RESOURCE_TYPES.filter((t) => subjectResources.some((r) => r.type === t.id)),
     [subjectResources],
   );
+
+  const lectureTypes: ResourceType[] = ["one-shot", "detailed-lectures", "yt-lectures", "revision"];
+  const allLectures = useMemo(
+    () => subjectResources.filter((r) => lectureTypes.includes(r.type)),
+    [subjectResources],
+  );
+
+  const totalLectureMin = useMemo(
+    () => allLectures.reduce((acc, r) => acc + (r.duration ?? 0), 0),
+    [allLectures],
+  );
+
+  const coveredChaptersCount = useMemo(() => {
+    const coveredIds = new Set(allLectures.map((l) => l.chapterId).filter(Boolean));
+    return coveredIds.size;
+  }, [allLectures]);
+
+  const availableEducators = useMemo(() => {
+    const set = new Set<string>();
+    allLectures.forEach((l) => set.add(l.source));
+    return Array.from(set).sort();
+  }, [allLectures]);
+
+  const filteredLectures = useMemo(() => {
+    const q = lectureSearch.trim().toLowerCase();
+    return allLectures.filter((r) => {
+      if (selectedChapterFilter !== "all" && r.chapterId !== selectedChapterFilter) return false;
+      if (selectedFormatFilter !== "all" && r.type !== selectedFormatFilter) return false;
+      if (selectedEducatorFilter !== "all" && r.source !== selectedEducatorFilter) return false;
+      if (q) {
+        const ch = subject?.chapters.find((c) => c.id === r.chapterId);
+        const text = [r.title, r.source, r.description, ch?.name ?? ""].join(" ").toLowerCase();
+        if (!text.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [allLectures, selectedChapterFilter, selectedFormatFilter, selectedEducatorFilter, lectureSearch, subject?.chapters]);
+
+  const isFiltered =
+    lectureSearch.trim() !== "" ||
+    selectedChapterFilter !== "all" ||
+    selectedFormatFilter !== "all" ||
+    selectedEducatorFilter !== "all";
+
+  const clearLectureFilters = () => {
+    setLectureSearch("");
+    setSelectedChapterFilter("all");
+    setSelectedFormatFilter("all");
+    setSelectedEducatorFilter("all");
+  };
 
   if (!subject) return <Navigate to="/subjects" replace />;
 
@@ -127,10 +189,44 @@ export function SubjectPage() {
               </Link>
             </div>
           ) : null}
+
+          {/* Quick Navigation Anchors */}
+          <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-inkline pt-6">
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-navy-400">Jump to section:</span>
+            <a
+              href="#chapters"
+              className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950"
+            >
+              <Library className="h-3.5 w-3.5 text-navy-400" />
+              Syllabus Chapters ({subject.chapters.length})
+            </a>
+            {allLectures.length > 0 ? (
+              <a
+                href="#lectures"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-gold-300 bg-gradient-to-r from-gold-50 to-gold-100/80 px-3.5 py-1.5 text-xs font-extrabold text-gold-900 shadow-sm transition-all hover:border-gold-400 hover:from-gold-100 hover:to-gold-200"
+              >
+                <Video className="h-3.5 w-3.5 text-gold-600" />
+                Video Lectures Hub
+                <span className="rounded-full bg-gold-200 px-1.5 py-0.2 text-[10px] font-extrabold text-gold-800">
+                  {coveredChaptersCount}/{subject.chapters.length} Chapters
+                </span>
+              </a>
+            ) : null}
+            {topLevel.length > 0 ? (
+              <a
+                href="#full-subject"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950"
+              >
+                <Layers className="h-3.5 w-3.5 text-navy-400" />
+                Full-Subject Material ({topLevel.length})
+              </a>
+            ) : null}
+          </div>
         </div>
       </section>
 
-      <section className="container-x py-12">
+      {/* ============================== CHAPTERS ============================== */}
+      <section id="chapters" className="container-x py-12">
         <Reveal>
           <div className="flex items-center gap-3">
             <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">Chapters</h2>
@@ -162,7 +258,7 @@ export function SubjectPage() {
                   <Link to={`/subjects/${subject.id}/${ch.id}`} className="focus-ring absolute inset-0 rounded-xl" aria-label={`Open chapter ${i + 1}: ${ch.name}`}>
                     <span className="sr-only">Open chapter</span>
                   </Link>
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0 flex-1 pointer-events-none">
                     <p className={cn("truncate font-display text-sm font-bold", done ? "text-green-900" : "text-navy-900")}>
                       {ch.name}
                     </p>
@@ -193,8 +289,243 @@ export function SubjectPage() {
         </div>
       </section>
 
+      {/* ===================== VIDEO LECTURES HUB ===================== */}
+      {allLectures.length > 0 ? (
+        <section id="lectures" className="border-t border-inkline bg-gradient-to-b from-navy-50/60 via-white to-navy-50/40 py-14 lg:py-20">
+          <div className="container-x">
+            <Reveal>
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300 bg-gold-50 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-gold-800">
+                      <Sparkles className="h-3.5 w-3.5 text-gold-600" />
+                      CBSE Class 12 Syllabus (2025–26)
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-green-700">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-green-600" />
+                      {coveredChaptersCount} of {subject.chapters.length} Chapters Covered (100%)
+                    </span>
+                  </div>
+                  <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+                    {subject.name} Video Lectures Hub
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy-600 sm:text-base">
+                    Every chapter in the CBSE Class 12 {subject.name} syllabus covered with full-chapter One-Shots,
+                    detailed conceptual playlists, and board derivation masterclasses from top educators.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="rounded-xl border border-inkline bg-white px-4 py-2.5 shadow-card">
+                    <p className="font-display text-xl font-extrabold text-navy-900">{allLectures.length}</p>
+                    <p className="text-[10.5px] font-extrabold uppercase tracking-wide text-navy-400">Total Lectures</p>
+                  </div>
+                  <div className="rounded-xl border border-inkline bg-white px-4 py-2.5 shadow-card">
+                    <p className="font-display text-xl font-extrabold text-navy-900">{fmtDuration(totalLectureMin)}</p>
+                    <p className="text-[10.5px] font-extrabold uppercase tracking-wide text-navy-400">Video Content</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Filter and Search Bar */}
+            <div className="mt-8 rounded-2xl border border-inkline bg-white p-5 shadow-card">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                {/* Search */}
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-400" />
+                  <input
+                    type="search"
+                    value={lectureSearch}
+                    onChange={(e) => setLectureSearch(e.target.value)}
+                    placeholder={`Search ${subject.short} lectures (e.g. Gauss, LCR, Optics)...`}
+                    className="focus-ring w-full rounded-xl border border-inkline bg-navy-50/50 py-2.5 pl-9 pr-3 text-sm font-medium text-navy-900 placeholder:text-navy-400 focus:bg-white"
+                  />
+                  {lectureSearch ? (
+                    <button
+                      type="button"
+                      onClick={() => setLectureSearch("")}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-1 text-navy-400 hover:text-navy-700"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  ) : null}
+                </div>
+
+                {/* Chapter Select Dropdown */}
+                <div className="relative">
+                  <select
+                    value={selectedChapterFilter}
+                    onChange={(e) => setSelectedChapterFilter(e.target.value)}
+                    className="focus-ring w-full rounded-xl border border-inkline bg-navy-50/50 py-2.5 pl-3 pr-8 text-sm font-bold text-navy-800 focus:bg-white"
+                    aria-label="Filter by chapter"
+                  >
+                    <option value="all">All {subject.chapters.length} Syllabus Chapters</option>
+                    {subject.chapters.map((ch, i) => (
+                      <option key={ch.id} value={ch.id}>
+                        Ch {i + 1}: {ch.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Educator Select Dropdown */}
+                <div className="relative">
+                  <select
+                    value={selectedEducatorFilter}
+                    onChange={(e) => setSelectedEducatorFilter(e.target.value)}
+                    className="focus-ring w-full rounded-xl border border-inkline bg-navy-50/50 py-2.5 pl-3 pr-8 text-sm font-bold text-navy-800 focus:bg-white"
+                    aria-label="Filter by educator"
+                  >
+                    <option value="all">All Educators & Channels</option>
+                    {availableEducators.map((ed) => (
+                      <option key={ed} value={ed}>
+                        {ed}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Format Pills & Reset */}
+              <div className="mt-4 flex flex-col gap-3 border-t border-inkline pt-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="mr-1 text-[11px] font-extrabold uppercase tracking-wide text-navy-400">Format:</span>
+                  {[
+                    { id: "all", label: "All Formats" },
+                    { id: "one-shot", label: "⚡ One-Shot" },
+                    { id: "detailed-lectures", label: "▶ Detailed" },
+                    { id: "yt-lectures", label: "📺 Playlists" },
+                  ].map((fmt) => (
+                    <button
+                      key={fmt.id}
+                      type="button"
+                      onClick={() => setSelectedFormatFilter(fmt.id)}
+                      className={cn(
+                        "focus-ring rounded-lg px-2.5 py-1 text-xs font-bold transition-all",
+                        selectedFormatFilter === fmt.id
+                          ? "bg-navy-900 text-white shadow-sm"
+                          : "border border-inkline bg-navy-50/60 text-navy-600 hover:border-navy-300 hover:bg-white",
+                      )}
+                    >
+                      {fmt.label}
+                    </button>
+                  ))}
+                </div>
+
+                {isFiltered ? (
+                  <button
+                    type="button"
+                    onClick={clearLectureFilters}
+                    className="focus-ring inline-flex w-fit items-center gap-1 rounded-md px-2 py-1 text-xs font-extrabold text-navy-500 hover:text-navy-900"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    Reset all filters
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Scrollable Chapter Quick Pills */}
+              <div className="no-scrollbar mt-3 flex items-center gap-1.5 overflow-x-auto border-t border-inkline/60 pt-3 pb-1">
+                <button
+                  type="button"
+                  onClick={() => setSelectedChapterFilter("all")}
+                  className={cn(
+                    "focus-ring shrink-0 rounded-full px-3 py-1 text-[11px] font-bold transition-all",
+                    selectedChapterFilter === "all"
+                      ? "bg-gold-500 text-navy-950 font-extrabold shadow-sm"
+                      : "border border-inkline bg-white text-navy-600 hover:border-navy-300",
+                  )}
+                >
+                  All Chapters
+                </button>
+                {subject.chapters.map((ch, i) => (
+                  <button
+                    key={ch.id}
+                    type="button"
+                    onClick={() => setSelectedChapterFilter(ch.id)}
+                    className={cn(
+                      "focus-ring shrink-0 rounded-full px-3 py-1 text-[11px] font-bold transition-all",
+                      selectedChapterFilter === ch.id
+                        ? "bg-navy-900 text-white shadow-sm"
+                        : "border border-inkline bg-white text-navy-600 hover:border-navy-300",
+                    )}
+                  >
+                    Ch {i + 1}: {ch.name.split(" ")[0]}...
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Selected Chapter Contextual Box */}
+            {selectedChapterFilter !== "all" ? (
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-sky-200 bg-sky-50/80 p-4 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sky-500 font-display text-sm font-extrabold text-white shadow-sm">
+                    {String(subject.chapters.findIndex((c) => c.id === selectedChapterFilter) + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-wide text-sky-700">
+                      CBSE Syllabus Chapter {subject.chapters.findIndex((c) => c.id === selectedChapterFilter) + 1}
+                    </p>
+                    <p className="font-display text-base font-bold text-sky-950">
+                      {subject.chapters.find((c) => c.id === selectedChapterFilter)?.name}
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to={`/subjects/${subject.id}/${selectedChapterFilter}`}
+                  className="focus-ring inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-4 py-2 text-xs font-extrabold text-white shadow-sm transition-all hover:bg-sky-700"
+                >
+                  Open Full Chapter Notes & PYQs
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            ) : null}
+
+            {/* Results Grid */}
+            <div className="mt-6">
+              <div className="mb-4 flex items-center justify-between text-xs font-bold text-navy-500">
+                <span>
+                  Showing <strong className="text-navy-900">{filteredLectures.length}</strong> {filteredLectures.length === 1 ? "lecture" : "lectures"}
+                </span>
+                {isFiltered ? (
+                  <span className="text-navy-400">Filters active</span>
+                ) : (
+                  <span>All chapters available</span>
+                )}
+              </div>
+
+              {filteredLectures.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-inkline bg-white p-10 text-center">
+                  <Video className="mx-auto h-10 w-10 text-navy-300" />
+                  <h3 className="mt-3 font-display text-base font-bold text-navy-900">No lectures found matching your filters</h3>
+                  <p className="mt-1 text-sm text-navy-500">Try clearing the search term or switching to "All Chapters".</p>
+                  <button
+                    type="button"
+                    onClick={clearLectureFilters}
+                    className="focus-ring btn-navy mt-4 px-4 py-2 text-xs"
+                  >
+                    Clear all filters
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {filteredLectures.map((r, i) => (
+                    <Reveal key={r.id} delay={(i % 3) * 50}>
+                      <ResourceCard resource={r} />
+                    </Reveal>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ======================= FULL SUBJECT RESOURCES ======================= */}
       {topLevel.length > 0 ? (
-        <section className="container-x pb-16">
+        <section id="full-subject" className="container-x pb-16 pt-8">
           <Reveal>
             <div className="flex items-center gap-3">
               <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">Full-subject resources</h2>
@@ -258,6 +589,7 @@ export function ChapterPage() {
             items={[
               { label: "Subjects", to: "/subjects" },
               { label: subject.name, to: `/subjects/${subject.id}` },
+              { label: "Lectures Hub", to: `/subjects/${subject.id}#lectures` },
               { label: `Chapter ${index + 1}` },
             ]}
           />
@@ -268,7 +600,7 @@ export function ChapterPage() {
               </span>
               <div>
                 <p className={cn("text-[11px] font-extrabold uppercase tracking-[0.18em]", tone.text)}>
-                  {subject.name} · Chapter {index + 1} of {subject.chapters.length}
+                  {subject.name} · Chapter {index + 1} of {subject.chapters.length} · CBSE Class 12
                 </p>
                 <h1 className="mt-1.5 max-w-2xl font-display text-2xl font-extrabold tracking-tight text-navy-950 sm:text-3xl">
                   {chapter.name}
@@ -288,20 +620,29 @@ export function ChapterPage() {
                 </p>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => toggleChapter(subject.id, chapter.id, chapter.name)}
-              aria-pressed={done}
-              className={cn(
-                "focus-ring inline-flex w-fit shrink-0 items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold transition-all active:scale-[.98]",
-                done
-                  ? "bg-green-600 text-white hover:bg-green-700"
-                  : "bg-navy-900 text-white hover:bg-navy-700",
-              )}
-            >
-              {done ? <CheckCircle2 className="h-4.5 w-4.5" /> : <Circle className="h-4.5 w-4.5" />}
-              {done ? "Chapter completed" : "Mark as completed"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Link
+                to={`/subjects/${subject.id}#lectures`}
+                className="focus-ring inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg border border-inkline bg-white/90 px-4 py-2.5 text-xs font-extrabold text-navy-800 shadow-sm transition-all hover:bg-white hover:text-navy-950 active:scale-[.98]"
+              >
+                <Video className="h-4 w-4 text-rose-500" />
+                All {subject.short} Lectures
+              </Link>
+              <button
+                type="button"
+                onClick={() => toggleChapter(subject.id, chapter.id, chapter.name)}
+                aria-pressed={done}
+                className={cn(
+                  "focus-ring inline-flex w-fit shrink-0 items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold transition-all active:scale-[.98]",
+                  done
+                    ? "bg-green-600 text-white hover:bg-green-700"
+                    : "bg-navy-900 text-white hover:bg-navy-700",
+                )}
+              >
+                {done ? <CheckCircle2 className="h-4.5 w-4.5" /> : <Circle className="h-4.5 w-4.5" />}
+                {done ? "Chapter completed" : "Mark as completed"}
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -363,11 +704,9 @@ export function ChapterPage() {
                 <span className="block truncate font-display text-sm font-bold text-navy-900">{index}. {prev.name}</span>
               </span>
             </Link>
-          ) : (
-            <span />
-          )}
+          ) : null}
           {next ? (
-            <Link to={`/subjects/${subject.id}/${next.id}`} className="card-hover focus-ring group flex items-center justify-end gap-3 rounded-xl border border-inkline bg-white p-4 text-right shadow-card sm:col-start-2">
+            <Link to={`/subjects/${subject.id}/${next.id}`} className={cn("card-hover focus-ring group flex items-center justify-end gap-3 rounded-xl border border-inkline bg-white p-4 text-right shadow-card", !prev && "sm:col-start-2")}>
               <span className="min-w-0">
                 <span className="block text-[10.5px] font-extrabold uppercase tracking-[0.14em] text-navy-400">Next chapter</span>
                 <span className="block truncate font-display text-sm font-bold text-navy-900">{index + 2}. {next.name}</span>

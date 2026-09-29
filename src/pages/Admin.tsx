@@ -447,9 +447,23 @@ export default function Admin() {
                     {rep.resolved ? (
                       <span className="rounded-full bg-green-50 px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wide text-green-700">Resolved</span>
                     ) : (
-                      <button type="button" onClick={() => app.resolveReport(rep.id)} className="focus-ring rounded-lg bg-navy-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-navy-700">
-                        Mark resolved
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {app.resources.some((r) => r.id === rep.resourceId) ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const target = app.resources.find((r) => r.id === rep.resourceId);
+                              if (target) startEdit(target);
+                            }}
+                            className="focus-ring rounded-lg border border-inkline bg-white px-3 py-2 text-xs font-bold text-navy-700 transition-colors hover:bg-navy-50"
+                          >
+                            Edit resource
+                          </button>
+                        ) : null}
+                        <button type="button" onClick={() => app.resolveReport(rep.id)} className="focus-ring rounded-lg bg-navy-900 px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-navy-700">
+                          Mark resolved
+                        </button>
+                      </div>
                     )}
                   </div>
                 ))}

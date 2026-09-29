@@ -18,11 +18,12 @@ export default function AnimatedBar({
     const t = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(t);
   }, []);
+  const safePct = Math.max(0, Math.min(Number.isFinite(pct) ? pct : 0, 100));
   return (
     <div className={cn("overflow-hidden rounded-full", trackClass, className)}>
       <div
         className={cn("h-full rounded-full transition-[width] duration-1000 ease-out", barClass)}
-        style={{ width: mounted ? `${Math.min(pct, 100)}%` : "0%" }}
+        style={{ width: mounted ? `${safePct}%` : "0%" }}
       />
     </div>
   );

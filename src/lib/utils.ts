@@ -27,9 +27,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { Difficulty, Goal, ResourceType, Tone } from "@/lib/types";
-
-export const cn = (...parts: Array<string | false | null | undefined>) =>
-  parts.filter(Boolean).join(" ");
+export { cn } from "@/utils/cn";
 
 /* ---------- tone presets (full class strings so Tailwind can see them) ---------- */
 
@@ -143,8 +141,14 @@ export const timeAgo = (iso: string): string => {
 
 export const todayISO = (): string => new Date().toISOString().slice(0, 10);
 
-export const fmtDate = (iso: string): string =>
-  new Date(`${iso}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+export const fmtDate = (iso: string): string => {
+  if (!iso) return "";
+  const dateStr = iso.includes("T") ? iso : `${iso}T00:00:00`;
+  const parsed = new Date(dateStr);
+  return isNaN(parsed.getTime())
+    ? iso
+    : parsed.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+};
 
 export const uid = (): string => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 

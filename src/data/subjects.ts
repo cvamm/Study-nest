@@ -210,12 +210,12 @@ export const SUBJECTS: Subject[] = [
     tone: "blue",
     icon: "monitor",
     chapters: chapters("ip", [
-      "Computational Thinking and Programming",
-      "Python Data Structures — List, Stack, Queue",
-      "Database Concepts",
+      "Data Handling using Pandas (Series and DataFrames)",
+      "Data Visualization using Pyplot",
+      "Database Concepts and SQL Functions",
       "Structured Query Language (SQL)",
-      "Interface Python with SQL",
-      "Computer Networks",
+      "Introduction to Computer Networks",
+      "Societal Impacts",
     ]),
   },
   {

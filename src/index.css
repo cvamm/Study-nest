@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Bricolage Grotesque", "Manrope", ui-sans-serif, sans-serif;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Caveat", cursive, sans-serif;
+  --font-sans: "Caveat", cursive, sans-serif;
+
+  --spacing-4_5: 1.125rem;
+  --spacing-5_5: 1.375rem;
+  --spacing-6_5: 1.625rem;
 
   --color-navy-950: #050d22;
   --color-navy-900: #0a1b3d;
@@ -68,9 +72,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-size: 17px;
   }
   body {
     @apply bg-paper font-sans text-navy-900 antialiased;
+    font-family: "Caveat", cursive, sans-serif;
+  }
+  button, input, select, textarea {
+    font-family: inherit;
   }
   ::selection {
     background: var(--color-gold-200);
@@ -144,6 +153,14 @@
 .reveal.is-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 ::-webkit-scrollbar {

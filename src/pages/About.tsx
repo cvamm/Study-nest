@@ -15,8 +15,7 @@ import {
 import EmptyState from "@/components/EmptyState";
 import { NestPlaceholder } from "@/components/NestPlaceholder";
 import Reveal from "@/components/Reveal";
-import { RESOURCE_TYPES, TONES } from "@/lib/utils";
-import { cn } from "@/lib/utils";
+import { cn, RESOURCE_TYPES, TONES } from "@/lib/utils";
 
 const ROADMAP = [
   { icon: Sparkles, title: "AI-powered recommendations", body: "Resources ranked against your completed chapters, bookmarks and planner gaps.", stage: "Foundation ready" },

@@ -57,7 +57,19 @@ function loadState(): Persisted {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return DEFAULTS;
-    return { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Persisted>) };
+    const parsed = JSON.parse(raw) as Partial<Persisted>;
+    return {
+      user: parsed.user ?? DEFAULTS.user,
+      bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks : DEFAULTS.bookmarks,
+      completed: Array.isArray(parsed.completed) ? parsed.completed : DEFAULTS.completed,
+      recent: Array.isArray(parsed.recent) ? parsed.recent : DEFAULTS.recent,
+      tasks: Array.isArray(parsed.tasks) ? parsed.tasks : DEFAULTS.tasks,
+      custom: Array.isArray(parsed.custom) ? parsed.custom : DEFAULTS.custom,
+      edited: parsed.edited && typeof parsed.edited === "object" ? parsed.edited : DEFAULTS.edited,
+      deleted: Array.isArray(parsed.deleted) ? parsed.deleted : DEFAULTS.deleted,
+      recOverride: parsed.recOverride && typeof parsed.recOverride === "object" ? parsed.recOverride : DEFAULTS.recOverride,
+      reports: Array.isArray(parsed.reports) ? parsed.reports : DEFAULTS.reports,
+    };
   } catch {
     return DEFAULTS;
   }
@@ -123,7 +135,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const rec = state.recOverride[r.id];
       return rec === undefined ? base : { ...base, recommended: rec };
     });
-    const custom = state.custom.filter((r) => !state.deleted.includes(r.id));
+    const custom = state.custom
+      .filter((r) => !state.deleted.includes(r.id))
+      .map((r) => {
+        const rec = state.recOverride[r.id];
+        return rec === undefined ? r : { ...r, recommended: rec };
+      });
     return [...seeds, ...custom];
   }, [state.deleted, state.edited, state.recOverride, state.custom]);
 
@@ -174,19 +191,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
       toast("Task removed", "info");
     },
     autoPlan: () => {
-      const remaining: Array<{ subjectId: string; chapter: string }> = [];
+      // Group remaining unfinished chapters by subject, excluding ones already in pending tasks
+      const subjectRemaining = new Map<string, Array<{ subjectId: string; chapter: string }>>();
       for (const s of SUBJECTS) {
-        for (const ch of s.chapters) {
-          if (!state.completed.includes(`${s.id}/${ch.id}`)) {
-            remaining.push({ subjectId: s.id, chapter: ch.name });
-          }
+        const uncompleted = s.chapters
+          .filter((ch) => !state.completed.includes(`${s.id}/${ch.id}`))
+          .filter((ch) => !state.tasks.some((t) => !t.done && t.title.includes(ch.name)));
+        if (uncompleted.length > 0) {
+          subjectRemaining.set(
+            s.id,
+            uncompleted.map((ch) => ({ subjectId: s.id, chapter: ch.name })),
+          );
         }
       }
-      if (remaining.length === 0) {
-        toast("All chapters are already marked complete", "info");
+
+      const remainingPool = Array.from(subjectRemaining.values());
+      if (remainingPool.length === 0) {
+        toast("All uncompleted chapters are already scheduled in your planner!", "info");
         return;
       }
-      const picks = remaining.slice(0, 10);
+
+      // Pick up to 10 chapters round-robin across subjects for a balanced study week
+      const picks: Array<{ subjectId: string; chapter: string }> = [];
+      let round = 0;
+      while (picks.length < 10) {
+        let addedThisRound = false;
+        for (const list of remainingPool) {
+          if (round < list.length && picks.length < 10) {
+            picks.push(list[round]);
+            addedThisRound = true;
+          }
+        }
+        if (!addedThisRound) break;
+        round++;
+      }
+
       const tasks: PlannerTask[] = picks.map((p, i) => ({
         id: uid(),
         title: `Revise: ${p.chapter}`,
@@ -211,24 +250,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
     updateResource: (id, r) => {
       setState((prev) => {
         const isCustom = prev.custom.some((c) => c.id === id);
+        const nextRec = { ...prev.recOverride, [id]: r.recommended };
         if (isCustom) {
           return {
             ...prev,
+            recOverride: nextRec,
             custom: prev.custom.map((c) => (c.id === id ? { ...r, id } : c)),
           };
         }
-        return { ...prev, edited: { ...prev.edited, [id]: { ...r, id } } };
+        return {
+          ...prev,
+          recOverride: nextRec,
+          edited: { ...prev.edited, [id]: { ...r, id } },
+        };
       });
       toast("Resource updated");
     },
     deleteResource: (id) => {
-      setState((prev) => ({
-        ...prev,
-        deleted: [...prev.deleted, id],
-        custom: prev.custom.filter((c) => c.id !== id),
-        bookmarks: prev.bookmarks.filter((b) => b !== id),
-        recent: prev.recent.filter((r) => r !== id),
-      }));
+      setState((prev) => {
+        const nextEdited = { ...prev.edited };
+        delete nextEdited[id];
+        const nextRec = { ...prev.recOverride };
+        delete nextRec[id];
+        return {
+          ...prev,
+          deleted: [...prev.deleted, id],
+          edited: nextEdited,
+          recOverride: nextRec,
+          custom: prev.custom.filter((c) => c.id !== id),
+          bookmarks: prev.bookmarks.filter((b) => b !== id),
+          recent: prev.recent.filter((r) => r !== id),
+        };
+      });
       toast("Resource deleted", "danger");
     },
     toggleRecommended: (id) =>

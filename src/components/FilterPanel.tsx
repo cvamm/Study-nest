@@ -99,7 +99,7 @@ export default function FilterPanel({
         <input
           type="search"
           value={filters.q}
-          onChange={(e) => onChange({ q: e.target.value, chapter: "" })}
+          onChange={(e) => onChange({ q: e.target.value })}
           placeholder="Search titles, chapters, channels…"
           aria-label="Search resources"
           className="input-base pl-9"
@@ -194,10 +194,7 @@ export default function FilterPanel({
                 key={g}
                 active={isActive}
                 onClick={() => onChange({ goals: toggle(filters.goals, g) })}
-                className={cn(
-                  "border-transparent shadow-sm",
-                  GOAL_META[g].replace("border-", "border ").split(" ").filter((x) => x.startsWith("bg-") || x.startsWith("text-")).join(" "),
-                )}
+                className="border-navy-900 bg-navy-900 text-white shadow-sm"
               >
                 {g}
               </Chip>

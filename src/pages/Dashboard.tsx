@@ -16,6 +16,7 @@ import {
   Sparkles,
   Trash2,
   UserRound,
+  type LucideIcon,
 } from "lucide-react";
 import AnimatedBar from "@/components/AnimatedBar";
 import EmptyState from "@/components/EmptyState";
@@ -277,7 +278,7 @@ function Overview() {
   );
 }
 
-function StatCard({ value, label, icon: Icon, tint }: { value: string; label: string; icon: typeof Check; tint: string }) {
+function StatCard({ value, label, icon: Icon, tint }: { value: string; label: string; icon: LucideIcon; tint: string }) {
   return (
     <div className="flex items-center gap-4 rounded-xl border border-inkline bg-white p-5 shadow-card">
       <span className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-xl", tint)}>
@@ -299,7 +300,8 @@ function Ring({ value }: { value: number }) {
   }, []);
   const r = 24;
   const circ = 2 * Math.PI * r;
-  const v = mounted ? Math.min(value, 1) : 0;
+  const safeValue = Number.isFinite(value) ? Math.max(0, Math.min(value, 1)) : 0;
+  const v = mounted ? safeValue : 0;
   return (
     <svg viewBox="0 0 60 60" className="h-14 w-14 shrink-0 -rotate-90">
       <circle cx="30" cy="30" r={r} fill="none" stroke="#eff3fb" strokeWidth="7" />
@@ -336,7 +338,7 @@ function Planner() {
       setError("Give the task a title — e.g. “Solve 20 PYQs from Integrals”");
       return;
     }
-    addTask({ title: title.trim(), subjectId, date, priority });
+    addTask({ title: title.trim(), subjectId, date: date || todayISO(), priority });
     setTitle("");
     setError("");
   };
@@ -499,7 +501,7 @@ function Planner() {
                             <p className="mt-0.5 flex items-center gap-2 text-[11px] font-bold text-navy-400">
                               <span className={cn("rounded-md border px-1.5 py-px", subject ? TONES[subject.tone].chip : "")}>{subject?.short}</span>
                               <span className={cn("rounded-md border px-1.5 py-px", PRIORITY_CHIP[t.priority])}>{t.priority}</span>
-                              <span className={cn("rounded-md border px-1.5 py-px", GOAL_META.Practice)}>{t.done ? "Done" : "Pending"}</span>
+                              <span className={cn("rounded-md border px-1.5 py-px", t.done ? "bg-green-50 text-green-700 border-green-200" : "bg-slate-100 text-slate-700 border-slate-200")}>{t.done ? "Done" : "Pending"}</span>
                             </p>
                           </div>
                           <button

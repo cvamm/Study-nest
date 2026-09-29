@@ -29,5 +29,11 @@ export function useCountUp<T extends HTMLElement>(target: number, duration = 150
     return () => io.disconnect();
   }, [target, duration]);
 
+  useEffect(() => {
+    if (started.current) {
+      setValue(target);
+    }
+  }, [target]);
+
   return { ref, value };
 }

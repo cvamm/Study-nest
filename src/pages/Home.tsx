@@ -34,8 +34,16 @@ const HERO_CHIPS = [
   { label: "Notes", to: "/resources?types=notes" },
 ];
 
-const BOARD_EXAM = new Date("2026-02-15T00:00:00");
-const PREP_START = new Date("2025-04-01T00:00:00");
+function getExamSchedule() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  // CBSE board exams start around Feb 15
+  const feb15ThisYear = new Date(currentYear, 1, 15, 0, 0, 0);
+  const examDate = now > feb15ThisYear ? new Date(currentYear + 1, 1, 15, 0, 0, 0) : feb15ThisYear;
+  const prepStartYear = examDate.getFullYear() - 1;
+  const prepStartDate = new Date(prepStartYear, 3, 1, 0, 0, 0);
+  return { examDate, prepStartDate, prepStartYearShort: String(prepStartYear).slice(-2) };
+}
 
 export default function Home() {
   const { resources } = useApp();
@@ -44,10 +52,10 @@ export default function Home() {
   const searchRef = useRef<HTMLInputElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
 
-  const recommended = useMemo(
-    () => resources.filter((r) => r.recommended).slice(0, 10),
-    [resources],
-  );
+  const recommended = useMemo(() => {
+    const list = resources.filter((r) => r.recommended);
+    return (list.length > 0 ? list : resources).slice(0, 10);
+  }, [resources]);
 
   const perSubject = useMemo(() => {
     const map = new Map<string, number>();
@@ -178,7 +186,7 @@ export default function Home() {
                   <div className="h-full rounded-full bg-gradient-to-r from-gold-300 to-gold-500" style={{ width: `${prepPct()}%` }} />
                 </div>
                 <p className="mt-2 text-[10.5px] font-bold text-navy-400">
-                  Prep window {prepPct()}% gone · starts 1 Apr '25
+                  Prep window {prepPct()}% gone · starts 1 Apr '{getExamSchedule().prepStartYearShort}
                 </p>
               </div>
               <div className="absolute -left-6 bottom-28 rotate-[-6deg] animate-float-slow rounded-lg bg-gradient-to-b from-gold-300 to-gold-500 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-wide text-navy-950 shadow-lift">
@@ -552,13 +560,15 @@ export default function Home() {
 /* ---------- helpers ---------- */
 
 function prepPct(): number {
-  const total = BOARD_EXAM.getTime() - PREP_START.getTime();
-  const done = Date.now() - PREP_START.getTime();
+  const { examDate, prepStartDate } = getExamSchedule();
+  const total = examDate.getTime() - prepStartDate.getTime();
+  const done = Date.now() - prepStartDate.getTime();
   return Math.min(100, Math.max(4, Math.round((done / total) * 100)));
 }
 
 function CountdownDays() {
-  const days = Math.max(0, Math.ceil((BOARD_EXAM.getTime() - Date.now()) / 86400000));
+  const { examDate } = getExamSchedule();
+  const days = Math.max(0, Math.ceil((examDate.getTime() - Date.now()) / 86400000));
   return <>{days}</>;
 }
 

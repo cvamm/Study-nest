@@ -12,6 +12,7 @@ import {
   Info,
   LayoutDashboard,
   LogOut,
+  Mail,
   Menu,
   Shield,
   Sparkles,
@@ -381,8 +382,19 @@ function Footer() {
         <FooterCol title="Quick resources" links={quick} />
       </div>
       <div className="relative border-t border-navy-800/80">
-        <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-[11.5px] font-semibold text-navy-400 sm:flex-row">
+        <div className="container-x flex flex-col items-center justify-between gap-3 py-5 text-xs font-semibold text-navy-400 md:flex-row">
           <p>© 2026 StudyNest 12. Built for CBSE Class 12 students.</p>
+          <div className="flex flex-wrap items-center justify-center gap-2 text-navy-300">
+            <span>Developed by <strong className="font-bold text-white">Shivam Shukla</strong></span>
+            <span className="text-navy-600">|</span>
+            <a
+              href="mailto:cvamm69@gmail.com"
+              className="inline-flex items-center gap-1.5 text-gold-300 transition-colors hover:text-gold-200 hover:underline"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              <span>cvamm69@gmail.com</span>
+            </a>
+          </div>
           <p>Independent study tool — not affiliated with CBSE or NCERT.</p>
         </div>
       </div>

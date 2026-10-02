@@ -47,10 +47,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
-  if (status === "unauthenticated") {
-    // If not authenticated, render Admin page directly so it presents the login view safely
-    return <>{children}</>;
-  }
-
+  // Both authenticated and unauthenticated states pass through to children
+  // (Admin component renders its own secure authentication gate with rate limiting and password check)
   return <>{children}</>;
 }

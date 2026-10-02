@@ -83,31 +83,52 @@ function DashboardHeader() {
   const hour = new Date().getHours();
   const dayPart = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
-      <div>
-        <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-600">{today}</p>
-        <h1 className="mt-1.5 font-display text-3xl font-extrabold tracking-tight text-navy-900">
-          {user ? `Good ${dayPart}, ${user.name.split(" ")[0]}` : "Your study dashboard"}
-        </h1>
-        <p className="mt-1.5 text-sm font-semibold text-navy-500">
-          {user ? "Here's how your Class 12 prep is shaping up." : "Track progress, plan your week and keep your shortlist — all in one place."}
-        </p>
-      </div>
-      {user ? (
-        <div className="flex items-center gap-2.5 rounded-xl border border-inkline bg-paper px-4 py-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 font-display text-sm font-bold text-gold-300">
-            {user.name.charAt(0).toUpperCase()}
-          </span>
-          <div>
-            <p className="text-sm font-bold text-navy-900">{user.name}</p>
-            <p className="text-[11px] font-semibold text-navy-400">Class 12 · CBSE 2025–26</p>
-          </div>
+    <div>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-gold-600">{today}</p>
+          <h1 className="mt-1.5 font-display text-3xl font-extrabold tracking-tight text-navy-900">
+            {user ? `Good ${dayPart}, ${user.name.split(" ")[0]}` : "Your study dashboard"}
+          </h1>
+          <p className="mt-1.5 text-sm font-semibold text-navy-500">
+            {user ? "Here's how your Class 12 prep is shaping up." : "Track progress, plan your week and keep your shortlist — all in one place."}
+          </p>
         </div>
-      ) : (
-        <Link to="/auth" className="focus-ring inline-flex items-center gap-2 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-700">
-          <UserRound className="h-4 w-4" />
-          Sign in to personalise
-        </Link>
+        {user ? (
+          <div className="flex items-center gap-2.5 rounded-xl border border-inkline bg-paper px-4 py-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 font-display text-sm font-bold text-gold-300">
+              {user.name.charAt(0).toUpperCase()}
+            </span>
+            <div>
+              <p className="text-sm font-bold text-navy-900">{user.name}</p>
+              <p className="text-[11px] font-semibold text-navy-400">Class 12 · CBSE 2025–26</p>
+            </div>
+          </div>
+        ) : (
+          <Link to="/auth" className="focus-ring inline-flex items-center gap-2 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-navy-700">
+            <UserRound className="h-4 w-4" />
+            Sign in to personalise
+          </Link>
+        )}
+      </div>
+
+      {!user && (
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-gold-200/80 bg-gradient-to-r from-gold-50/70 to-amber-50/50 p-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gold-400/20 text-gold-700">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <p className="text-xs font-semibold text-navy-800">
+              You are using Dashboard as a guest. All your syllabus progress and planner tasks are currently stored in this browser session.
+            </p>
+          </div>
+          <Link
+            to="/auth"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-navy-900 px-3.5 py-1.5 text-xs font-bold text-white transition-colors hover:bg-navy-800"
+          >
+            Create Profile <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
       )}
     </div>
   );

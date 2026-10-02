@@ -5,7 +5,6 @@ import {
   Check,
   CheckCircle2,
   ChevronLeft,
-  ChevronRight,
   Circle,
   Clock,
   FileArchive,
@@ -19,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import AnimatedBar from "@/components/AnimatedBar";
+import Crumbs from "@/components/Crumbs";
 import EmptyState from "@/components/EmptyState";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Reveal from "@/components/Reveal";
@@ -56,25 +56,6 @@ function PyqLoadingFallback() {
   );
 }
 
-function Crumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
-  return (
-    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-xs font-bold text-navy-400">
-      {items.map((item, i) => (
-        <span key={i} className="flex items-center gap-1.5">
-          {i > 0 ? <ChevronRight className="h-3 w-3 text-navy-300" /> : null}
-          {item.to ? (
-            <Link to={item.to} className="focus-ring rounded-sm transition-colors hover:text-navy-800">
-              {item.label}
-            </Link>
-          ) : (
-            <span className="text-navy-700">{item.label}</span>
-          )}
-        </span>
-      ))}
-    </nav>
-  );
-}
-
 /* ================================ SUBJECT ================================ */
 
 export function SubjectPage() {
@@ -91,10 +72,24 @@ export function SubjectPage() {
   useEffect(() => {
     const sec = searchParams.get("section");
     if (sec) {
-      const timer = setTimeout(() => {
-        document.getElementById(sec)?.scrollIntoView({ behavior: "smooth" });
-      }, 150);
-      return () => clearTimeout(timer);
+      const scroll = () => {
+        const el = document.getElementById(sec);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+          return true;
+        }
+        return false;
+      };
+
+      if (!scroll()) {
+        const timer1 = setTimeout(() => {
+          if (!scroll()) {
+            const timer2 = setTimeout(scroll, 500);
+            return () => clearTimeout(timer2);
+          }
+        }, 250);
+        return () => clearTimeout(timer1);
+      }
     }
   }, [searchParams]);
 

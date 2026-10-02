@@ -54,6 +54,33 @@ export default function SubjectPyqArchiveSection({
     });
   };
 
+  const handleYearSelect = (year: number | "all") => {
+    setSelectedYear(year);
+    if (year !== "all") {
+      setExpandedYears((prev) => new Set([...prev, year]));
+    }
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim()) {
+      const q = query.trim().toLowerCase();
+      const matchingYears = archive.years
+        .filter((y) =>
+          y.papers.some(
+            (p) =>
+              p.kind.toLowerCase().includes(q) ||
+              String(y.year).includes(q) ||
+              p.codes.some((code) => code.toLowerCase().includes(q)),
+          ),
+        )
+        .map((y) => y.year);
+      if (matchingYears.length > 0) {
+        setExpandedYears((prev) => new Set([...prev, ...matchingYears]));
+      }
+    }
+  };
+
   const expandAllYears = () => {
     setExpandedYears(new Set(archive.years.map((y) => y.year)));
   };
@@ -140,7 +167,7 @@ export default function SubjectPyqArchiveSection({
           <span className="text-[11px] font-bold uppercase tracking-wider text-navy-300 mr-1">Select Year:</span>
           <button
             type="button"
-            onClick={() => setSelectedYear("all")}
+            onClick={() => handleYearSelect("all")}
             className={cn(
               "rounded-lg px-2.5 py-1 text-xs font-bold transition-all",
               selectedYear === "all"
@@ -154,7 +181,7 @@ export default function SubjectPyqArchiveSection({
             <button
               key={y.year}
               type="button"
-              onClick={() => setSelectedYear(y.year)}
+              onClick={() => handleYearSelect(y.year)}
               className={cn(
                 "rounded-lg px-2.5 py-1 text-xs font-bold transition-all",
                 selectedYear === y.year
@@ -175,7 +202,7 @@ export default function SubjectPyqArchiveSection({
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search by Q.P. code (e.g. 55/1/1), region or exam..."
             className="w-full rounded-xl border border-navy-200 bg-white py-2 pl-9 pr-4 text-xs font-medium text-navy-900 placeholder:text-navy-400 focus:border-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500/20"
           />

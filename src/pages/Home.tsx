@@ -26,6 +26,7 @@ import { useApp } from "@/context/AppContext";
 import { useCountUp } from "@/lib/useCountUp";
 import { CHANNELS, channelSearchUrl } from "@/data/channels";
 import { SUBJECTS, TOTAL_CHAPTERS } from "@/data/subjects";
+import { getOfficialPyqArchive } from "@/data/officialPyqPapers";
 import { cn, RESOURCE_TYPES, subjectIcon, TONES, typeMeta } from "@/lib/utils";
 
 const HERO_CHIPS = [
@@ -288,11 +289,15 @@ export default function Home() {
                     <span className="mt-2.5 flex flex-wrap items-center gap-2 text-[11px] font-bold text-navy-400">
                       <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{s.chapters.length} chapters</span>
                       <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{perSubject.get(s.id) ?? 0} resources</span>
-                      {["phy", "chem", "math", "bio", "cs", "bst", "geo", "pol", "ip", "eco", "his"].includes(s.id) ? (
-                        <span className="rounded-md bg-indigo-50 border border-indigo-200/80 px-1.5 py-0.5 text-indigo-700 font-extrabold">
-                          {s.chapters.length * 50} PYQs
-                        </span>
-                      ) : null}
+                      {(() => {
+                        const arch = getOfficialPyqArchive(s.id);
+                        if (!arch) return null;
+                        return (
+                          <span className="rounded-md bg-indigo-50 border border-indigo-200/80 px-1.5 py-0.5 text-indigo-700 font-extrabold">
+                            {arch.totalPapers} Board Papers
+                          </span>
+                        );
+                      })()}
                     </span>
                   </span>
                   <span className={cn("absolute inset-x-0 bottom-0 h-[3px] opacity-0 transition-opacity duration-300 group-hover:opacity-100", tone.bar)} aria-hidden="true" />
@@ -679,10 +684,10 @@ function HeroCard({
       </div>
       <p className="mt-2.5 line-clamp-2 font-display text-[13px] font-bold leading-snug text-navy-900">{pick.title}</p>
       <p className="mt-1.5 text-[11px] font-bold text-navy-400">{pick.source}</p>
-      <div className="mt-3 h-1 overflow-hidden rounded-full bg-navy-100">
-        <div className="h-full w-[64%] rounded-full bg-gradient-to-r from-navy-800 to-navy-500" />
+      <div className="mt-3 flex items-center justify-between border-t border-navy-100/70 pt-2.5 text-[11px] font-semibold text-navy-500">
+        <span className="truncate">{pick.subjectId.toUpperCase()} · Class 12</span>
+        <span className="shrink-0 font-bold text-navy-400">{pick.duration ? `${pick.duration}m` : "Free Access"}</span>
       </div>
-      <p className="mt-1.5 text-[10px] font-bold text-navy-400">64% watched · sample preview</p>
     </div>
   );
 }

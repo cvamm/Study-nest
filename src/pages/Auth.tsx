@@ -18,17 +18,13 @@ export default function Auth() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    const trimmedEmail = email.trim().toLowerCase();
-
     const next: Record<string, string> = {};
     if (mode === "signup" && name.trim().length < 2) next.name = "Tell us your name (at least 2 characters).";
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) next.email = "Enter a valid email address.";
-    if (password.length < 6) next.password = "Password needs at least 6 characters.";
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -81,8 +77,8 @@ export default function Auth() {
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-navy-500">
             {mode === "login"
-              ? "Sign in to see your bookmarks, progress and planner."
-              : "Create a free account — everything stays on your device in this demo."}
+              ? "Access your saved syllabus checklist, planner tasks, and bookmarked resources."
+              : "Set up your student profile in seconds — no password needed, saved directly in this browser."}
           </p>
 
           <div className="mt-6 grid grid-cols-2 rounded-xl border border-inkline bg-white p-1" role="tablist" aria-label="Authentication mode">
@@ -101,7 +97,7 @@ export default function Auth() {
                   mode === m ? "bg-navy-900 text-white shadow-sm" : "text-navy-500 hover:text-navy-900",
                 )}
               >
-                {m === "login" ? "Log in" : "Sign up"}
+                {m === "login" ? "Sign In" : "New Student"}
               </button>
             ))}
           </div>
@@ -112,23 +108,19 @@ export default function Auth() {
                 <input id="auth-name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Aarav Sharma" className="input-base" autoComplete="name" />
               </Field>
             ) : null}
-            <Field label="Email" htmlFor="auth-email" error={errors.email}>
+            <Field label="Student Email" htmlFor="auth-email" error={errors.email}>
               <input id="auth-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@school.in" className="input-base" autoComplete="email" />
-            </Field>
-            <Field label="Password" htmlFor="auth-password" error={errors.password}>
-              <input id="auth-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" className="input-base" autoComplete={mode === "login" ? "current-password" : "new-password"} />
             </Field>
             <button type="submit" className="btn-gold w-full py-3">
               <ShieldCheck className="h-4.5 w-4.5" />
-              {mode === "login" ? "Log in" : "Create account"}
+              {mode === "login" ? "Open My Dashboard" : "Create Student Profile"}
             </button>
           </form>
 
           <div className="mt-4 flex items-start gap-2.5 rounded-lg border border-sky-200 bg-sky-50 px-4 py-3">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" />
             <p className="text-xs font-semibold leading-relaxed text-sky-800">
-              Frontend demo — credentials never leave your browser. The data layer is structured for a
-              drop-in Supabase auth + database integration later.
+              Instant local profile — your bookmarks, syllabus checklist, and planner are saved directly to your browser without needing a password.
             </p>
           </div>
 

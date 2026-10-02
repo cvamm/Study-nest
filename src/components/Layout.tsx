@@ -8,6 +8,7 @@ import {
   Bookmark,
   BookOpen,
   CalendarDays,
+  Check,
   CheckCircle2,
   ChevronDown,
   FileCheck2,
@@ -75,6 +76,9 @@ export default function Layout() {
   const { user, logout, bookmarks, toasts, dismissToast } = useApp();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
+  const [notifsViewed, setNotifsViewed] = useState(() => {
+    return typeof window !== "undefined" && localStorage.getItem("studynest_notifs_viewed") === "true";
+  });
   const [userOpen, setUserOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -124,11 +128,22 @@ export default function Layout() {
                 type="button"
                 aria-label="Notifications"
                 aria-expanded={bellOpen}
-                onClick={() => setBellOpen((v) => !v)}
+                onClick={() => {
+                  setBellOpen((v) => {
+                    const next = !v;
+                    if (next && !notifsViewed) {
+                      setNotifsViewed(true);
+                      localStorage.setItem("studynest_notifs_viewed", "true");
+                    }
+                    return next;
+                  });
+                }}
                 className="focus-ring relative rounded-lg p-2.5 text-navy-500 transition-colors hover:bg-navy-50 hover:text-navy-900"
               >
                 <Bell className="h-5 w-5" />
-                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-gold-400 ring-2 ring-white" />
+                {!notifsViewed && (
+                  <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-gold-400 ring-2 ring-white" />
+                )}
               </button>
               {bellOpen ? (
                 <>
@@ -356,7 +371,7 @@ export default function Layout() {
                   <FileCheck2 className={cn("h-5 w-5 transition-transform", isActive && "scale-110 text-gold-500")} />
                   {isActive && <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold-500" />}
                 </div>
-                <span className="mt-1 tracking-tight">PYQ Papers</span>
+                <span className="mt-1 tracking-tight">PYQs</span>
               </>
             )}
           </NavLink>
@@ -434,6 +449,7 @@ export default function Layout() {
 function Footer() {
   const { toast } = useApp();
   const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
   const [mentorOpen, setMentorOpen] = useState(false);
 
   const subscribe = (e: FormEvent) => {
@@ -442,8 +458,18 @@ function Footer() {
       toast("Enter a valid email to subscribe", "danger");
       return;
     }
+    try {
+      const existing: string[] = JSON.parse(localStorage.getItem("studynest_subscribers") || "[]");
+      if (!existing.includes(email.trim())) {
+        existing.push(email.trim());
+        localStorage.setItem("studynest_subscribers", JSON.stringify(existing));
+      }
+    } catch {
+      // ignore storage errors
+    }
     setEmail("");
-    toast("You're on the list — board updates coming your way (demo)");
+    setSubscribed(true);
+    toast("Subscribed! We'll alert you on major exam & board updates.");
   };
 
   const explore: FooterLinkItem[] = [
@@ -508,10 +534,15 @@ function Footer() {
                   aria-label="Email for updates"
                   className="w-full rounded-lg border border-navy-700 bg-navy-900/80 px-3.5 py-2.5 text-sm font-semibold text-white placeholder:text-navy-400 focus:border-gold-400/60 focus:outline-none focus:ring-2 focus:ring-navy-800"
                 />
-                <button type="submit" className="focus-ring btn-gold shrink-0 px-4">
-                  <ArrowRight className="h-4 w-4" />
+                <button type="submit" className="focus-ring btn-gold shrink-0 px-4" title="Subscribe to updates">
+                  {subscribed ? <Check className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
                 </button>
               </div>
+              {subscribed ? (
+                <p className="mt-1.5 text-[11px] font-semibold text-emerald-400">
+                  ✓ Subscribed! You will receive board paper & revision alerts.
+                </p>
+              ) : null}
             </form>
 
             <div className="mt-6 inline-flex items-start gap-2 rounded-lg border border-navy-800 bg-navy-900/80 px-3.5 py-2.5">

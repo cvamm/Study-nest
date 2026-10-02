@@ -9,6 +9,7 @@ const Admin = lazy(() => import("@/pages/Admin"));
 import Auth from "@/pages/Auth";
 import Dashboard from "@/pages/Dashboard";
 import Home from "@/pages/Home";
+import PyqPapers from "@/pages/PyqPapers";
 import Resources from "@/pages/Resources";
 import Subjects from "@/pages/Subjects";
 import { ChapterPage, SubjectPage } from "@/pages/SubjectDetail";
@@ -33,6 +34,7 @@ export default function App() {
               <Route path="/subjects" element={<Subjects />} />
               <Route path="/subjects/:subjectId" element={<SubjectPage />} />
               <Route path="/subjects/:subjectId/:chapterId" element={<ChapterPage />} />
+              <Route path="/pyq-papers" element={<PyqPapers />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/auth" element={<Auth />} />

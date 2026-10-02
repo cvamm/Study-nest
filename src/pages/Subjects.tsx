@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, Search } from "lucide-react";
+import { ArrowRight, ChevronRight, FileArchive, Search } from "lucide-react";
 import AnimatedBar from "@/components/AnimatedBar";
 import Reveal from "@/components/Reveal";
 import EmptyState from "@/components/EmptyState";
@@ -69,6 +69,38 @@ export default function Subjects() {
           </div>
         </div>
       </section>
+
+      {/* Official CBSE Board Papers Banner */}
+      <div className="container-x mt-8">
+        <Link
+          to="/pyq-papers"
+          className="card-hover group flex flex-col items-start justify-between gap-4 rounded-2xl border border-amber-300/80 bg-gradient-to-r from-amber-50 via-gold-50/60 to-white p-5 shadow-sm sm:flex-row sm:items-center sm:p-6"
+        >
+          <div className="flex items-start gap-4">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gold-300 bg-gold-400 text-navy-950 shadow-gold">
+              <FileArchive className="h-6 w-6" />
+            </span>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-gold-200 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-gold-950">
+                  New CBSE Archive
+                </span>
+                <span className="text-xs font-bold text-navy-600">2015–2026 Board Papers &middot; All 15 Subjects</span>
+              </div>
+              <h3 className="mt-1 font-display text-base font-extrabold text-navy-900 sm:text-lg">
+                Download Official CBSE Past-Year Question Paper Archives
+              </h3>
+              <p className="mt-0.5 text-xs text-navy-600">
+                273 verified archive bundles and 1,703 set papers with Delhi, All India, Foreign and Compartment exams.
+              </p>
+            </div>
+          </div>
+          <span className="inline-flex items-center gap-1.5 rounded-xl bg-navy-950 px-4 py-2 text-xs font-extrabold text-gold-300 shadow-md transition-all group-hover:bg-navy-900 group-hover:text-gold-200">
+            Browse All Papers
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+      </div>
 
       <div className="container-x space-y-14 py-12 lg:py-16">
         {filtered.length === 0 ? (

@@ -32,6 +32,7 @@ import { getMentorEmail, sanitizeText } from "@/lib/security";
 const NAV_ITEMS = [
   { to: "/", label: "Home", end: true },
   { to: "/subjects", label: "Subjects" },
+  { to: "/pyq-papers", label: "PYQ Papers" },
   { to: "/resources", label: "Resources" },
   { to: "/about", label: "About" },
 ];
@@ -341,7 +342,7 @@ export default function Layout() {
           </NavLink>
 
           <NavLink
-            to="/resources?types=pyq"
+            to="/pyq-papers"
             className={({ isActive }) =>
               cn(
                 "flex flex-1 flex-col items-center justify-center py-1 text-[11px] font-bold transition-all active:scale-90",
@@ -355,7 +356,7 @@ export default function Layout() {
                   <FileCheck2 className={cn("h-5 w-5 transition-transform", isActive && "scale-110 text-gold-500")} />
                   {isActive && <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold-500" />}
                 </div>
-                <span className="mt-1 tracking-tight">PYQs</span>
+                <span className="mt-1 tracking-tight">PYQ Papers</span>
               </>
             )}
           </NavLink>
@@ -466,6 +467,7 @@ function Footer() {
     { to: "/subjects/cs", label: "Computer Science" },
   ];
   const quick: FooterLinkItem[] = [
+    { to: "/pyq-papers", label: "CBSE Board Papers (2015–2026)" },
     { to: "/resources?types=pyq", label: "Previous Year Questions" },
     { to: "/resources?types=sample-papers", label: "Sample Papers" },
     { to: "/resources?types=one-shot", label: "One-Shot Revision" },

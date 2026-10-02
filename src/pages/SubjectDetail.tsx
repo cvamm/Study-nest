@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Circle,
   Clock,
+  FileArchive,
   FileCheck2,
   Layers,
   Library,
@@ -22,8 +23,10 @@ import EmptyState from "@/components/EmptyState";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Reveal from "@/components/Reveal";
 import ResourceCard from "@/components/ResourceCard";
+import SubjectPyqArchiveSection from "@/components/SubjectPyqArchiveSection";
 import { useApp } from "@/context/AppContext";
 import { hasPyqData, subjectById } from "@/data/subjects";
+import { getOfficialPyqArchive } from "@/data/officialPyqPapers";
 import type { ResourceType } from "@/lib/types";
 import { cn, fmtDuration, RESOURCE_TYPES, subjectIcon, TONES } from "@/lib/utils";
 
@@ -266,6 +269,19 @@ export function SubjectPage() {
                 Chapterwise Board PYQs (50 Qs / Ch)
                 <span className="rounded-full bg-indigo-200 px-1.5 py-0.2 text-[10px] font-extrabold text-indigo-800">
                   {subject.chapters.length * 50} Qs
+                </span>
+              </button>
+            ) : null}
+            {getOfficialPyqArchive(subject.id) ? (
+              <button
+                type="button"
+                onClick={() => scrollToSection("past-papers")}
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-gradient-to-r from-amber-50 to-gold-100/80 px-3.5 py-1.5 text-xs font-extrabold text-amber-950 shadow-sm transition-all hover:border-amber-400 hover:from-amber-100 hover:to-gold-200 active:scale-[.98]"
+              >
+                <FileArchive className="h-3.5 w-3.5 text-amber-700" />
+                Official Board Papers (2015–2026)
+                <span className="rounded-full bg-amber-200 px-1.5 py-0.2 text-[10px] font-extrabold text-amber-900">
+                  {getOfficialPyqArchive(subject.id)?.totalBundles} Bundles
                 </span>
               </button>
             ) : null}
@@ -630,6 +646,46 @@ export function SubjectPage() {
                 {subject.id === "psy" ? <PsychologyPyqSection defaultOpen={true} /> : null}
                 {subject.id === "eng" ? <EnglishPyqSection defaultOpen={true} /> : null}
               </Suspense>
+            </ErrorBoundary>
+          </div>
+        </section>
+      ) : null}
+
+      {/* ===================== OFFICIAL PAST-YEAR PAPERS ARCHIVE (2015–2026) ===================== */}
+      {getOfficialPyqArchive(subject.id) ? (
+        <section id="past-papers" className="border-t border-inkline bg-white py-14 lg:py-20">
+          <div className="container-x">
+            <Reveal>
+              <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-amber-900">
+                      <FileArchive className="h-3.5 w-3.5 text-amber-600" />
+                      Official Board Paper Downloads (2015–2026)
+                    </span>
+                    <span className="rounded-full bg-navy-100 px-2.5 py-0.5 text-[11px] font-bold text-navy-700">
+                      All Sets &amp; Regions Included
+                    </span>
+                  </div>
+                  <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+                    Official CBSE Past-Year Question Papers
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy-600 sm:text-base">
+                    Download complete verified original CBSE board question paper bundles (Delhi, All India, Foreign regions, and Compartment) direct from the official archive.
+                  </p>
+                </div>
+                <Link
+                  to="/pyq-papers"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 hover:underline"
+                >
+                  View all 15 subjects archive
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </Reveal>
+
+            <ErrorBoundary>
+              <SubjectPyqArchiveSection subjectId={subject.id} />
             </ErrorBoundary>
           </div>
         </section>

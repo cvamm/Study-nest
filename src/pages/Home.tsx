@@ -9,6 +9,7 @@ import {
   ChevronRight,
   ClipboardList,
   Clock,
+  FileArchive,
   FileQuestion,
   FileText,
   MessageSquare,
@@ -28,7 +29,8 @@ import { SUBJECTS, TOTAL_CHAPTERS } from "@/data/subjects";
 import { cn, RESOURCE_TYPES, subjectIcon, TONES, typeMeta } from "@/lib/utils";
 
 const HERO_CHIPS = [
-  { label: "PYQs 2015–25", to: "/resources?types=pyq" },
+  { label: "Board Papers 2015–26", to: "/pyq-papers" },
+  { label: "Chapterwise PYQs", to: "/subjects" },
   { label: "One-shots", to: "/resources?types=one-shot" },
   { label: "Sample papers", to: "/resources?types=sample-papers" },
   { label: "Notes", to: "/resources?types=notes" },
@@ -354,19 +356,19 @@ export default function Home() {
         </Reveal>
         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
           <Reveal>
-            <Link to="/resources?types=pyq" className="card-hover focus-ring group relative flex h-full flex-col justify-between overflow-hidden rounded-xl bg-navy-950 p-6 shadow-card">
+            <Link to="/pyq-papers" className="card-hover focus-ring group relative flex h-full flex-col justify-between overflow-hidden rounded-xl bg-navy-950 p-6 shadow-card">
               <div className="bg-hero-grid absolute inset-0" aria-hidden="true" />
               <div className="relative">
                 <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-gradient-to-b from-gold-300 to-gold-500 text-navy-950 shadow-gold">
-                  <FileQuestion className="h-5.5 w-5.5" />
+                  <FileArchive className="h-5.5 w-5.5" />
                 </span>
-                <h3 className="mt-4 font-display text-xl font-bold text-white">Previous Year Questions</h3>
+                <h3 className="mt-4 font-display text-xl font-bold text-white">CBSE Past-Year Question Papers</h3>
                 <p className="mt-2 text-sm leading-relaxed text-navy-300">
-                  A decade of board questions, tagged chapterwise — see exactly what repeats.
+                  Over a decade of official board question papers (2015–2026), Delhi, All India, Foreign &amp; Compartment sets — verified cbse.gov.in archives.
                 </p>
               </div>
               <span className="relative mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-gold-300">
-                Open PYQ bank
+                Download Official Papers
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </span>
             </Link>

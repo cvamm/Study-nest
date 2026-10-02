@@ -5,7 +5,7 @@ import AnimatedBar from "@/components/AnimatedBar";
 import Reveal from "@/components/Reveal";
 import EmptyState from "@/components/EmptyState";
 import { useApp } from "@/context/AppContext";
-import { SUBJECTS } from "@/data/subjects";
+import { hasPyqData, SUBJECTS } from "@/data/subjects";
 import { cn, subjectIcon, TONES } from "@/lib/utils";
 
 const STREAMS: Array<{ label: string; blurb: string; ids: string[] }> = [
@@ -119,9 +119,14 @@ export default function Subjects() {
                           </div>
                           <h3 className="mt-4 font-display text-lg font-bold text-navy-900">{s.name}</h3>
                           <p className="mt-1 flex-1 text-xs leading-relaxed text-navy-500">{s.tagline}</p>
-                          <div className="mt-4 flex items-center gap-2 text-[11px] font-bold text-navy-400">
+                          <div className="mt-4 flex flex-wrap items-center gap-2 text-[11px] font-bold text-navy-400">
                             <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{s.chapters.length} chapters</span>
                             <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{perSubject.get(s.id) ?? 0} resources</span>
+                            {hasPyqData(s.id) ? (
+                              <span className="rounded-md bg-indigo-50 border border-indigo-200/80 px-1.5 py-0.5 text-indigo-700 font-extrabold">
+                                {s.chapters.length * 50} Board PYQs
+                              </span>
+                            ) : null}
                           </div>
                           <div className="mt-3">
                             <div className="flex items-center justify-between text-[10.5px] font-extrabold uppercase tracking-wide">

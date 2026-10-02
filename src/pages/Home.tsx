@@ -115,10 +115,13 @@ export default function Home() {
             </p>
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]">
               All Your Class 12 Resources,{" "}
-              <span className="relative inline-block text-gold-300">
-                One Nest.
-                <svg viewBox="0 0 220 12" className="absolute -bottom-2 left-0 w-full" aria-hidden="true">
-                  <path d="M3 9c40-6 140-8 214-4" fill="none" stroke="#f5b93b" strokeWidth="4" strokeLinecap="round" opacity=".55" />
+              <span className="relative inline-block glow-nest">
+                {/* Text with animated gold metallic shimmer */}
+                <span className="text-shimmer-gold">One Nest.</span>
+
+                {/* Glowing curved underline */}
+                <svg viewBox="0 0 220 12" className="absolute -bottom-2 left-0 w-full drop-shadow-[0_0_8px_rgba(245,185,59,0.7)]" aria-hidden="true">
+                  <path d="M3 9c40-6 140-8 214-4" fill="none" stroke="#f5b93b" strokeWidth="4.5" strokeLinecap="round" opacity=".9" />
                 </svg>
               </span>
             </h1>
@@ -137,12 +140,12 @@ export default function Home() {
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Search subjects, chapters, or resources..."
                 aria-label="Search subjects, chapters, or resources"
-                className="w-full bg-transparent py-2 text-sm font-semibold text-white placeholder:text-navy-300 focus:outline-none"
+                className="w-full bg-transparent py-2 text-base sm:text-sm font-semibold text-white placeholder:text-navy-300 focus:outline-none"
               />
               <kbd className="pointer-events-none mt-auto mb-auto hidden h-7 w-7 items-center justify-center rounded-md border border-navy-700 bg-navy-800 font-sans text-[11px] font-bold text-navy-300 sm:flex" aria-hidden="true">
                 /
               </kbd>
-              <button type="submit" className="focus-ring btn-gold shrink-0 px-5">
+              <button type="submit" className="focus-ring btn-gold shrink-0 px-4 sm:px-5">
                 Search
               </button>
             </form>
@@ -159,13 +162,42 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+
+            {/* Mobile Exam Countdown & PYQ Badge */}
+            <div className="mt-6 flex flex-col gap-3 rounded-xl border border-navy-700/80 bg-navy-900/80 p-4 shadow-lift backdrop-blur-sm lg:hidden">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400/15 text-gold-300">
+                    <CalendarClock className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="font-display text-lg font-extrabold leading-tight text-white">
+                      <CountdownDays />
+                      <span className="ml-1 text-xs font-bold text-navy-300">days to board exams</span>
+                    </p>
+                    <p className="text-[10px] font-bold text-navy-400">
+                      Prep window {prepPct()}% gone
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to="/resources?types=pyq"
+                  className="rounded-lg bg-gradient-to-r from-gold-400 to-gold-500 px-3 py-1.5 text-xs font-extrabold text-navy-950 shadow-sm transition-transform active:scale-95"
+                >
+                  PYQs Bank →
+                </Link>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-navy-800">
+                <div className="h-full rounded-full bg-gradient-to-r from-gold-300 to-gold-500 transition-all duration-500" style={{ width: `${prepPct()}%` }} />
+              </div>
+            </div>
           </div>
 
           {/* collage */}
           <div className="relative hidden lg:block" aria-hidden="true">
             <div className="relative mx-auto h-[430px] max-w-md">
-              <HeroCard className="absolute left-0 top-8 w-72 rotate-[-3deg] animate-float-slow" index={0} />
-              <HeroCard className="absolute right-0 top-0 w-72 rotate-[2.5deg] animate-float" index={1} />
+              <HeroCard className="absolute left-0 top-8 w-72 rotate-[-3deg] animate-float-slow" query="Electric Charges" index={0} />
+              <HeroCard className="absolute right-0 top-0 w-72 rotate-[2.5deg] animate-float" query="Integrals" index={1} />
               <div
                 className="absolute bottom-0 left-10 w-64 rotate-[-1.5deg] animate-float rounded-xl border border-navy-700 bg-navy-900/90 p-4 shadow-lift backdrop-blur-sm"
                 style={{ animationDelay: "0.6s" }}
@@ -251,9 +283,14 @@ export default function Home() {
                       <ChevronRight className="h-4 w-4 shrink-0 text-navy-300 transition-all group-hover:translate-x-0.5 group-hover:text-navy-600" />
                     </span>
                     <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-navy-500">{s.tagline}</span>
-                    <span className="mt-2.5 flex items-center gap-2 text-[11px] font-bold text-navy-400">
+                    <span className="mt-2.5 flex flex-wrap items-center gap-2 text-[11px] font-bold text-navy-400">
                       <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{s.chapters.length} chapters</span>
                       <span className="rounded-md bg-navy-50 px-1.5 py-0.5 text-navy-600">{perSubject.get(s.id) ?? 0} resources</span>
+                      {["phy", "chem", "math", "bio", "cs", "bst", "geo", "pol", "ip", "eco", "his"].includes(s.id) ? (
+                        <span className="rounded-md bg-indigo-50 border border-indigo-200/80 px-1.5 py-0.5 text-indigo-700 font-extrabold">
+                          {s.chapters.length * 50} PYQs
+                        </span>
+                      ) : null}
                     </span>
                   </span>
                   <span className={cn("absolute inset-x-0 bottom-0 h-[3px] opacity-0 transition-opacity duration-300 group-hover:opacity-100", tone.bar)} aria-hidden="true" />
@@ -382,7 +419,7 @@ export default function Home() {
                   Featured & recommended
                 </h2>
                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-navy-500">
-                  Resources our editors would start with. Sample picks for the demo — curation begins soon.
+                  High-yield hand-picked resources and official curriculum materials to jumpstart your preparation.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -413,7 +450,7 @@ export default function Home() {
           <div className="relative mt-8">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-12 bg-gradient-to-r from-white to-transparent lg:block" aria-hidden="true" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-12 bg-gradient-to-l from-white to-transparent lg:block" aria-hidden="true" />
-            <div ref={railRef} className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-2 sm:mx-0 sm:px-0">
+            <div ref={railRef} className="no-scrollbar touch-scroll -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-4 pb-2 sm:mx-0 sm:px-0">
               {recommended.map((r) => (
                 <div key={r.id} className="w-[86vw] max-w-[390px] shrink-0 snap-start sm:w-[390px]">
                   <ResourceCard resource={r} />
@@ -441,7 +478,7 @@ export default function Home() {
               </div>
             </div>
           </Reveal>
-          <div className="no-scrollbar -mx-4 mt-8 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5">
+          <div className="no-scrollbar touch-scroll -mx-4 mt-8 flex snap-x gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5">
             {CHANNELS.slice(0, 10).map((c, i) => {
               const tone = TONES[c.tone];
               return (
@@ -484,7 +521,7 @@ export default function Home() {
             <div className="max-w-2xl">
               <p className="inline-flex items-center gap-2 rounded-full border border-navy-700 bg-navy-900/70 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-gold-300">
                 <Bot className="h-3.5 w-3.5" />
-                StudyNest Intelligence · Coming soon
+                StudyBust Intelligence · Coming soon
               </p>
               <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                 An AI study partner is joining the nest
@@ -606,9 +643,23 @@ function CountStat({ value, suffix = "", label }: { value: number; suffix?: stri
   );
 }
 
-function HeroCard({ className, index }: { className?: string; index: number }) {
+function HeroCard({
+  className,
+  query,
+  index = 0,
+}: {
+  className?: string;
+  query?: string;
+  index?: number;
+}) {
   const { resources } = useApp();
-  const pick = resources.filter((r) => r.recommended)[index] ?? resources[index];
+  const pick =
+    (query
+      ? resources.find((r) => r.title.toLowerCase().includes(query.toLowerCase()) && r.recommended) ??
+        resources.find((r) => r.title.toLowerCase().includes(query.toLowerCase()))
+      : undefined) ??
+    resources.filter((r) => r.recommended)[index] ??
+    resources[index];
   if (!pick) return null;
   const meta = typeMeta(pick.type);
   const Icon = meta.id === "yt-lectures" ? PlayCircle : meta.id === "notes" ? NotebookPen : meta.icon;

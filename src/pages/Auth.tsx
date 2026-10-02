@@ -25,21 +25,9 @@ export default function Auth() {
     e.preventDefault();
     const trimmedEmail = email.trim().toLowerCase();
 
-    // Check for admin login
-    if (mode === "login" && (trimmedEmail === "admingmail.com" || trimmedEmail === "admin@gmail.com") && password === "admin@123") {
-      try {
-        localStorage.setItem("studynest12_admin_session", "true");
-      } catch {
-        // ignore
-      }
-      login("Administrator", "admingmail.com");
-      navigate("/admin");
-      return;
-    }
-
     const next: Record<string, string> = {};
     if (mode === "signup" && name.trim().length < 2) next.name = "Tell us your name (at least 2 characters).";
-    if (trimmedEmail !== "admingmail.com" && !/^\S+@\S+\.\S+$/.test(email.trim())) next.email = "Enter a valid email address.";
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) next.email = "Enter a valid email address.";
     if (password.length < 6) next.password = "Password needs at least 6 characters.";
     setErrors(next);
     if (Object.keys(next).length > 0) return;

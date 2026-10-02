@@ -3,32 +3,36 @@ import {
   Search,
   ChevronDown,
   ChevronUp,
-  Calculator,
+  TrendingUp,
+  BarChart3,
+  Globe2,
   HelpCircle,
   CheckCircle2,
   XCircle,
   Eye,
   EyeOff,
+  Printer,
 } from "lucide-react";
-import { MATH_PYQ_CHAPTERS, type PyqQuestion } from "@/data/mathPyqs";
+import { ECO_PYQ_CHAPTERS, type PyqQuestion } from "@/data/ecoPyqs";
 import { cn } from "@/lib/utils";
 
-interface MathPyqSectionProps {
+interface EcoPyqSectionProps {
   initialChapterNum?: number;
   lockChapter?: boolean;
   defaultOpen?: boolean;
 }
 
-export default function MathPyqSection({
+export default function EcoPyqSection({
   initialChapterNum = 1,
   lockChapter = false,
   defaultOpen = true,
-}: MathPyqSectionProps) {
+}: EcoPyqSectionProps) {
   const [selectedChapterIdx, setSelectedChapterIdx] = useState<number>(() => {
     const idx = initialChapterNum - 1;
-    return idx >= 0 && idx < MATH_PYQ_CHAPTERS.length ? idx : 0;
+    return idx >= 0 && idx < ECO_PYQ_CHAPTERS.length ? idx : 0;
   });
 
+  const [selectedPartFilter, setSelectedPartFilter] = useState<"all" | "partA" | "partB">("all");
   const [isSectionOpen, setIsSectionOpen] = useState(defaultOpen);
   const [showOptions, setShowOptions] = useState(true);
   const [expandedQuestionOptions, setExpandedQuestionOptions] = useState<Set<number>>(new Set());
@@ -38,7 +42,7 @@ export default function MathPyqSection({
   const [allExpanded, setAllExpanded] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<Record<number, string>>({});
 
-  const activeChapter = MATH_PYQ_CHAPTERS[selectedChapterIdx] ?? MATH_PYQ_CHAPTERS[0];
+  const activeChapter = ECO_PYQ_CHAPTERS[selectedChapterIdx] ?? ECO_PYQ_CHAPTERS[0];
 
   const filteredQuestions = useMemo(() => {
     let list = activeChapter.questions;
@@ -114,47 +118,66 @@ export default function MathPyqSection({
     };
   }, [activeChapter]);
 
+  // Filter visible chapters by Part in chapter selection
+  const displayedChapters = useMemo(() => {
+    return ECO_PYQ_CHAPTERS.map((ch, idx) => ({ ch, idx })).filter(({ idx }) => {
+      if (selectedPartFilter === "partA") return idx < 6; // Ch 1-6: Macroeconomics
+      if (selectedPartFilter === "partB") return idx >= 6; // Ch 7-12: Indian Economic Development
+      return true;
+    });
+  }, [selectedPartFilter]);
+
   return (
-    <div className="rounded-2xl border border-indigo-200/80 bg-white shadow-lift overflow-hidden">
+    <div className="rounded-2xl border border-teal-200/80 bg-white shadow-lift overflow-hidden">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-navy-950 via-slate-900 to-indigo-950 p-6 text-white sm:p-8">
+      <div className="relative overflow-hidden bg-gradient-to-r from-slate-950 via-teal-950 to-emerald-950 p-6 text-white sm:p-8">
         <div className="bg-hero-grid absolute inset-0 opacity-20" aria-hidden="true" />
         <div
           className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-20 blur-3xl"
-          style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, #0f4c5c 0%, #2dd4bf 100%)" }}
           aria-hidden="true"
         />
 
         <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-400/40 bg-indigo-400/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-indigo-300">
-                <Calculator className="h-3.5 w-3.5" />
-                CBSE 650 Mathematics PYQ Master Bank
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-teal-400/40 bg-teal-400/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-teal-300">
+                <TrendingUp className="h-3.5 w-3.5" />
+                CBSE 600 Economics (030) PYQ Master Bank
               </span>
-              <span className="rounded-full bg-indigo-500/20 px-2.5 py-0.5 text-[11px] font-bold text-indigo-300 ring-1 ring-indigo-500/40">
-                50 Questions per Chapter (13 Chapters)
+              <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[11px] font-bold text-emerald-300 ring-1 ring-emerald-500/40">
+                50 Questions per Chapter (12 Chapters)
               </span>
-              <span className="rounded-full bg-gold-400/20 px-2.5 py-0.5 text-[11px] font-bold text-gold-300 ring-1 ring-gold-400/40">
-                80 Marks Theory
+              <span className="rounded-full bg-amber-400/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-300 ring-1 ring-amber-400/40">
+                Macro + Indian Economic Dev
               </span>
             </div>
             <h3 className="mt-3 font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
               {lockChapter
                 ? `Chapter ${activeChapter.info.chapter_num}: ${activeChapter.info.title}`
-                : "Mathematics Chapterwise Board PYQ Bank"}
+                : "Economics Chapterwise Board PYQ Bank"}
             </h3>
-            <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-indigo-200/90">
-              Unit {activeChapter.info.unit_num}: {activeChapter.info.unit_title} ({activeChapter.info.weightage_unit}) ·
-              Includes 25 MCQs, 5 Assertion-Reason, 10 Short Answers & 10 Long Answers / Calculus with step-by-step solutions.
+            <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-teal-200/90">
+              {activeChapter.info.book} &bull; {activeChapter.info.weightage_unit} &bull;
+              Includes 25 MCQs, 5 Assertion-Reason, 10 Short Answers & 10 Long Answers with step-by-step CBSE marking schemes & numerical derivations.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
+            <a
+              href="/economics-pyq-bank.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring inline-flex items-center gap-1.5 rounded-xl border border-teal-400/40 bg-teal-900/60 px-4 py-2.5 text-xs font-bold text-teal-200 shadow-sm transition-all hover:bg-teal-800/80 hover:text-white"
+              title="Open full 600 questions standalone print-friendly view or export to PDF"
+            >
+              <Printer className="h-3.5 w-3.5" />
+              <span>Print / PDF View</span>
+            </a>
             <button
               type="button"
               onClick={() => setIsSectionOpen(!isSectionOpen)}
-              className="focus-ring inline-flex items-center gap-2 rounded-xl bg-indigo-400 px-5 py-2.5 text-xs font-extrabold text-navy-950 shadow-md transition-all hover:bg-indigo-300 hover:shadow-lg active:scale-[.98]"
+              className="focus-ring inline-flex items-center gap-2 rounded-xl bg-teal-400 px-5 py-2.5 text-xs font-extrabold text-navy-950 shadow-md transition-all hover:bg-teal-300 hover:shadow-lg active:scale-[.98]"
             >
               {isSectionOpen ? (
                 <>
@@ -174,17 +197,62 @@ export default function MathPyqSection({
 
       {/* Chapter Selection Pills (visible when not locked to a specific chapter) */}
       {!lockChapter && (
-        <div className="border-b border-inkline bg-indigo-50/40 p-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-900">
-              Select Chapter (1 to 13):
-            </span>
-            <span className="text-xs font-semibold text-indigo-800">
-              Chapter {activeChapter.info.chapter_num} of {MATH_PYQ_CHAPTERS.length}
+        <div className="border-b border-inkline bg-teal-50/40 p-4">
+          <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-teal-950">
+                Select Part & Chapter:
+              </span>
+              <div className="inline-flex rounded-lg border border-teal-300/80 bg-white p-0.5 text-[11px] font-bold">
+                <button
+                  type="button"
+                  onClick={() => setSelectedPartFilter("all")}
+                  className={cn(
+                    "rounded-md px-2.5 py-0.5 transition-all",
+                    selectedPartFilter === "all"
+                      ? "bg-teal-950 text-white shadow-xs"
+                      : "text-navy-700 hover:text-navy-950",
+                  )}
+                >
+                  All 12 Chs
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedPartFilter("partA")}
+                  className={cn(
+                    "rounded-md px-2.5 py-0.5 transition-all flex items-center gap-1",
+                    selectedPartFilter === "partA"
+                      ? "bg-teal-950 text-white shadow-xs"
+                      : "text-navy-700 hover:text-navy-950",
+                  )}
+                  title="Part A: Introductory Macroeconomics (Ch 1-6)"
+                >
+                  <BarChart3 className="h-3 w-3" />
+                  Part A: Macro (Ch 1-6)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedPartFilter("partB")}
+                  className={cn(
+                    "rounded-md px-2.5 py-0.5 transition-all flex items-center gap-1",
+                    selectedPartFilter === "partB"
+                      ? "bg-teal-950 text-white shadow-xs"
+                      : "text-navy-700 hover:text-navy-950",
+                  )}
+                  title="Part B: Indian Economic Development (Ch 7-12)"
+                >
+                  <Globe2 className="h-3 w-3" />
+                  Part B: IED (Ch 7-12)
+                </button>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-teal-900">
+              Active: Chapter {activeChapter.info.chapter_num} of {ECO_PYQ_CHAPTERS.length}
             </span>
           </div>
+
           <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-            {MATH_PYQ_CHAPTERS.map((ch, idx) => {
+            {displayedChapters.map(({ ch, idx }) => {
               const active = idx === selectedChapterIdx;
               return (
                 <button
@@ -200,8 +268,8 @@ export default function MathPyqSection({
                   className={cn(
                     "focus-ring shrink-0 rounded-lg px-3 py-1.5 text-xs font-bold transition-all",
                     active
-                      ? "bg-navy-900 text-indigo-300 shadow-sm border border-indigo-600"
-                      : "border border-inkline bg-white text-navy-800 hover:border-indigo-300 hover:bg-indigo-50",
+                      ? "bg-teal-950 text-teal-200 shadow-sm border border-teal-600"
+                      : "border border-inkline bg-white text-navy-800 hover:border-teal-300 hover:bg-teal-50",
                   )}
                 >
                   Ch {ch.info.chapter_num}: {ch.info.title.length > 25 ? ch.info.title.slice(0, 25) + "..." : ch.info.title}
@@ -214,27 +282,27 @@ export default function MathPyqSection({
 
       {/* Collapsed Overview CTA (when questions are hidden) */}
       {!isSectionOpen && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 bg-gradient-to-r from-indigo-50/40 via-white to-indigo-50/40 border-t border-inkline">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 bg-gradient-to-r from-teal-50/40 via-white to-teal-50/40 border-t border-inkline">
           <div className="flex items-center gap-3.5">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-900 border border-indigo-200">
-              <Calculator className="h-5 w-5" />
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-100 text-teal-900 border border-teal-200">
+              <TrendingUp className="h-5 w-5" />
             </span>
             <div>
               <p className="text-sm font-extrabold text-navy-950">
-                Chapter {activeChapter.info.chapter_num} Previous Year Questions ({filterCounts.all} Qs)
+                Chapter {activeChapter.info.chapter_num}: {activeChapter.info.title} ({filterCounts.all} Qs)
               </p>
               <p className="text-xs text-navy-500 font-medium mt-0.5">
-                {filterCounts.MCQ} MCQs · {filterCounts.AR} Assertion-Reason · {filterCounts.SA} Short Answers · {filterCounts.LA} Long / Calculus
+                {filterCounts.MCQ} MCQs &bull; {filterCounts.AR} Assertion-Reason &bull; {filterCounts.SA} Short Answers &bull; {filterCounts.LA} Long / Case Studies
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setIsSectionOpen(true)}
-            className="focus-ring inline-flex items-center gap-2 rounded-xl bg-navy-950 px-5 py-2.5 text-xs font-extrabold text-indigo-300 shadow-md transition-all hover:bg-navy-900 hover:text-indigo-200 hover:shadow-lg active:scale-[.98]"
+            className="focus-ring inline-flex items-center gap-2 rounded-xl bg-teal-950 px-5 py-2.5 text-xs font-extrabold text-teal-300 shadow-md transition-all hover:bg-teal-900 hover:text-teal-200 hover:shadow-lg active:scale-[.98]"
           >
             <span>Show PYQ Questions ({filterCounts.all})</span>
-            <ChevronDown className="h-3.5 w-3.5 text-indigo-400" />
+            <ChevronDown className="h-3.5 w-3.5 text-teal-400" />
           </button>
         </div>
       )}
@@ -251,8 +319,8 @@ export default function MathPyqSection({
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search integrals, matrices, probability, determinants, vectors, tags..."
-                className="w-full rounded-xl border border-inkline bg-navy-50/50 py-2 pl-9 pr-3 text-xs text-navy-900 placeholder-navy-400 transition-colors focus:border-indigo-500 focus:bg-white focus:outline-none"
+                placeholder="Search National Income, Multiplier, Repo Rate, GST, Green Rev, tags..."
+                className="w-full rounded-xl border border-inkline bg-navy-50/50 py-2 pl-9 pr-3 text-xs text-navy-900 placeholder-navy-400 transition-colors focus:border-teal-500 focus:bg-white focus:outline-none"
               />
             </div>
 
@@ -263,7 +331,7 @@ export default function MathPyqSection({
                 { id: "MCQ", label: `MCQs (${filterCounts.MCQ})` },
                 { id: "AR", label: `A & R (${filterCounts.AR})` },
                 { id: "SA", label: `Short Answer (${filterCounts.SA})` },
-                { id: "LA", label: `Long / Calculus (${filterCounts.LA})` },
+                { id: "LA", label: `Long / Numerical (${filterCounts.LA})` },
               ].map((f) => {
                 const active = selectedFilter === f.id;
                 return (
@@ -274,8 +342,8 @@ export default function MathPyqSection({
                     className={cn(
                       "focus-ring rounded-lg px-3 py-1.5 text-xs font-bold transition-all",
                       active
-                        ? "bg-indigo-800 text-white shadow-sm"
-                        : "border border-inkline bg-white text-navy-600 hover:bg-indigo-50/60",
+                        ? "bg-teal-950 text-white shadow-sm"
+                        : "border border-inkline bg-white text-navy-600 hover:bg-teal-50/60",
                     )}
                   >
                     {f.label}
@@ -287,17 +355,17 @@ export default function MathPyqSection({
               <button
                 type="button"
                 onClick={() => setShowOptions(!showOptions)}
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50"
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 transition-colors hover:border-teal-300 hover:bg-teal-50"
                 title={showOptions ? "Hide options to test yourself first" : "Show all options"}
               >
-                {showOptions ? <EyeOff className="h-3.5 w-3.5 text-navy-500" /> : <Eye className="h-3.5 w-3.5 text-indigo-600" />}
+                {showOptions ? <EyeOff className="h-3.5 w-3.5 text-navy-500" /> : <Eye className="h-3.5 w-3.5 text-teal-600" />}
                 {showOptions ? "Hide Options" : "Show Options"}
               </button>
 
               <button
                 type="button"
                 onClick={toggleAllSolutions}
-                className="focus-ring rounded-lg border border-indigo-300 bg-white px-3 py-1.5 text-xs font-extrabold text-indigo-800 transition-colors hover:border-indigo-500 hover:bg-indigo-50"
+                className="focus-ring rounded-lg border border-teal-300 bg-white px-3 py-1.5 text-xs font-extrabold text-teal-900 transition-colors hover:border-teal-500 hover:bg-teal-50"
               >
                 {allExpanded ? "Hide All Solutions" : "Show All Solutions"}
               </button>
@@ -308,7 +376,7 @@ export default function MathPyqSection({
           <div className="p-4 sm:p-6 space-y-4 max-h-[750px] overflow-y-auto">
             {filteredQuestions.length === 0 ? (
               <div className="rounded-xl border border-dashed border-inkline p-8 text-center">
-                <HelpCircle className="mx-auto h-8 w-8 text-indigo-300" />
+                <HelpCircle className="mx-auto h-8 w-8 text-teal-300" />
                 <p className="mt-2 text-sm font-bold text-navy-800">No questions match your filter</p>
                 <p className="mt-1 text-xs text-navy-500">Try changing the question type or clearing the search query.</p>
               </div>
@@ -324,23 +392,23 @@ export default function MathPyqSection({
                   badgeColor = "bg-amber-50 text-amber-800 border-amber-200";
                   typeTitle = "Assertion-Reason (1 Mark)";
                 } else if (q.type === "SA") {
-                  badgeColor = "bg-pink-50 text-pink-800 border-pink-200";
-                  typeTitle = "Short Answer (2–3 Marks)";
+                  badgeColor = "bg-purple-50 text-purple-800 border-purple-200";
+                  typeTitle = "Short Answer (3–4 Marks)";
                 } else if (q.type === "LA") {
-                  badgeColor = "bg-indigo-50 text-indigo-800 border-indigo-200";
-                  typeTitle = "Long Answer / Calculus (4–5 Marks)";
+                  badgeColor = "bg-emerald-50 text-emerald-800 border-emerald-200";
+                  typeTitle = "Long Answer / Numerical (6 Marks)";
                 }
 
                 return (
                   <div
                     key={q.id}
-                    className="rounded-xl border border-inkline bg-white p-4 sm:p-5 shadow-sm transition-all hover:border-indigo-300 hover:shadow-card"
+                    className="rounded-xl border border-inkline bg-white p-4 sm:p-5 shadow-sm transition-all hover:border-teal-300 hover:shadow-card"
                   >
                     {/* Header with question number, tag, and type */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-inkline/60 pb-3">
                       <div className="flex items-center gap-2">
                         <span className="font-display text-sm font-extrabold text-navy-950">Q{q.id}.</span>
-                        <span className="rounded bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-[11px] font-bold text-indigo-800">
+                        <span className="rounded bg-teal-50 border border-teal-100 px-2 py-0.5 text-[11px] font-bold text-teal-800">
                           {q.tag}
                         </span>
                       </div>
@@ -350,9 +418,9 @@ export default function MathPyqSection({
                     </div>
 
                     {/* Question Body */}
-                    <p className="mt-3 whitespace-pre-line text-sm font-semibold leading-relaxed text-navy-900">
+                    <div className="mt-3 font-sans text-sm leading-relaxed text-navy-900 whitespace-pre-wrap break-words font-medium">
                       {q.question}
-                    </p>
+                    </div>
 
                     {/* Multiple Choice Options Grid */}
                     {q.options && q.options.length > 0 && (
@@ -378,7 +446,7 @@ export default function MathPyqSection({
                                         : "bg-red-50 border-red-300 text-red-950 font-bold"
                                       : isExpanded && isCorrect
                                       ? "bg-emerald-50 border-emerald-300 text-emerald-900 font-bold"
-                                      : "border-inkline bg-navy-50/40 text-navy-800 hover:bg-indigo-50/50 hover:border-indigo-200",
+                                      : "border-inkline bg-navy-50/40 text-navy-800 hover:bg-teal-50/50 hover:border-teal-200",
                                   )}
                                 >
                                   <span>{opt}</span>
@@ -399,9 +467,9 @@ export default function MathPyqSection({
                           <button
                             type="button"
                             onClick={() => toggleQuestionOptions(q.id)}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-indigo-300 bg-indigo-50/60 px-3 py-1.5 text-xs font-semibold text-indigo-900 transition-colors hover:bg-indigo-100/70"
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-dashed border-teal-300 bg-teal-50/60 px-3 py-1.5 text-xs font-semibold text-teal-900 transition-colors hover:bg-teal-100/70"
                           >
-                            <ChevronDown className="h-3.5 w-3.5 text-indigo-700" />
+                            <ChevronDown className="h-3.5 w-3.5 text-teal-700" />
                             Show Options ({q.options.length})
                           </button>
                         )}
@@ -413,36 +481,36 @@ export default function MathPyqSection({
                       <button
                         type="button"
                         onClick={() => toggleSolution(q.id)}
-                        className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-dashed border-indigo-300 bg-indigo-50/60 px-3 py-1.5 text-xs font-bold text-indigo-800 transition-colors hover:border-indigo-500 hover:bg-indigo-100/70"
+                        className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-dashed border-teal-300 bg-teal-50/60 px-3 py-1.5 text-xs font-bold text-teal-900 transition-colors hover:border-teal-500 hover:bg-teal-100/70"
                       >
                         {isExpanded ? (
                           <>
-                            <ChevronUp className="h-3.5 w-3.5 text-indigo-700" />
+                            <ChevronUp className="h-3.5 w-3.5 text-teal-700" />
                             Hide Solution
                           </>
                         ) : (
                           <>
-                            <ChevronDown className="h-3.5 w-3.5 text-indigo-700" />
+                            <ChevronDown className="h-3.5 w-3.5 text-teal-700" />
                             View Detailed Solution & Marking Scheme
                           </>
                         )}
                       </button>
 
                       <span className="text-[11px] font-semibold text-navy-400">
-                        Question ID: MATH-{activeChapter.info.chapter_num}-{q.id}
+                        Question ID: ECO-{activeChapter.info.chapter_num}-{q.id}
                       </span>
                     </div>
 
                     {/* Collapsible Solution Content */}
                     {isExpanded && (
-                      <div className="mt-3.5 rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 text-xs">
+                      <div className="mt-3.5 rounded-xl border border-teal-900 bg-slate-950 p-4 text-xs text-slate-200">
                         {q.answer && (
                           <div className="mb-2 flex items-baseline gap-2">
-                            <span className="font-extrabold text-indigo-800">Correct Answer:</span>
-                            <span className="font-bold text-navy-900">{q.answer}</span>
+                            <span className="font-extrabold text-emerald-400">Correct Answer / Key:</span>
+                            <span className="font-bold text-emerald-200">{q.answer}</span>
                           </div>
                         )}
-                        <div className="border-t border-indigo-200/80 pt-2 leading-relaxed whitespace-pre-line text-navy-800">
+                        <div className="border-t border-slate-800 pt-2 leading-relaxed whitespace-pre-wrap text-teal-100 font-mono">
                           {q.explanation}
                         </div>
                       </div>
@@ -457,7 +525,7 @@ export default function MathPyqSection({
               <button
                 type="button"
                 onClick={() => setIsSectionOpen(false)}
-                className="focus-ring inline-flex items-center gap-2 rounded-xl border border-indigo-200 bg-white px-5 py-2 text-xs font-bold text-indigo-900 shadow-sm hover:bg-indigo-50 hover:border-indigo-300 transition-all"
+                className="focus-ring inline-flex items-center gap-2 rounded-xl border border-teal-200 bg-white px-5 py-2 text-xs font-bold text-teal-900 shadow-sm hover:bg-teal-50 hover:border-teal-300 transition-all"
               >
                 <ChevronUp className="h-4 w-4" />
                 Collapse / Hide Questions

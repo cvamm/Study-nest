@@ -1,0 +1,5935 @@
+export interface PyqQuestion {
+  id: number;
+  type: "MCQ" | "AR" | "SA" | "LA";
+  tag: string;
+  question: string;
+  options?: string[];
+  answer: string;
+  explanation: string;
+}
+
+export interface PyqChapterInfo {
+  chapter_num: number;
+  book: string;
+  author: string;
+  title: string;
+  weightage_unit: string;
+}
+
+export interface PyqChapter {
+  info: PyqChapterInfo;
+  questions: PyqQuestion[];
+}
+
+export const IP_PYQ_CHAPTERS: PyqChapter[] = [
+  {
+    "info": {
+      "chapter_num": 1,
+      "book": "Unit 1: Data Handling using Pandas and Data Visualization",
+      "title": "Python Pandas: Series Data Structure",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 1: Data Handling using Pandas (Core Data Structures)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which of the following statements correctly creates a Pandas Series from a Python dictionary d = {'A': 10, 'B': 20, 'C': 30}?",
+        "options": [
+          "(a) s = pd.Series(d)",
+          "(b) s = pd.series(d)",
+          "(c) s = pd.CreateSeries(d)",
+          "(d) s = pd.DataFrame(d)"
+        ],
+        "answer": "(a) s = pd.Series(d)",
+        "explanation": "In Pandas, the constructor is capital 'S' `Series()`. When a dictionary is passed, the dictionary keys become the Series index and values become the Series data."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is the key difference between positional slicing and label-based slicing in a Pandas Series?",
+        "options": [
+          "(a) Positional slicing includes the stop value, while label-based slicing excludes it",
+          "(b) Positional slicing excludes the stop index, whereas label-based slicing INCLUDES both the start and stop labels",
+          "(c) Both exclude the stop value",
+          "(d) Both include the stop value"
+        ],
+        "answer": "(b) Positional slicing excludes the stop index, whereas label-based slicing INCLUDES both the start and stop labels",
+        "explanation": "Positional slicing (e.g. `s[0:3]`) follows Python standard slicing excluding index 3 (slices 0, 1, 2). Label-based slicing (e.g. `s['a':'c']`) includes the end label 'c'."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which attribute of a Pandas Series returns the number of elements in the Series?",
+        "options": [
+          "(a) .length",
+          "(b) .size",
+          "(c) .count",
+          "(d) .elements"
+        ],
+        "answer": "(b) .size",
+        "explanation": "The `.size` attribute returns the total number of elements in the Series (including NaN values). Note that `.count()` is a method that counts non-null values only."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Given the series s = pd.Series([10, 20, 30, 40, 50], index=['a', 'b', 'c', 'd', 'e']), what is the output of print(s.head(2))?",
+        "options": [
+          "(a) a 10, b 20",
+          "(b) d 40, e 50",
+          "(c) 10, 20",
+          "(d) [10, 20]"
+        ],
+        "answer": "(a) a 10, b 20",
+        "explanation": "`head(n)` displays the first n rows along with their index labels: 'a' with 10 and 'b' with 20."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "If two Pandas Series S1 and S2 have non-matching index labels, what happens when we execute S1 + S2?",
+        "options": [
+          "(a) An IndexError is thrown immediately",
+          "(b) The operation performs index alignment and assigns NaN to labels that do not appear in both Series",
+          "(c) All unmatched values are converted to 0",
+          "(d) Only the smaller series is added"
+        ],
+        "answer": "(b) The operation performs index alignment and assigns NaN to labels that do not appear in both Series",
+        "explanation": "Pandas aligns data based on index labels during vector arithmetic. If an index label is present in only one Series, the resulting value at that label is `NaN` (Not a Number)."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which attribute returns a tuple representing the dimensionality of a Pandas Series?",
+        "options": [
+          "(a) .shape",
+          "(b) .ndim",
+          "(c) .dimensions",
+          "(d) .size"
+        ],
+        "answer": "(a) .shape",
+        "explanation": "The `.shape` attribute returns a tuple showing the dimensions (e.g. `(5,)` for a 1D Series of 5 elements)."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What will be the output of the following Python code?\nimport pandas as pd\ns = pd.Series(5, index=['p', 'q', 'r'])\nprint(s)",
+        "options": [
+          "(a) p 5, q 5, r 5",
+          "(b) 5, 5, 5",
+          "(c) Error: scalar value requires length",
+          "(d) p 0, q 1, r 2"
+        ],
+        "answer": "(a) p 5, q 5, r 5",
+        "explanation": "When a scalar value is passed along with an explicit index list, Pandas broadcasts the scalar value across all specified index labels."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "Which of the following statements about Pandas Series is FALSE?",
+        "options": [
+          "(a) A Series is a one-dimensional labeled array",
+          "(b) Series data is size-mutable (we can dynamically change the number of elements)",
+          "(c) Series values are value-mutable",
+          "(d) A Series can hold homogeneous or heterogeneous data types"
+        ],
+        "answer": "(b) Series data is size-mutable (we can dynamically change the number of elements)",
+        "explanation": "A Pandas Series is size-immutable (its length cannot be changed once instantiated, although values are mutable)."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "To get the data type of the underlying elements stored in a Series `s`, which attribute is used?",
+        "options": [
+          "(a) s.type()",
+          "(b) s.dtype",
+          "(c) s.datatype",
+          "(d) s.kind"
+        ],
+        "answer": "(b) s.dtype",
+        "explanation": "The `.dtype` attribute returns the data type of the underlying values (e.g., `int64`, `float64`, `object`)."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What is the default index created for a Pandas Series if no custom index is supplied during creation?",
+        "options": [
+          "(a) Alphabetical letters 'A', 'B', 'C', ...",
+          "(b) Integers starting from 0 up to N-1 (RangeIndex)",
+          "(c) Integers starting from 1 up to N",
+          "(d) Random integers"
+        ],
+        "answer": "(b) Integers starting from 0 up to N-1 (RangeIndex)",
+        "explanation": "By default, Pandas assigns a RangeIndex starting at 0 and ending at N-1 (0, 1, 2, ...)."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Given s = pd.Series([100, 200, 300, 400], index=['w', 'x', 'y', 'z']), what will print(s['x':'z']) output?",
+        "options": [
+          "(a) Only x 200",
+          "(b) x 200, y 300",
+          "(c) x 200, y 300, z 400",
+          "(d) y 300, z 400"
+        ],
+        "answer": "(c) x 200, y 300, z 400",
+        "explanation": "Label slicing includes the endpoint 'z', so it returns all elements from 'x' through 'z' inclusive: x 200, y 300, z 400."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which method on a Pandas Series returns True if the Series contains zero elements?",
+        "options": [
+          "(a) s.empty",
+          "(b) s.is_empty()",
+          "(c) s.null()",
+          "(d) s.zero()"
+        ],
+        "answer": "(a) s.empty",
+        "explanation": "`.empty` is a boolean attribute that returns `True` if the Series contains no elements (length is 0), and `False` otherwise."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What will be the output of the following code?\nimport pandas as pd\ns = pd.Series([1, 2, 3])\nprint(s * 2)",
+        "options": [
+          "(a) [1, 2, 3, 1, 2, 3]",
+          "(b) 0 2, 1 4, 2 6",
+          "(c) Error: cannot multiply Series",
+          "(d) 2, 4, 6 without index"
+        ],
+        "answer": "(b) 0 2, 1 4, 2 6",
+        "explanation": "In Pandas, arithmetic operations are vectorized. Multiplying by 2 multiplies each element by 2 (unlike Python lists which replicate elements)."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which of the following attributes returns only the actual numpy array of values from a Series without the index?",
+        "options": [
+          "(a) s.data",
+          "(b) s.values",
+          "(c) s.array_val",
+          "(d) s.items"
+        ],
+        "answer": "(b) s.values",
+        "explanation": "The `.values` attribute returns the underlying data array as a NumPy ndarray without index labels."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the output of print(s.tail(3)) if s has 5 elements with default integer indices?",
+        "options": [
+          "(a) First 3 elements",
+          "(b) Last 3 elements (indices 2, 3, 4)",
+          "(c) Middle 3 elements",
+          "(d) All 5 elements"
+        ],
+        "answer": "(b) Last 3 elements (indices 2, 3, 4)",
+        "explanation": "`tail(n)` retrieves the last n rows of the Series. For a 5-element Series, `tail(3)` returns elements at indices 2, 3, and 4."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which method drops elements by label without modifying the original Series in-place (unless inplace=True)?",
+        "options": [
+          "(a) s.remove()",
+          "(b) s.drop()",
+          "(c) s.delete()",
+          "(d) s.pop()"
+        ],
+        "answer": "(b) s.drop()",
+        "explanation": "`s.drop(labels)` removes the specified index labels and returns a new Series with those labels deleted."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What will be the output of s.count() if s = pd.Series([10, None, 30, float('nan'), 50])?",
+        "options": [
+          "(a) 5",
+          "(b) 3",
+          "(c) 2",
+          "(d) 0"
+        ],
+        "answer": "(b) 3",
+        "explanation": "`.count()` counts only valid non-null elements, excluding `None` and `NaN` values. Out of 5 elements, 3 are non-null (10, 30, 50)."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "What is the value of `s.ndim` for any Pandas Series?",
+        "options": [
+          "(a) Always 1",
+          "(b) Always 2",
+          "(c) Depends on number of rows",
+          "(d) 0"
+        ],
+        "answer": "(a) Always 1",
+        "explanation": "A Series is strictly a one-dimensional data structure, so `.ndim` is always 1."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "How can you reassign or change the index of an existing Series `s` of 3 elements?",
+        "options": [
+          "(a) s.index = ['X', 'Y', 'Z']",
+          "(b) s.change_index(['X', 'Y', 'Z'])",
+          "(c) s.set_index(['X', 'Y', 'Z'])",
+          "(d) s.index(['X', 'Y', 'Z'])"
+        ],
+        "answer": "(a) s.index = ['X', 'Y', 'Z']",
+        "explanation": "The `.index` attribute is mutable; assigning a new list of matching length renames the index labels directly: `s.index = ['X', 'Y', 'Z']`."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What will be the result of executing print(s > 25) on s = pd.Series([10, 20, 30, 40])?",
+        "options": [
+          "(a) [30, 40]",
+          "(b) A boolean Series with values: False, False, True, True",
+          "(c) An error",
+          "(d) True"
+        ],
+        "answer": "(b) A boolean Series with values: False, False, True, True",
+        "explanation": "Comparison operators on a Series perform element-wise comparisons and return a boolean Series of identical shape and index."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "To filter and retrieve only those elements greater than 25 from `s = pd.Series([10, 20, 30, 40])`, which syntax is correct?",
+        "options": [
+          "(a) s[s > 25]",
+          "(b) s(s > 25)",
+          "(c) s.filter(25)",
+          "(d) s.where(25)"
+        ],
+        "answer": "(a) s[s > 25]",
+        "explanation": "Boolean indexing `s[boolean_condition]` filters the Series and returns only the elements where the condition evaluates to `True`."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which function is used to check for missing/null values in a Pandas Series?",
+        "options": [
+          "(a) s.isnull() or s.isna()",
+          "(b) s.has_zero()",
+          "(c) s.check_nan()",
+          "(d) s.missing()"
+        ],
+        "answer": "(a) s.isnull() or s.isna()",
+        "explanation": "`isnull()` and `isna()` return a boolean Series indicating `True` where values are `NaN` or `None`."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "What is the memory size in bytes of the data in a Series returned by which attribute?",
+        "options": [
+          "(a) .nbytes",
+          "(b) .bytes",
+          "(c) .memory",
+          "(d) .size_bytes"
+        ],
+        "answer": "(a) .nbytes",
+        "explanation": "The `.nbytes` attribute returns the total number of bytes consumed by the underlying data elements in the Series."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "If s = pd.Series([10, 20, 30, 40], index=['a', 'b', 'c', 'd']), what does s.iloc[1:3] return?",
+        "options": [
+          "(a) Elements at positions 1 and 2 (b 20, c 30)",
+          "(b) Elements at positions 1, 2, and 3",
+          "(c) Only element at position 1",
+          "(d) Error"
+        ],
+        "answer": "(a) Elements at positions 1 and 2 (b 20, c 30)",
+        "explanation": "`.iloc[]` uses integer-based positional indexing and standard Python slicing rules: `1:3` fetches positions 1 and 2, excluding 3."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What happens if a Series is created with a dictionary whose values are lists?",
+        "options": [
+          "(a) The Series stores the lists as its element values with object dtype",
+          "(b) It creates a multi-dimensional matrix",
+          "(c) It automatically creates a DataFrame",
+          "(d) It throws a ValueError"
+        ],
+        "answer": "(a) The Series stores the lists as its element values with object dtype",
+        "explanation": "When a dictionary with list values is passed to `pd.Series()`, each list is stored as a single element in the Series, and the Series has `object` dtype."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): In Pandas Series, positional slicing s[1:4] excludes the element at index position 4.\nReason (R): Label-based slicing s['a':'d'] on a Series includes both the starting label 'a' and the ending label 'd'.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+        "explanation": "Both statements are correct facts about Series slicing rules, but (R) is a parallel convention for label slicing, not the causal explanation for positional slicing behavior."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): When adding two Pandas Series, data alignment occurs automatically based on index labels.\nReason (R): If a label exists in one Series but not in the other, Pandas replaces the missing value with 0 during arithmetic operations.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is true but (R) is false",
+          "(c) (A) is false but (R) is true",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is true but (R) is false",
+        "explanation": "Assertion is true. Reason is false: Pandas assigns `NaN` (Not a Number), not 0, when an index label is missing in one of the operands."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): A Pandas Series is value-mutable but size-immutable.\nReason (R): We can alter and update the data values stored in a Series, but we cannot add or delete rows to change its size without creating a new object.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. By design, once a Series is initialized with length N, modifying its length requires reallocating memory, making it size-immutable."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): Multiplying a Python list by 2 multiplies each numerical element inside the list by 2.\nReason (R): Multiplying a Pandas Series by 2 performs a vectorized arithmetic operation, doubling every individual element.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: multiplying a Python list by 2 replicates the list elements (e.g. `[1, 2] * 2 = [1, 2, 1, 2]`). Reason is true: Pandas Series performs vectorized arithmetic."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): The attribute s.size returns the exact same integer count as the method s.count().\nReason (R): Both s.size and s.count() count all elements regardless of whether they contain NaN or null values.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both are false: `s.size` returns total elements including NaNs, whereas `s.count()` counts ONLY non-null values. They differ whenever missing values are present."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Write Python statements to create a Series named 'Scores' with the marks [85, 92, 78, 95] and index labels ['Eng', 'Math', 'Sci', 'IP']. Print the marks obtained in 'Math' and 'IP'. [2 Marks]",
+        "answer": "Scores = pd.Series([85, 92, 78, 95], index=['Eng', 'Math', 'Sci', 'IP']); print(Scores[['Math', 'IP']])",
+        "explanation": "Marking Scheme (1 Mark creation + 1 Mark accessing):\n```python\nimport pandas as pd\nScores = pd.Series([85, 92, 78, 95], index=['Eng', 'Math', 'Sci', 'IP'])\nprint(Scores[['Math', 'IP']])  # or print(Scores['Math'], Scores['IP'])\n```"
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Predict the output of the following Python Pandas code: [2 Marks]\nimport pandas as pd\ns = pd.Series([10, 20, 30, 40, 50], index=['a', 'b', 'c', 'd', 'e'])\nprint(s['b':'d'])\nprint(s[1:3])",
+        "answer": "First print displays b 20, c 30, d 40; Second print displays b 20, c 30.",
+        "explanation": "Marking Scheme (1 Mark each output):\n• Output 1 (`s['b':'d']`): Label slicing includes end label 'd':\n  b    20\n  c    30\n  d    40\n  dtype: int64\n• Output 2 (`s[1:3]`): Positional slicing excludes position 3 (takes positions 1 and 2):\n  b    20\n  c    30\n  dtype: int64"
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between a Python standard List and a Pandas Series on any two points. [2 Marks]",
+        "answer": "List: implicit integer index, scalar multiplication replicates; Series: custom labeled index, vectorized arithmetic.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Indexing: Python lists only support default integer indexing (0, 1, 2...). A Pandas Series can have custom explicit index labels (strings, dates, floats).\n• 2. Vectorized Operations: Arithmetic operations on a Series operate element-wise (`s * 2` doubles each value). On a list, `lst * 2` replicates elements."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Given two Series S1 and S2:\nS1 = pd.Series([10, 20, 30], index=['A', 'B', 'C'])\nS2 = pd.Series([5, 15, 25], index=['B', 'C', 'D'])\nWhat will be the output of print(S1 + S2)? Explain why NaN appears. [3 Marks]",
+        "answer": "A: NaN, B: 25.0, C: 45.0, D: NaN; Explanation of index alignment.",
+        "explanation": "Marking Scheme (2 Marks output + 1 Mark explanation):\n• Output:\nA     NaN\nB    25.0\nC    45.0\nD     NaN\ndtype: float64\n• Explanation: Pandas aligns data based on common index labels before addition. For 'B' (20+5=25) and 'C' (30+15=45), labels match. For 'A' and 'D', the label is present in only one Series, resulting in `NaN`."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "State the purpose of any three of the following Series attributes: [3 Marks]\n(a) .index\n(b) .values\n(c) .size\n(d) .hasnans",
+        "answer": "Purpose of .index (returns index object), .values (ndarray of values), .size (total elements), and .hasnans (True if nulls exist).",
+        "explanation": "Marking Scheme (1 Mark each for any three):\n• (a) `.index`: Returns the index object containing all row labels of the Series.\n• (b) `.values`: Returns a NumPy ndarray containing only the data elements without labels.\n• (c) `.size`: Returns the total number of elements in the Series (including missing values).\n• (d) `.hasnans`: Returns `True` if there are any missing/NaN values present in the Series, else `False`."
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Write a Python script to create a Series of 5 random float numbers between 10 and 50 and display only those values that are greater than 30. [2 Marks]",
+        "answer": "import pandas as pd, numpy as np; s = pd.Series(np.random.uniform(10, 50, 5)); print(s[s > 30])",
+        "explanation": "Marking Scheme (1 Mark creation + 1 Mark boolean filtering):\n```python\nimport pandas as pd\nimport numpy as np\ns = pd.Series(np.random.uniform(10, 50, 5))\nprint(s[s > 30])\n```"
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "What is the difference between `head()` and `tail()` methods in Pandas? What are their default parameter values? [2 Marks]",
+        "answer": "head() returns first n rows, tail() returns last n rows; Default value of n is 5 for both.",
+        "explanation": "Marking Scheme (1 Mark distinction + 1 Mark default):\n• `head(n)`: Returns the first `n` rows of the Series/DataFrame.\n• `tail(n)`: Returns the last `n` rows of the Series/DataFrame.\n• If no argument `n` is specified, both methods return 5 rows by default."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Given the Series `temp = pd.Series([32.5, 34.0, 29.8, 36.2], index=['Delhi', 'Mumbai', 'Kolkata', 'Chennai'])`:\n(a) Write a statement to modify the temperature of 'Kolkata' to 31.0.\n(b) Write a statement to add a new city 'Bengaluru' with temperature 28.5. [2 Marks]",
+        "answer": "(a) temp['Kolkata'] = 31.0; (b) temp['Bengaluru'] = 28.5",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) Modification: `temp['Kolkata'] = 31.0`\n• (b) Adding new entry: `temp['Bengaluru'] = 28.5`"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "Identify and correct errors in the following code snippet: [2 Marks]\nimport pandas as pd\ns = pd.series([10, 20, 30], index=['a', 'b'])\nprint(s.Index)",
+        "answer": "Error 1: pd.series should be pd.Series; Error 2: length of index (2) does not match data length (3); Error 3: s.Index should be s.index.",
+        "explanation": "Marking Scheme (1 Mark for identifying errors + 1 Mark for corrected code):\n• Corrected code:\n```python\nimport pandas as pd\ns = pd.Series([10, 20, 30], index=['a', 'b', 'c'])  # capital 'S', matching length\nprint(s.index)  # lowercase 'index'\n```"
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "Explain how a Series can be created using a scalar value with an index. Give a code example. [2 Marks]",
+        "answer": "Pass scalar value and list of indices; value is broadcast to all indices.",
+        "explanation": "Marking Scheme (1 Mark explanation + 1 Mark code):\n• Explanation: When a single scalar value is supplied with an index list, Pandas broadcasts (replicates) that scalar value across every specified index label.\n• Code:\n```python\nimport pandas as pd\ns = pd.Series(100, index=['Q1', 'Q2', 'Q3', 'Q4'])\nprint(s)\n```"
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Consider a dictionary storing rainfall data for four quarters: rain = {'Q1': 120.5, 'Q2': 450.0, 'Q3': 890.2, 'Q4': 210.8}.\nWrite a complete Python program using Pandas to: [4 Marks]\n(a) Create a Series named 'Rainfall' from the dictionary.\n(b) Display the rainfall for 'Q2' and 'Q3' using label-based slicing.\n(c) Display all quarters where rainfall exceeded 300 mm.\n(d) Calculate and print the average quarterly rainfall.",
+        "answer": "Complete python program demonstrating dictionary conversion, label slicing, boolean filtering, and .mean() calculation.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n\n# (a) Create Series\nrain = {'Q1': 120.5, 'Q2': 450.0, 'Q3': 890.2, 'Q4': 210.8}\nRainfall = pd.Series(rain)\nprint(\"Full Series:\\n\", Rainfall)\n\n# (b) Label-based slicing\nprint(\"\\nQ2 and Q3 Rainfall:\\n\", Rainfall['Q2':'Q3'])\n\n# (c) Quarters with rainfall > 300 mm\nprint(\"\\nRainfall > 300 mm:\\n\", Rainfall[Rainfall > 300])\n\n# (d) Average quarterly rainfall\nprint(\"\\nAverage Rainfall:\", Rainfall.mean())\n```"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the concept of 'Data Alignment' in Pandas Series arithmetic operations with a comprehensive code example. What role does `fill_value` play when using methods like `s1.add(s2, fill_value=0)`? [4 Marks]",
+        "answer": "Explanation of index-based alignment resulting in NaN; Role of add() with fill_value=0 to replace missing values before addition.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks alignment concept + 2 Marks fill_value demonstration):\n• 1. Data Alignment Concept [2 Marks]:\n  - In standard arithmetic (`+`, `-`, `*`, `/`), Pandas automatically matches elements based on identical index labels.\n  - If an index label appears in one Series but not the other, the standard operator produces `NaN` because the missing value is treated as unknown.\n• 2. Role of `fill_value` using `.add()` [2 Marks]:\n  - To prevent unwanted `NaN` outputs, Pandas provides arithmetic methods (`.add()`, `.sub()`, `.mul()`, `.div()`) that take a `fill_value` argument.\n  - If an index label is missing in either Series, Pandas substitutes `fill_value` (e.g. 0) before performing the addition:\n```python\nimport pandas as pd\ns1 = pd.Series([10, 20], index=['A', 'B'])\ns2 = pd.Series([30, 40], index=['B', 'C'])\n# Standard addition produces NaN for A and C\nprint(s1 + s2)\n# Using add with fill_value=0 treats missing as 0:\nresult = s1.add(s2, fill_value=0)\nprint(result)  # A: 10, B: 50, C: 40\n```"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Given the Series:\ns = pd.Series([45, 88, 62, 91, 53, 76, 84], index=['Ajay', 'Bina', 'Chetan', 'Divya', 'Esha', 'Farhan', 'Gita'])\nWrite code statements to: [4 Marks]\n(a) Display the names and marks of the top 3 students using head().\n(b) Display the marks of students who scored between 60 and 85 inclusive.\n(c) Increase the marks of all students who scored below 60 by 5 grace marks.\n(d) Count the total number of students who scored 75 or above.",
+        "answer": "Code statements using head(), compound boolean indexing, conditional assignment, and count() calculation.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\ns = pd.Series([45, 88, 62, 91, 53, 76, 84], index=['Ajay', 'Bina', 'Chetan', 'Divya', 'Esha', 'Farhan', 'Gita'])\n\n# (a) Top 3 rows\nprint(s.head(3))\n\n# (b) Marks between 60 and 85 inclusive\nprint(s[(s >= 60) & (s <= 85)])\n\n# (c) Add 5 grace marks to students < 60\ns[s < 60] = s[s < 60] + 5\nprint(s)\n\n# (d) Count students with marks >= 75\ncount_75 = s[s >= 75].count()\nprint(\"Students >= 75:\", count_75)\n```"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Write a Python program to perform the following operations on a Series: [4 Marks]\n(a) Create a Series from a NumPy array containing numbers from 11 to 20.\n(b) Assign custom index labels 'N1' to 'N10'.\n(c) Display the elements at even index positions using iloc.\n(d) Display the minimum, maximum, and standard deviation of the Series.",
+        "answer": "Complete script demonstrating np.arange, custom indexing, iloc slicing, and summary stats (.min(), .max(), .std()).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\nimport numpy as np\n\n# (a) & (b) Create Series with custom index\narr = np.arange(11, 21)\nidx = [f'N{i}' for i in range(1, 11)]\ns = pd.Series(arr, index=idx)\nprint(\"Series:\\n\", s)\n\n# (c) Elements at even positional indices (0, 2, 4, 6, 8)\nprint(\"\\nEven Positions:\\n\", s.iloc[::2])\n\n# (d) Summary statistics\nprint(\"\\nMin:\", s.min())\nprint(\"Max:\", s.max())\nprint(\"Std Dev:\", s.std())\n```"
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Explain the difference between `loc` and `iloc` indexers in Pandas Series with clear syntax and illustrative examples. [4 Marks]",
+        "answer": "loc is label-based (includes stop label); iloc is integer-position based (excludes stop position); code examples for both.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks conceptual difference + 2 Marks code demonstration):\n• 1. Conceptual Differences [2 Marks]:\n  - `.loc[]`: Label-based indexer. Accepts the explicit row index names/labels. When slicing with `.loc['start':'stop']`, BOTH start and stop labels are included in the result.\n  - `.iloc[]`: Integer-position-based indexer. Accepts integer row offset numbers (0 to N-1). When slicing with `.iloc[start:stop]`, standard Python slicing applies where `stop` is EXCLUDED.\n• 2. Code Demonstration [2 Marks]:\n```python\nimport pandas as pd\ns = pd.Series([100, 200, 300, 400], index=['a', 'b', 'c', 'd'])\n\n# Using loc with labels\nprint(s.loc['b':'d'])  # Returns b, c, d (all 3)\n\n# Using iloc with integer positions\nprint(s.iloc[1:3])     # Returns positions 1 and 2 (b and c only)\n```"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Consider two Series representing monthly sales of two branches:\nB1 = pd.Series([45000, 52000, 61000], index=['Jan', 'Feb', 'Mar'])\nB2 = pd.Series([48000, 50000, 65000], index=['Feb', 'Mar', 'Apr'])\nWrite code to: [4 Marks]\n(a) Compute total combined monthly sales across both branches.\n(b) Handle non-overlapping months so that sales are not shown as NaN.\n(c) Find the month with the maximum sales in Branch 1.",
+        "answer": "Code for combined sales using .add(fill_value=0) and finding max sales month using idxmax().",
+        "explanation": "Step-by-Step Marking Scheme (1.5 Marks standard vs fill_value + 1.5 Marks code + 1 Mark idxmax):\n```python\nimport pandas as pd\nB1 = pd.Series([45000, 52000, 61000], index=['Jan', 'Feb', 'Mar'])\nB2 = pd.Series([48000, 50000, 65000], index=['Feb', 'Mar', 'Apr'])\n\n# (a) & (b) Combined sales without NaN using fill_value=0\ntotal_sales = B1.add(B2, fill_value=0)\nprint(\"Total Monthly Sales:\\n\", total_sales)\n\n# (c) Month with maximum sales in Branch 1\nmax_month = B1.idxmax()\nprint(\"\\nMax Sales Month in Branch 1:\", max_month, \"with sales:\", B1.max())\n```"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Write a Python script to demonstrate any four of the following Series attributes using a sample Series of your choice: [4 Marks]\n(a) .dtype\n(b) .shape\n(c) .size\n(d) .empty\n(e) .nbytes",
+        "answer": "Creation of sample Series and demonstration of .dtype, .shape, .size, .empty, and .nbytes.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each for four attributes):\n```python\nimport pandas as pd\n\n# Sample Series\ns = pd.Series([10.5, 20.0, 35.5, 42.0], index=['P1', 'P2', 'P3', 'P4'])\n\n# (a) dtype: Data type of underlying values\nprint(\"dtype:\", s.dtype)    # float64\n\n# (b) shape: Dimensions tuple\nprint(\"shape:\", s.shape)    # (4,)\n\n# (c) size: Total number of elements\nprint(\"size:\", s.size)      # 4\n\n# (d) empty: True if series has no elements\nprint(\"empty:\", s.empty)    # False\n\n# (e) nbytes: Memory in bytes\nprint(\"nbytes:\", s.nbytes)  # 32 bytes (4 * 8 bytes)\n```"
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Explain how missing values (`NaN`) are identified, counted, and dropped in a Pandas Series. Provide code examples using `isna()`, `count()`, and `dropna()`. [4 Marks]",
+        "answer": "Identification using isna(), counting non-null using count(), counting nulls using isna().sum(), and dropping using dropna().",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark for each operation):\n```python\nimport pandas as pd\nimport numpy as np\n\ns = pd.Series([10, np.nan, 30, np.nan, 50], index=['a', 'b', 'c', 'd', 'e'])\n\n# 1. Identifying missing values (returns boolean Series)\nprint(\"Missing mask:\\n\", s.isna())\n\n# 2. Counting non-null values\nprint(\"\\nNon-null count:\", s.count())  # 3\n\n# 3. Counting total missing values\nprint(\"Missing count:\", s.isna().sum())  # 2\n\n# 4. Dropping missing values\nclean_s = s.dropna()\nprint(\"\\nSeries after dropna:\\n\", clean_s)\n```"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "What is the output of the following code? Trace step-by-step: [4 Marks]\nimport pandas as pd\ns1 = pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])\ns2 = pd.Series([10, 20, 30, 40], index=['c', 'd', 'e', 'f'])\nprint(\"Result 1:\")\nprint(s1 * 3)\nprint(\"Result 2:\")\nprint(s1 + s2)\nprint(\"Result 3:\")\nprint(s1[s1 % 2 == 0])",
+        "answer": "Result 1: element-wise tripling; Result 2: index-aligned addition with NaNs; Result 3: even elements filtered.",
+        "explanation": "Step-by-Step Marking Scheme (1.33 Marks per result):\n• Result 1 (`s1 * 3`):\na     3\nb     6\nc     9\nd    12\ndtype: int64\n\n• Result 2 (`s1 + s2`):\na     NaN\nb     NaN\nc    13.0\nd    24.0\ne     NaN\nf     NaN\ndtype: float64\n\n• Result 3 (`s1[s1 % 2 == 0]`):\nb    2\nd    4\ndtype: int64"
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Write a complete Python Pandas script to manage weekly petrol price records: [4 Marks]\n(a) Create a Series named 'Petrol' for 7 days (Mon to Sun) with daily prices.\n(b) Display the highest and lowest price recorded during the week.\n(c) Display the days where the price was above the weekly average.\n(d) Sort and display the Series in descending order of prices.",
+        "answer": "Complete script demonstrating Series creation, min()/max(), boolean comparison against mean(), and sort_values(ascending=False).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n\n# (a) Create Series\ndays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\nprices = [96.5, 96.8, 97.2, 96.0, 97.5, 98.0, 97.0]\nPetrol = pd.Series(prices, index=days)\n\n# (b) Highest and Lowest price\nprint(\"Highest Price:\", Petrol.max(), \"on\", Petrol.idxmax())\nprint(\"Lowest Price:\", Petrol.min(), \"on\", Petrol.idxmin())\n\n# (c) Days above weekly average\navg_price = Petrol.mean()\nprint(\"\\nDays above Average Price:\")\nprint(Petrol[Petrol > avg_price])\n\n# (d) Sort descending\nprint(\"\\nPrices in Descending Order:\")\nprint(Petrol.sort_values(ascending=False))\n```"
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 2,
+      "book": "Unit 1: Data Handling using Pandas and Data Visualization",
+      "title": "Python Pandas: DataFrame Creation, Accessing & Slicing",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 1: Data Handling using Pandas (Two-Dimensional Data Structures)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which of the following creates a DataFrame from a dictionary of lists where the dictionary keys automatically become column headers?",
+        "options": [
+          "(a) df = pd.DataFrame(dict_data)",
+          "(b) df = pd.Series(dict_data)",
+          "(c) df = pd.dataframe(dict_data)",
+          "(d) df = pd.CreateDF(dict_data)"
+        ],
+        "answer": "(a) df = pd.DataFrame(dict_data)",
+        "explanation": "In Pandas, `pd.DataFrame()` constructor with capital 'D' and 'F' converts a dictionary of lists into a 2D table where dictionary keys become column labels."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which attribute is used to swap the rows and columns (transpose) of a DataFrame `df`?",
+        "options": [
+          "(a) df.transpose() or df.T",
+          "(b) df.swap()",
+          "(c) df.invert",
+          "(d) df.reverse"
+        ],
+        "answer": "(a) df.transpose() or df.T",
+        "explanation": "The `.T` attribute (or `.transpose()` method) reflects the DataFrame over its main diagonal, interchanging rows and columns."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the return value of `df.ndim` for any standard Pandas DataFrame?",
+        "options": [
+          "(a) Always 1",
+          "(b) Always 2",
+          "(c) Depends on number of columns",
+          "(d) 0"
+        ],
+        "answer": "(b) Always 2",
+        "explanation": "A DataFrame is strictly a two-dimensional tabular data structure (rows and columns), so its `.ndim` attribute is always 2."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "To delete a column named 'Salary' from a DataFrame `df` permanently in-place, which command is correct?",
+        "options": [
+          "(a) df.drop('Salary', axis=1, inplace=True)",
+          "(b) df.delete('Salary', axis=0)",
+          "(c) df.remove('Salary')",
+          "(d) df.drop_column('Salary')"
+        ],
+        "answer": "(a) df.drop('Salary', axis=1, inplace=True)",
+        "explanation": "`df.drop()` requires `axis=1` (or `columns='Salary'`) and `inplace=True` to alter the original DataFrame in-place."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Given a DataFrame `df`, what is the difference between `df.loc['R1':'R3']` and `df.iloc[0:2]`?",
+        "options": [
+          "(a) loc includes the row 'R3', whereas iloc excludes positional index 2 (fetches rows 0 and 1)",
+          "(b) Both fetch the exact same number of rows",
+          "(c) iloc is label-based, loc is position-based",
+          "(d) Both exclude the end value"
+        ],
+        "answer": "(a) loc includes the row 'R3', whereas iloc excludes positional index 2 (fetches rows 0 and 1)",
+        "explanation": "`.loc[]` is label-based and includes the terminal label ('R3'), while `.iloc[]` is integer-position based and excludes the stop boundary index (fetching positions 0 and 1 only)."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which method is used to iterate over the rows of a DataFrame as (index, Series) pairs?",
+        "options": [
+          "(a) df.iterrows()",
+          "(b) df.items()",
+          "(c) df.itertuples()",
+          "(d) df.iterate()"
+        ],
+        "answer": "(a) df.iterrows()",
+        "explanation": "`.iterrows()` iterates over DataFrame rows, yielding a tuple containing the row index and the row data as a Series for each row."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What will `df.shape` return if a DataFrame has 10 rows and 4 columns?",
+        "options": [
+          "(a) (10, 4)",
+          "(b) (4, 10)",
+          "(c) 40",
+          "(d) [10, 4]"
+        ],
+        "answer": "(a) (10, 4)",
+        "explanation": "The `.shape` attribute returns a tuple in the format `(number_of_rows, number_of_columns)`."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "When creating a DataFrame from a list of dictionaries, what happens if a dictionary is missing a key present in other dictionaries?",
+        "options": [
+          "(a) An error is raised",
+          "(b) Pandas automatically fills the missing value with NaN",
+          "(c) The row is skipped",
+          "(d) It inserts 0"
+        ],
+        "answer": "(b) Pandas automatically fills the missing value with NaN",
+        "explanation": "Pandas takes the union of all dictionary keys as columns and places `NaN` (Not a Number) in rows where a key is missing."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "Which of the following statements correctly adds a new column 'Grade' with all values set to 'A' in DataFrame `df`?",
+        "options": [
+          "(a) df['Grade'] = 'A'",
+          "(b) df.add_column('Grade', 'A')",
+          "(c) df.Grade('A')",
+          "(d) df.insert('Grade', 'A')"
+        ],
+        "answer": "(a) df['Grade'] = 'A'",
+        "explanation": "Assigning a scalar value to a new column name `df['new_col'] = value` broadcasts that value across all existing rows."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "How can you select multiple columns 'Name' and 'Age' from a DataFrame `df`?",
+        "options": [
+          "(a) df['Name', 'Age']",
+          "(b) df[['Name', 'Age']]",
+          "(c) df.Name.Age",
+          "(d) df('Name', 'Age')"
+        ],
+        "answer": "(b) df[['Name', 'Age']]",
+        "explanation": "To select multiple columns, a Python list of column names must be passed inside indexing brackets: `df[['col1', 'col2']]`."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which attribute returns a list of two elements: [row_index, column_index] of a DataFrame?",
+        "options": [
+          "(a) df.axes",
+          "(b) df.dimensions",
+          "(c) df.labels",
+          "(d) df.grid"
+        ],
+        "answer": "(a) df.axes",
+        "explanation": "The `.axes` attribute returns a list representing the axes of the DataFrame: `[Index(rows), Index(columns)]`."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What is the default value of `axis` in `df.drop()` method?",
+        "options": [
+          "(a) 0 (Rows)",
+          "(b) 1 (Columns)",
+          "(c) -1",
+          "(d) None"
+        ],
+        "answer": "(a) 0 (Rows)",
+        "explanation": "In `df.drop()`, the default is `axis=0`, meaning it attempts to drop rows by default unless `axis=1` is explicitly specified."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "To filter rows in `df` where 'Age' is greater than 18 AND 'City' is 'Delhi', which syntax is valid in Pandas?",
+        "options": [
+          "(a) df[(df['Age'] > 18) and (df['City'] == 'Delhi')]",
+          "(b) df[(df['Age'] > 18) & (df['City'] == 'Delhi')]",
+          "(c) df[df['Age'] > 18 & df['City'] == 'Delhi']",
+          "(d) df.filter(Age > 18 & City == 'Delhi')"
+        ],
+        "answer": "(b) df[(df['Age'] > 18) & (df['City'] == 'Delhi')]",
+        "explanation": "In Pandas, bitwise operator `&` is required for element-wise logical AND, and each sub-condition must be enclosed in parentheses to ensure correct operator precedence."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What does `df.dtypes` return?",
+        "options": [
+          "(a) The data type of the entire DataFrame as a single string",
+          "(b) A Series containing the data types of each column",
+          "(c) The memory size in bytes",
+          "(d) Total number of columns"
+        ],
+        "answer": "(b) A Series containing the data types of each column",
+        "explanation": "`.dtypes` returns a Series with the data type of each individual column in the DataFrame."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "How do you access the value in row 'R2' and column 'Marks' using `loc`?",
+        "options": [
+          "(a) df.loc['R2', 'Marks']",
+          "(b) df.loc['Marks', 'R2']",
+          "(c) df.loc['R2']['Marks']()",
+          "(d) df.iloc['R2', 'Marks']"
+        ],
+        "answer": "(a) df.loc['R2', 'Marks']",
+        "explanation": "Syntax for `.loc[]` is `df.loc[row_label, column_label]`, so `df.loc['R2', 'Marks']` accesses the specified cell."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "To access the first 3 rows and first 2 columns using integer positions, which statement is correct?",
+        "options": [
+          "(a) df.iloc[0:3, 0:2]",
+          "(b) df.loc[0:3, 0:2]",
+          "(c) df.iloc[1:3, 1:2]",
+          "(d) df.get(3, 2)"
+        ],
+        "answer": "(a) df.iloc[0:3, 0:2]",
+        "explanation": "`.iloc[0:3, 0:2]` slices rows at index positions 0, 1, 2 and columns at positions 0, 1."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What is the effect of executing `del df['Sales']`?",
+        "options": [
+          "(a) It temporarily hides the 'Sales' column",
+          "(b) It permanently deletes the 'Sales' column from the DataFrame in-place",
+          "(c) It deletes the first row of Sales",
+          "(d) It throws a syntax error"
+        ],
+        "answer": "(b) It permanently deletes the 'Sales' column from the DataFrame in-place",
+        "explanation": "The Python `del` statement modifies the DataFrame in-place by permanently removing the specified column."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "Which method is used to iterate over the columns of a DataFrame as (col_name, Series) pairs?",
+        "options": [
+          "(a) df.itercols()",
+          "(b) df.items() or df.iteritems()",
+          "(c) df.itertuples()",
+          "(d) df.iterate_columns()"
+        ],
+        "answer": "(b) df.items() or df.iteritems()",
+        "explanation": "`.items()` (formerly `iteritems()`) yields each column name along with its entire column content as a Series."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is returned by `df.size` for a DataFrame with 5 rows and 3 columns?",
+        "options": [
+          "(a) 15",
+          "(b) (5, 3)",
+          "(c) 8",
+          "(d) 5"
+        ],
+        "answer": "(a) 15",
+        "explanation": "For a DataFrame, `.size` returns the total number of elements, which is `rows × columns` = 5 × 3 = 15."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "How do you add a new row with index 'R5' and values [10, 20, 30] to a DataFrame `df` with 3 columns?",
+        "options": [
+          "(a) df.loc['R5'] = [10, 20, 30]",
+          "(b) df.append_row('R5', [10, 20, 30])",
+          "(c) df.add('R5', [10, 20, 30])",
+          "(d) df.insert_row('R5', [10, 20, 30])"
+        ],
+        "answer": "(a) df.loc['R5'] = [10, 20, 30]",
+        "explanation": "Assigning a list of matching length using `.loc['new_row_label'] = [...]` adds a new row to the DataFrame."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "What happens when you create a DataFrame from a 2D NumPy array without providing custom row and column indices?",
+        "options": [
+          "(a) An error is raised",
+          "(b) Default integer indices starting from 0 (RangeIndex) are assigned to both rows and columns",
+          "(c) Column headers become 'A', 'B', 'C'",
+          "(d) Row indices become 'R1', 'R2'"
+        ],
+        "answer": "(b) Default integer indices starting from 0 (RangeIndex) are assigned to both rows and columns",
+        "explanation": "Pandas assigns 0, 1, 2, ... as default RangeIndex for both rows and columns if not specified."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which of the following functions can be used to rename columns 'OldName' to 'NewName' in `df`?",
+        "options": [
+          "(a) df.rename(columns={'OldName': 'NewName'})",
+          "(b) df.change_column({'OldName': 'NewName'})",
+          "(c) df.columns.replace('OldName', 'NewName')",
+          "(d) df.modify('OldName', 'NewName')"
+        ],
+        "answer": "(a) df.rename(columns={'OldName': 'NewName'})",
+        "explanation": "The `df.rename(columns={...})` method accepts a dictionary mapping old column names to new column names."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "What is the output of `df.tail(2)` on a DataFrame with 6 rows?",
+        "options": [
+          "(a) The first 2 rows",
+          "(b) The last 2 rows (rows at index 4 and 5)",
+          "(c) Rows 2 and 3",
+          "(d) An error"
+        ],
+        "answer": "(b) The last 2 rows (rows at index 4 and 5)",
+        "explanation": "`tail(n)` displays the last `n` rows of the DataFrame."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What will `df.empty` return if a DataFrame contains 0 rows and 0 columns?",
+        "options": [
+          "(a) True",
+          "(b) False",
+          "(c) None",
+          "(d) 0"
+        ],
+        "answer": "(a) True",
+        "explanation": "The `.empty` attribute returns `True` if the DataFrame has no data elements (length is 0)."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which operator is used for element-wise logical OR in Pandas DataFrame filtering?",
+        "options": [
+          "(a) or",
+          "(b) |",
+          "(c) ||",
+          "(d) &"
+        ],
+        "answer": "(b) |",
+        "explanation": "In Pandas, the bitwise pipe operator `|` is used for element-wise logical OR."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): In a Pandas DataFrame, both the data values and the size are mutable.\nReason (R): We can update cell values, add new columns, and add new rows dynamically to an existing DataFrame.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Unlike a Series (which is size-immutable), a DataFrame is both value-mutable and size-mutable because columns and rows can be inserted or deleted."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): When combining multiple boolean filter conditions on a DataFrame, standard Python keywords 'and' and 'or' must be used.\nReason (R): Python logical operators 'and' and 'or' evaluate the truth value of an entire Series rather than element-wise values.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: bitwise operators `&` and `|` must be used in Pandas for element-wise evaluation. Reason is true: Python keywords 'and'/'or' evaluate the truth value of the whole collection, raising a ValueError."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): `df.iloc[1:4, 0:2]` includes the element at row position 4.\nReason (R): In `.iloc[]`, slicing follows standard Python zero-based indexing where the stop boundary is excluded.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: `1:4` in `.iloc[]` includes row positions 1, 2, and 3 only (excluding position 4). Reason is true."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): The `.T` attribute transforms rows into columns and columns into rows in a DataFrame.\nReason (R): Transposing a DataFrame of shape (4, 3) produces a transposed DataFrame of shape (3, 4).",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Transposing reflects the matrix across its diagonal, reversing its dimensions from `(M, N)` to `(N, M)`."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): In `df.drop()`, setting axis=1 deletes the specified label from the columns.\nReason (R): In Pandas two-dimensional data structures, axis=0 refers to the row index and axis=1 refers to the column index.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. By standard convention, axis 0 represents rows and axis 1 represents columns."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Write a Python Pandas program to create a DataFrame from the following dictionary: [2 Marks]\ndata = {'Item': ['Pen', 'Notebook', 'Eraser'], 'Price': [20, 60, 5], 'Quantity': [50, 30, 100]}\nAssign custom row labels: ['P1', 'P2', 'P3'].",
+        "answer": "df = pd.DataFrame(data, index=['P1', 'P2', 'P3']); print(df)",
+        "explanation": "Marking Scheme (1 Mark syntax + 1 Mark custom index):\n```python\nimport pandas as pd\ndata = {'Item': ['Pen', 'Notebook', 'Eraser'], 'Price': [20, 60, 5], 'Quantity': [50, 30, 100]}\ndf = pd.DataFrame(data, index=['P1', 'P2', 'P3'])\nprint(df)\n```"
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Given the DataFrame `Emp`:\n      Name  Dept  Salary\nE1    Amit    HR   45000\nE2   Priya    IT   65000\nE3   Rohan    IT   62000\nWrite statements to: [2 Marks]\n(a) Display all employees belonging to the 'IT' department.\n(b) Increase the salary of all employees by 10%.",
+        "answer": "(a) print(Emp[Emp['Dept'] == 'IT']); (b) Emp['Salary'] = Emp['Salary'] * 1.10",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `print(Emp[Emp['Dept'] == 'IT'])`\n• (b) `Emp['Salary'] = Emp['Salary'] * 1.10`"
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between `loc` and `iloc` indexers on any two points when applied to a DataFrame. [2 Marks]",
+        "answer": "loc uses row/col labels (includes endpoints); iloc uses integer positions (excludes stop boundaries).",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Label vs Position: `.loc[]` selects data using row and column labels/names. `.iloc[]` selects data strictly using integer positions (0, 1, 2...).\n• 2. Slicing Endpoints: In `.loc['R1':'R3']`, the stop label 'R3' is included. In `.iloc[0:2]`, the stop position 2 is excluded."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Predict the output of the following code: [2 Marks]\nimport pandas as pd\ndf = pd.DataFrame([[1, 2], [3, 4], [5, 6]], columns=['A', 'B'])\nprint(df.shape)\nprint(df.size)",
+        "answer": "df.shape outputs (3, 2); df.size outputs 6.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `df.shape`: Outputs `(3, 2)` (3 rows and 2 columns).\n• `df.size`: Outputs `6` (total elements = 3 × 2 = 6)."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Write statements to perform the following on a DataFrame `df`: [3 Marks]\n(a) Add a new column 'Total' which is the sum of columns 'Theory' and 'Practical'.\n(b) Delete the row with label 'R2'.\n(c) Rename column 'OldName' to 'NewName'.",
+        "answer": "(a) df['Total'] = df['Theory'] + df['Practical']; (b) df.drop('R2', inplace=True); (c) df.rename(columns={'OldName': 'NewName'}, inplace=True)",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `df['Total'] = df['Theory'] + df['Practical']`\n• (b) `df.drop('R2', axis=0, inplace=True)`\n• (c) `df.rename(columns={'OldName': 'NewName'}, inplace=True)`"
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Explain the method `df.iterrows()` with a code example. [2 Marks]",
+        "answer": "Iterates over DataFrame rows yielding (index, Series) pairs.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark code):\n• Concept: Iterates through each row of the DataFrame, yielding the row label and the entire row content as a Series.\n• Example:\n```python\nimport pandas as pd\ndf = pd.DataFrame({'Name': ['A', 'B'], 'Age': [20, 22]})\nfor index, row in df.iterrows():\n    print(index, row['Name'], row['Age'])\n```"
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "State the purpose of the following DataFrame attributes: [3 Marks]\n(a) .columns\n(b) .dtypes\n(c) .empty",
+        "answer": "(a) .columns returns column labels; (b) .dtypes returns data type of each column; (c) .empty returns True if DataFrame has zero elements.",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `.columns`: Returns an Index object containing all column headers of the DataFrame.\n• (b) `.dtypes`: Returns a Series displaying the data type of each column.\n• (c) `.empty`: Returns a boolean value (`True` if the DataFrame contains no elements, otherwise `False`)."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "How do you create a DataFrame from a list of dictionaries? Illustrate with a code example. [2 Marks]",
+        "answer": "Pass a list of dicts to pd.DataFrame(); each dict represents a row and keys become columns.",
+        "explanation": "Marking Scheme (1 Mark explanation + 1 Mark code):\n```python\nimport pandas as pd\nrecords = [\n    {'Name': 'Kavita', 'Marks': 88},\n    {'Name': 'Suresh', 'Marks': 92}\n]\ndf = pd.DataFrame(records)\nprint(df)\n```"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "Given DataFrame `df`:\n      Math  Science\nS1     78       85\nS2     90       92\nS3     65       70\nWhat is the output of:\n(a) print(df.loc['S2', 'Science'])\n(b) print(df.iloc[0:2, 1]) [2 Marks]",
+        "answer": "(a) 92; (b) S1: 85, S2: 92 (Science marks of S1 and S2).",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `df.loc['S2', 'Science']`: Outputs `92`.\n• (b) `df.iloc[0:2, 1]`: Slices rows 0 and 1 from column index 1 ('Science'):\n  S1    85\n  S2    92\n  Name: Science, dtype: int64"
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "What is the difference between deleting a column using `del df['col']` and using `df.drop('col', axis=1)`? [2 Marks]",
+        "answer": "del modifies in-place and returns nothing; drop returns a new DataFrame copy unless inplace=True is set.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `del df['col']`: Permanently deletes the column in-place from memory and returns `None`.\n• `df.drop('col', axis=1)`: By default returns a new DataFrame with the column removed, preserving the original `df` unless `inplace=True` is explicitly specified."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Consider a dictionary storing quarterly sales data of three products:\nsales_data = {\n    'Laptop': [120, 150, 170, 190],\n    'Mobile': [300, 420, 380, 450],\n    'Tablet': [80, 95, 110, 105]\n}\nWrite a complete Python script to: [4 Marks]\n(a) Create a DataFrame named `SalesDF` with row indices ['Qtr1', 'Qtr2', 'Qtr3', 'Qtr4'].\n(b) Add a new column 'Total_Sales' representing the total quarterly units sold across all products.\n(c) Display the sales of 'Mobile' and 'Tablet' for 'Qtr2' and 'Qtr3' using `loc`.\n(d) Display quarters where 'Laptop' sales exceeded 150 units.",
+        "answer": "Complete script demonstrating DataFrame creation, derived column computation, multi-row/col loc slicing, and boolean filtering.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n\n# (a) Create DataFrame with quarterly index\nsales_data = {\n    'Laptop': [120, 150, 170, 190],\n    'Mobile': [300, 420, 380, 450],\n    'Tablet': [80, 95, 110, 105]\n}\nSalesDF = pd.DataFrame(sales_data, index=['Qtr1', 'Qtr2', 'Qtr3', 'Qtr4'])\nprint(\"Initial DataFrame:\\n\", SalesDF)\n\n# (b) Add Total_Sales column\nSalesDF['Total_Sales'] = SalesDF['Laptop'] + SalesDF['Mobile'] + SalesDF['Tablet']\nprint(\"\\nWith Total Sales:\\n\", SalesDF)\n\n# (c) loc slicing for Qtr2 & Qtr3, Mobile & Tablet\nprint(\"\\nQtr2 and Qtr3 Sales (Mobile & Tablet):\\n\", SalesDF.loc['Qtr2':'Qtr3', ['Mobile', 'Tablet']])\n\n# (d) Quarters where Laptop > 150\nprint(\"\\nQuarters with Laptop > 150:\\n\", SalesDF[SalesDF['Laptop'] > 150])\n```"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the four different ways to create a Pandas DataFrame: [4 Marks]\n(a) From a 2D NumPy array\n(b) From a dictionary of lists\n(c) From a list of dictionaries\n(d) From a dictionary of Series\nProvide a concise code snippet for each.",
+        "answer": "Detailed explanation and code snippets for DataFrame creation from 2D array, dict of lists, list of dicts, and dict of Series.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each creation technique):\n```python\nimport pandas as pd\nimport numpy as np\n\n# (a) From 2D NumPy array\narr = np.array([[1, 2], [3, 4]])\ndf1 = pd.DataFrame(arr, columns=['A', 'B'])\n\n# (b) From dictionary of lists\nd_lists = {'Name': ['Aman', 'Pooja'], 'Score': [85, 92]}\ndf2 = pd.DataFrame(d_lists)\n\n# (c) From list of dictionaries\nl_dicts = [{'Product': 'TV', 'Price': 30000}, {'Product': 'AC', 'Price': 45000}]\ndf3 = pd.DataFrame(l_dicts)\n\n# (d) From dictionary of Series\ns1 = pd.Series([10, 20], index=['a', 'b'])\ns2 = pd.Series([30, 40], index=['a', 'b'])\ndf4 = pd.DataFrame({'Col1': s1, 'Col2': s2})\n```"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Given the following DataFrame `Student`:\n        Name  Class  Marks  Attendance\nRoll1   Anil     12     88          92\nRoll2  Babita    12     74          80\nRoll3  Charan    11     95          96\nRoll4  Deepak    12     62          72\nWrite statements to: [4 Marks]\n(a) Display the details of students in Class 12 whose Marks are greater than 70.\n(b) Display only the 'Name' and 'Attendance' of all students using `loc`.\n(c) Change Deepak's attendance to 78.\n(d) Delete the row corresponding to 'Roll2'.",
+        "answer": "Statements demonstrating compound boolean filtering, label column projection, value update via loc, and drop(axis=0).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n# Assuming Student DataFrame is defined\n\n# (a) Compound filter: Class == 12 and Marks > 70\nprint(Student[(Student['Class'] == 12) & (Student['Marks'] > 70)])\n\n# (b) loc projection of Name and Attendance\nprint(Student.loc[:, ['Name', 'Attendance']])\n\n# (c) Update Deepak's attendance to 78\nStudent.loc['Roll4', 'Attendance'] = 78\n\n# (d) Delete Roll2\nStudent.drop('Roll2', axis=0, inplace=True)\n```"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Explain the difference between iterating over a DataFrame using `iterrows()` and `items()` (formerly `iteritems()`). Write a Python code snippet illustrating both methods. [4 Marks]",
+        "answer": "iterrows() yields (row_index, Series of row); items() yields (col_name, Series of column); complete illustrative script.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concept + 2 Marks code demonstration):\n• 1. Concepts [2 Marks]:\n  - `.iterrows()`: Row-wise traversal. In each iteration, it returns a tuple `(row_label, row_series)` where the row Series contains values across all columns for that row.\n  - `.items()`: Column-wise traversal. In each iteration, it returns a tuple `(col_name, col_series)` where the column Series contains values down all rows for that column.\n• 2. Code Demonstration [2 Marks]:\n```python\nimport pandas as pd\ndf = pd.DataFrame({'Roll': [101, 102], 'Marks': [85, 92]}, index=['S1', 'S2'])\n\n# Row iteration\nprint(\"Row-wise Iteration:\")\nfor idx, row in df.iterrows():\n    print(f\"Row: {idx}, Roll: {row['Roll']}, Marks: {row['Marks']}\")\n\n# Column iteration\nprint(\"\\nColumn-wise Iteration:\")\nfor col_name, col_data in df.items():\n    print(f\"Column: {col_name}\\n{col_data}\")\n```"
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Write a Python Pandas program to perform the following operations: [4 Marks]\n(a) Create a DataFrame `EmpDF` containing 'EmpID', 'Ename', 'Designation', and 'Salary' for 4 employees.\n(b) Display the first 2 rows and last 2 rows using `head()` and `tail()`.\n(c) Display the columns and index of the DataFrame.\n(d) Transpose the DataFrame and display its new shape.",
+        "answer": "Complete script demonstrating DataFrame creation, head/tail methods, .columns/.index attributes, and .T with .shape.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n\n# (a) Create DataFrame\ndata = {\n    'EmpID': [101, 102, 103, 104],\n    'Ename': ['Kiran', 'Manish', 'Neha', 'Pankaj'],\n    'Designation': ['Manager', 'Analyst', 'Developer', 'Clerk'],\n    'Salary': [75000, 50000, 60000, 30000]\n}\nEmpDF = pd.DataFrame(data)\n\n# (b) head(2) and tail(2)\nprint(\"First 2 rows:\\n\", EmpDF.head(2))\nprint(\"\\nLast 2 rows:\\n\", EmpDF.tail(2))\n\n# (c) Display columns and index\nprint(\"\\nColumns:\", EmpDF.columns)\nprint(\"Index:\", EmpDF.index)\n\n# (d) Transpose and new shape\ntransposed_df = EmpDF.T\nprint(\"\\nTransposed shape:\", transposed_df.shape)\n```"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Consider a DataFrame `Flight` storing flight records:\n       Airline     Source Destination  Fare  Duration\nF1    AirIndia      Delhi      Mumbai  5500       130\nF2      IndiGo     Mumbai   Bengaluru  4200       105\nF3     SpiceJet     Delhi     Chennai  6100       165\nF4       Vistara  Kolkata       Delhi  4800       140\nWrite statements to: [4 Marks]\n(a) Display flights originating from 'Delhi' with Fare less than 6000.\n(b) Display only the 'Airline' and 'Fare' for flights F2 and F3 using `iloc`.\n(c) Add a new column 'Tax' which is 5% of Fare.\n(d) Drop the 'Duration' column permanently.",
+        "answer": "Statements for filtering with compound conditions, integer-based iloc slicing, derived column creation, and column drop with inplace=True.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\n# (a) Filter Delhi source and Fare < 6000\nprint(Flight[(Flight['Source'] == 'Delhi') & (Flight['Fare'] < 6000)])\n\n# (b) iloc for rows F2, F3 (positions 1, 2) and cols Airline, Fare (positions 0, 3)\nprint(Flight.iloc[1:3, [0, 3]])\n\n# (c) Add Tax = 5% of Fare\nFlight['Tax'] = Flight['Fare'] * 0.05\n\n# (d) Drop Duration permanently\nFlight.drop('Duration', axis=1, inplace=True)\n```"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Predict the output of the following code and explain the slicing mechanism: [4 Marks]\nimport pandas as pd\ndf = pd.DataFrame({\n    'A': [10, 20, 30, 40],\n    'B': [50, 60, 70, 80],\n    'C': [90, 100, 110, 120]\n}, index=['w', 'x', 'y', 'z'])\nprint(\"Output 1:\")\nprint(df.loc['x':'y', 'B':'C'])\nprint(\"Output 2:\")\nprint(df.iloc[1:3, 1:3])",
+        "answer": "Output 1 and Output 2 produce identical 2x2 sub-tables; Detailed explanation of label inclusion vs integer boundary exclusion.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks each output & explanation):\n• Output 1 (`df.loc['x':'y', 'B':'C']`):\n    B    C\nx  60  100\ny  70  110\nExplanation: `.loc` is label-based, so both row 'y' and column 'C' endpoints are included.\n\n• Output 2 (`df.iloc[1:3, 1:3]`):\n    B    C\nx  60  100\ny  70  110\nExplanation: `.iloc` uses 0-based integer positions. Slice `1:3` fetches row positions 1 ('x') and 2 ('y'), excluding position 3 ('z'). Column slice `1:3` fetches column positions 1 ('B') and 2 ('C'), excluding position 3."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Write a Python script to demonstrate how to handle missing data when creating a DataFrame from a list of dictionaries with unequal keys. How can you replace the resulting `NaN` values with 0 using `fillna()`? [4 Marks]",
+        "answer": "Creation of DataFrame with missing keys yielding NaNs, and replacing them using fillna(0, inplace=True).",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks creation with NaNs + 2 Marks fillna demonstration):\n```python\nimport pandas as pd\n\n# List of dictionaries with mismatched keys\nemployees = [\n    {'Name': 'Aarav', 'Bonus': 5000, 'Overtime': 1200},\n    {'Name': 'Bhavna', 'Bonus': 7500},\n    {'Name': 'Chirag', 'Overtime': 2000}\n]\n\n# Creating DataFrame (missing keys become NaN)\ndf = pd.DataFrame(employees)\nprint(\"DataFrame with NaNs:\\n\", df)\n\n# Replacing NaNs with 0\ndf.fillna(0, inplace=True)\nprint(\"\\nDataFrame after fillna(0):\\n\", df)\n```"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Given the DataFrame `Inventory`:\n      Item  Stock  Reorder_Level\n0   Laptop     45             20\n1  Printer     12             15\n2  Monitor      8             10\n3  Scanner     25             12\nWrite statements to: [4 Marks]\n(a) Identify items where current Stock is less than the Reorder_Level.\n(b) Display the item names that need to be reordered.\n(c) Add a new boolean column 'Reorder_Required' which is True when Stock < Reorder_Level.\n(d) Calculate the total units of Stock currently available across all items.",
+        "answer": "Filtering condition Stock < Reorder_Level, extracting Item column, creating boolean column, and sum() calculation.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\n# (a) Filter items where Stock < Reorder_Level\nprint(Inventory[Inventory['Stock'] < Inventory['Reorder_Level']])\n\n# (b) Display item names needing reorder\nprint(Inventory.loc[Inventory['Stock'] < Inventory['Reorder_Level'], 'Item'])\n\n# (c) Add boolean column\nInventory['Reorder_Required'] = Inventory['Stock'] < Inventory['Reorder_Level']\nprint(Inventory)\n\n# (d) Total stock available\ntotal_units = Inventory['Stock'].sum()\nprint(\"Total Stock:\", total_units)\n```"
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Explain how to rename rows and columns in a DataFrame using the `rename()` method. Provide a complete code example that renames index labels and column names simultaneously. [4 Marks]",
+        "answer": "Detailed explanation of rename(index={...}, columns={...}) and code demonstration.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks syntax & parameters + 2 Marks code):\n• Explanation: The `df.rename()` method allows renaming row indices via the `index` parameter and column headers via the `columns` parameter using dictionary mappings `{'old': 'new'}`.\n• Code Example:\n```python\nimport pandas as pd\n\ndf = pd.DataFrame({\n    'A': [1, 2],\n    'B': [3, 4]\n}, index=['R1', 'R2'])\nprint(\"Original:\\n\", df)\n\n# Renaming both rows and columns simultaneously\ndf.rename(\n    index={'R1': 'Row_One', 'R2': 'Row_Two'},\n    columns={'A': 'Col_Alpha', 'B': 'Col_Beta'},\n    inplace=True\n)\nprint(\"\\nRenamed DataFrame:\\n\", df)\n```"
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 3,
+      "book": "Unit 1: Data Handling using Pandas and Data Visualization",
+      "title": "Python Pandas: DataFrame Operations, Handling Missing Data & CSV",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 1: Data Handling using Pandas (Advanced Operations & I/O)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which function is used in Pandas to import and read data from a CSV file into a DataFrame?",
+        "options": [
+          "(a) pd.read_csv()",
+          "(b) pd.import_csv()",
+          "(c) pd.load_csv()",
+          "(d) pd.open_csv()"
+        ],
+        "answer": "(a) pd.read_csv()",
+        "explanation": "`pd.read_csv()` is the standard Pandas function to load comma-separated values (CSV) into a 2D DataFrame."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is the default value of the `axis` parameter when executing aggregation functions like `df.mean()` or `df.sum()`?",
+        "options": [
+          "(a) axis=0 (Column-wise across rows)",
+          "(b) axis=1 (Row-wise across columns)",
+          "(c) axis=None",
+          "(d) axis='both'"
+        ],
+        "answer": "(a) axis=0 (Column-wise across rows)",
+        "explanation": "In Pandas statistical operations, the default is `axis=0`, which operates downwards across rows to calculate column-wise aggregates."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "To save a DataFrame `df` to a CSV file named 'report.csv' without writing the row index numbers, which argument is used?",
+        "options": [
+          "(a) df.to_csv('report.csv', index=False)",
+          "(b) df.to_csv('report.csv', no_index=True)",
+          "(c) df.to_csv('report.csv', row_index=None)",
+          "(d) df.export_csv('report.csv', index=0)"
+        ],
+        "answer": "(a) df.to_csv('report.csv', index=False)",
+        "explanation": "Setting `index=False` in `df.to_csv()` suppresses the default writing of row index labels into the exported file."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which parameter in `df.dropna()` ensures that a row is dropped ONLY IF ALL its values are `NaN`?",
+        "options": [
+          "(a) how='all'",
+          "(b) how='any'",
+          "(c) condition='all'",
+          "(d) drop='complete'"
+        ],
+        "answer": "(a) how='all'",
+        "explanation": "`how='all'` drops a row/column only when every single entry is `NaN`. The default is `how='any'`, which drops if at least one `NaN` exists."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "What does `df.sort_values(by='Marks', ascending=False)` do?",
+        "options": [
+          "(a) Sorts the DataFrame in descending order based on the 'Marks' column",
+          "(b) Sorts the DataFrame in ascending order based on 'Marks'",
+          "(c) Sorts the index in descending order",
+          "(d) Deletes the lowest marks"
+        ],
+        "answer": "(a) Sorts the DataFrame in descending order based on the 'Marks' column",
+        "explanation": "`sort_values()` with `ascending=False` sorts the data rows in descending (highest to lowest) order of the specified column."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which method is used to replace all `NaN` values in a DataFrame with a specified replacement constant value?",
+        "options": [
+          "(a) df.fillna()",
+          "(b) df.replace_nan()",
+          "(c) df.impute()",
+          "(d) df.setna()"
+        ],
+        "answer": "(a) df.fillna()",
+        "explanation": "`df.fillna(value)` replaces missing `NaN` values with the specified scalar value, dictionary, or Series."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "By default, aggregation functions like `df.sum()` and `df.mean()` behave in which way regarding `NaN` values?",
+        "options": [
+          "(a) They skip NaN values automatically (skipna=True)",
+          "(b) They return NaN if even a single NaN is present",
+          "(c) They raise an exception",
+          "(d) They convert NaNs to 1"
+        ],
+        "answer": "(a) They skip NaN values automatically (skipna=True)",
+        "explanation": "Pandas statistical functions have `skipna=True` by default, excluding missing values from the calculation."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "To skip the first 3 lines of an input CSV file while importing using `pd.read_csv()`, which parameter is used?",
+        "options": [
+          "(a) skiprows=3",
+          "(b) ignore_rows=3",
+          "(c) header=3",
+          "(d) skip_lines=3"
+        ],
+        "answer": "(a) skiprows=3",
+        "explanation": "The `skiprows=n` parameter skips the first `n` lines of the text file before parsing column headers and data."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "What is the output of `df.count()` for a column that contains 6 rows with 2 `NaN` values?",
+        "options": [
+          "(a) 6",
+          "(b) 4",
+          "(c) 2",
+          "(d) NaN"
+        ],
+        "answer": "(b) 4",
+        "explanation": "`.count()` counts only valid, non-null values. Out of 6 rows, 4 are non-null."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which of the following functions sorts a DataFrame based on its row labels?",
+        "options": [
+          "(a) df.sort_index()",
+          "(b) df.sort_labels()",
+          "(c) df.order_by_index()",
+          "(d) df.index_sort()"
+        ],
+        "answer": "(a) df.sort_index()",
+        "explanation": "`df.sort_index()` sorts the DataFrame by its index labels (default `axis=0` sorts rows, `axis=1` sorts column labels)."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which parameter in `pd.read_csv()` specifies which column from the CSV should be used as the DataFrame's row index?",
+        "options": [
+          "(a) index_col",
+          "(b) row_index",
+          "(c) set_index",
+          "(d) primary_key"
+        ],
+        "answer": "(a) index_col",
+        "explanation": "`index_col=0` (or `index_col='ColName'`) designates a specific column to serve as the row index labels."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What does `df.sum(axis=1)` calculate?",
+        "options": [
+          "(a) Sum across rows for each column",
+          "(b) Sum across columns for each row (row-wise total)",
+          "(c) Grand total of all numbers in the DataFrame",
+          "(d) Number of rows"
+        ],
+        "answer": "(b) Sum across columns for each row (row-wise total)",
+        "explanation": "With `axis=1`, the operation runs horizontally across columns, returning the sum for each individual row."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which function provides a statistical summary containing count, mean, std, min, 25%, 50%, 75%, and max for all numerical columns?",
+        "options": [
+          "(a) df.describe()",
+          "(b) df.info()",
+          "(c) df.summary()",
+          "(d) df.stats()"
+        ],
+        "answer": "(a) df.describe()",
+        "explanation": "`df.describe()` computes descriptive summary statistics for all numeric columns in a DataFrame."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "To drop columns containing any missing values from a DataFrame, which syntax is used?",
+        "options": [
+          "(a) df.dropna(axis=1)",
+          "(b) df.dropna(axis=0)",
+          "(c) df.drop(axis='cols')",
+          "(d) df.remove_nan()"
+        ],
+        "answer": "(a) df.dropna(axis=1)",
+        "explanation": "Setting `axis=1` in `dropna()` targets columns instead of rows, dropping any column that contains at least one `NaN`."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the full form of CSV in computing?",
+        "options": [
+          "(a) Comma Separated Values",
+          "(b) Character Separated Variables",
+          "(c) Common Storage Vector",
+          "(d) Computerized Structured Values"
+        ],
+        "answer": "(a) Comma Separated Values",
+        "explanation": "CSV stands for Comma Separated Values, a standard plain-text format for tabular data where columns are delimited by commas."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What will `df.isna().sum()` return?",
+        "options": [
+          "(a) The total count of missing NaN values in each column",
+          "(b) The sum of all numerical values",
+          "(c) True or False",
+          "(d) An error"
+        ],
+        "answer": "(a) The total count of missing NaN values in each column",
+        "explanation": "`df.isna()` converts values to boolean (`True` for `NaN`), and `.sum()` treats `True` as 1, yielding the count of missing values per column."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "How do you specify a custom column separator (e.g. semicolon ';') when reading a CSV file?",
+        "options": [
+          "(a) pd.read_csv('data.txt', sep=';')",
+          "(b) pd.read_csv('data.txt', delimiter_char=';')",
+          "(c) pd.read_csv('data.txt', split=';')",
+          "(d) pd.read_csv('data.txt', char=';')"
+        ],
+        "answer": "(a) pd.read_csv('data.txt', sep=';')",
+        "explanation": "The `sep` (or `delimiter`) parameter in `pd.read_csv()` sets the character separating data values."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "Which method computes the median value of each column in a DataFrame?",
+        "options": [
+          "(a) df.median()",
+          "(b) df.middle()",
+          "(c) df.mid()",
+          "(d) df.med()"
+        ],
+        "answer": "(a) df.median()",
+        "explanation": "`df.median()` computes the 50th percentile (median) for each numeric column."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "To supply custom column names when reading a CSV file that has no header row, which parameters are used together?",
+        "options": [
+          "(a) header=None, names=['Col1', 'Col2', ...]",
+          "(b) columns=['Col1', 'Col2', ...]",
+          "(c) set_header=['Col1', 'Col2', ...]",
+          "(d) new_names=['Col1', 'Col2', ...]"
+        ],
+        "answer": "(a) header=None, names=['Col1', 'Col2', ...]",
+        "explanation": "`header=None` prevents the first row from being used as headers, and `names=[...]` assigns the list of custom column names."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the return value of `df.min()` across numeric columns?",
+        "options": [
+          "(a) A Series containing the minimum value of each column",
+          "(b) A single minimum number from the entire DataFrame",
+          "(c) A list of minimum numbers",
+          "(d) The first row"
+        ],
+        "answer": "(a) A Series containing the minimum value of each column",
+        "explanation": "`df.min()` computes the minimum down each column (default `axis=0`) and returns the results as a Pandas Series."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "Which parameter in `to_csv()` specifies the representation for missing/null data in the output file?",
+        "options": [
+          "(a) na_rep",
+          "(b) null_as",
+          "(c) missing_char",
+          "(d) fill_na"
+        ],
+        "answer": "(a) na_rep",
+        "explanation": "`na_rep='string'` specifies how `NaN` values should be written to the exported text file (e.g. `na_rep='NA'`)."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "How can you sort a DataFrame by 'City' in ascending order, and then by 'Salary' in descending order?",
+        "options": [
+          "(a) df.sort_values(by=['City', 'Salary'], ascending=[True, False])",
+          "(b) df.sort_values(by=['City', 'Salary'], order=['asc', 'desc'])",
+          "(c) df.sort(['City', 'Salary'], ascending=[1, -1])",
+          "(d) df.order_by('City', '-Salary')"
+        ],
+        "answer": "(a) df.sort_values(by=['City', 'Salary'], ascending=[True, False])",
+        "explanation": "Passing lists to both `by` and `ascending` parameters enables multi-column sorting with distinct sorting orders."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which method fills missing values using the value immediately preceding it (forward fill)?",
+        "options": [
+          "(a) df.fillna(method='ffill')",
+          "(b) df.fillna(method='bfill')",
+          "(c) df.fillna(direction='forward')",
+          "(d) df.forward_fill()"
+        ],
+        "answer": "(a) df.fillna(method='ffill')",
+        "explanation": "`method='ffill'` (forward fill) propagates the last valid observation forward to replace subsequent missing values."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What is the output of `df.std()`?",
+        "options": [
+          "(a) Sample standard deviation of each numerical column",
+          "(b) Variance of the DataFrame",
+          "(c) Standard error of the mean",
+          "(d) Total sum"
+        ],
+        "answer": "(a) Sample standard deviation of each numerical column",
+        "explanation": "`df.std()` computes the sample standard deviation for each numerical column."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "To remove leading and trailing whitespaces from strings in a column 'Name', which vectorized string method is used?",
+        "options": [
+          "(a) df['Name'].str.strip()",
+          "(b) df['Name'].strip()",
+          "(c) df['Name'].trim()",
+          "(d) df['Name'].clean()"
+        ],
+        "answer": "(a) df['Name'].str.strip()",
+        "explanation": "Pandas provides the `.str` accessor for vectorized string operations; `df['Col'].str.strip()` removes whitespaces."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): `df.dropna(how='all')` deletes only those rows where every single cell contains a NaN value.\nReason (R): By default, `df.dropna()` uses `how='any'`, which removes a row even if a single column has a missing value.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+        "explanation": "Both statements are correct facts about the `how` parameter options in `df.dropna()`, but (R) is a description of the default behavior rather than the explanation for `how='all'`."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): In Pandas aggregation functions, setting axis=1 computes metrics horizontally across columns for each row.\nReason (R): In a 2D tabular structure, axis=1 refers to the column dimension.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Because axis=1 represents columns, aggregating along axis=1 collapses values across columns for each row."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): CSV files are widely used for exchanging tabular data between Python Pandas and spreadsheet applications.\nReason (R): CSV is a lightweight plain-text format that uses commas to separate column values and newlines to separate records.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. The plain-text comma-delimited nature of CSV makes it universally portable across platforms."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): `df.to_csv('out.csv')` automatically excludes row index labels by default.\nReason (R): The `index` parameter in `to_csv()` defaults to False.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both are false: `to_csv()` includes row indices by default because `index=True` is the default parameter value."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): Descriptive statistical functions in Pandas automatically exclude NaN values from calculations by default.\nReason (R): The `skipna` parameter in statistical methods like `sum()`, `mean()`, and `std()` defaults to True.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Because `skipna=True` is the default, calculations disregard missing values."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Write Python statements to read a CSV file named 'Students.csv' into a DataFrame `df`, and export only rows where Marks > 75 to 'TopStudents.csv' without writing index labels. [2 Marks]",
+        "answer": "df = pd.read_csv('Students.csv'); top_df = df[df['Marks'] > 75]; top_df.to_csv('TopStudents.csv', index=False)",
+        "explanation": "Marking Scheme (1 Mark read & filter + 1 Mark to_csv):\n```python\nimport pandas as pd\ndf = pd.read_csv('Students.csv')\ntop_df = df[df['Marks'] > 75]\ntop_df.to_csv('TopStudents.csv', index=False)\n```"
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Given the DataFrame `Scores`:\n      Term1  Term2\nS1     40     NaN\nS2     35      42\nS3    NaN      38\n(a) Write a statement to replace all NaN values with 0.\n(b) Write a statement to calculate row-wise total marks across Term1 and Term2. [2 Marks]",
+        "answer": "(a) Scores.fillna(0, inplace=True); (b) Scores['Total'] = Scores.sum(axis=1)",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `Scores.fillna(0, inplace=True)`\n• (b) `Scores['Total'] = Scores.sum(axis=1)`"
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Explain the difference between `df.dropna(how='any')` and `df.dropna(how='all')`. [2 Marks]",
+        "answer": "how='any' drops row/column if at least one NaN is present; how='all' drops only if all entries are NaN.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `how='any'`: Drops a row or column if it contains at least one `NaN` value.\n• `how='all'`: Drops a row or column only if every single value in that row or column is `NaN`."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What is the difference between `df.sum(axis=0)` and `df.sum(axis=1)`? [2 Marks]",
+        "answer": "axis=0 computes column-wise sum across rows; axis=1 computes row-wise sum across columns.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `df.sum(axis=0)`: Aggregates down the rows, yielding the sum for each column.\n• `df.sum(axis=1)`: Aggregates horizontally across columns, yielding the sum for each row."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Write a statement to sort a DataFrame `Emp` by 'Department' in ascending order, and within each department by 'Salary' in descending order. [2 Marks]",
+        "answer": "Emp.sort_values(by=['Department', 'Salary'], ascending=[True, False], inplace=True)",
+        "explanation": "Marking Scheme (2 Marks syntax):\n```python\nEmp.sort_values(by=['Department', 'Salary'], ascending=[True, False], inplace=True)\n```"
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "State the purpose of the following parameters in `pd.read_csv()`: [3 Marks]\n(a) sep\n(b) header\n(c) index_col",
+        "answer": "(a) sep specifies delimiter character; (b) header specifies which row to use as column names; (c) index_col designates column to use as row labels.",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `sep`: Specifies the delimiter/separator character used between data values in the file.\n• (b) `header`: Specifies which row number should be treated as column header names (or `header=None` if no header exists).\n• (c) `index_col`: Identifies the column number or column name that should serve as the row index labels."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Explain the output of `df.describe()` on a numerical DataFrame. What statistical metrics does it display? [3 Marks]",
+        "answer": "Displays count, mean, std, min, 25%, 50% (median), 75%, and max.",
+        "explanation": "Marking Scheme:\n• `df.describe()` produces a summary DataFrame containing 8 statistical measures for each numerical column:\n  1. `count`: Total non-null observations.\n  2. `mean`: Arithmetic average.\n  3. `std`: Sample standard deviation.\n  4. `min`: Minimum value.\n  5. `25%`: First quartile (25th percentile).\n  6. `50%`: Median (50th percentile).\n  7. `75%`: Third quartile (75th percentile).\n  8. `max`: Maximum value."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Predict the output of the following code: [2 Marks]\nimport pandas as pd\ndf = pd.DataFrame({'A': [10, 20, 30], 'B': [5, None, 15]})\nprint(df.mean())\nprint(df['B'].count())",
+        "answer": "df.mean() outputs A: 20.0, B: 10.0; df['B'].count() outputs 2.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `df.mean()`: A mean = (10+20+30)/3 = 20.0; B mean = (5+15)/2 = 10.0 (NaN is skipped).\n• `df['B'].count()`: Outputs `2` (only 2 non-null values in column B)."
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "How can you convert all string values in a column 'City' to uppercase in a DataFrame `df`? [2 Marks]",
+        "answer": "df['City'] = df['City'].str.upper()",
+        "explanation": "Marking Scheme (2 Marks syntax):\n```python\ndf['City'] = df['City'].str.upper()\n```"
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "What is the purpose of the `subset` parameter in `df.dropna()`? Give an example. [2 Marks]",
+        "answer": "Restricts checking of NaNs to specified columns instead of checking all columns.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark example):\n• Purpose: `subset=['col1', 'col2']` specifies that rows should only be dropped if `NaN` occurs in the listed subset of columns, ignoring missing values in other columns.\n• Example: `df.dropna(subset=['Salary'], inplace=True)` drops rows only if 'Salary' is missing."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Write a complete Python Pandas script to manage employee payroll data stored in 'Payroll.csv': [4 Marks]\n(a) Read 'Payroll.csv' into a DataFrame named `df`.\n(b) Display the count of missing values in each column.\n(c) Fill missing values in 'Bonus' column with 0, and drop rows where 'Basic_Salary' is missing.\n(d) Calculate and print the mean and median salary across all departments.\n(e) Export the cleaned data to 'Cleaned_Payroll.csv' without index.",
+        "answer": "Complete script demonstrating pd.read_csv, isna().sum(), fillna, dropna with subset, mean/median stats, and to_csv.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each major block):\n```python\nimport pandas as pd\n\n# (a) Read CSV\ndf = pd.read_csv('Payroll.csv')\n\n# (b) Count missing values per column\nprint(\"Missing values per column:\\n\", df.isna().sum())\n\n# (c) Handle missing values\ndf['Bonus'].fillna(0, inplace=True)\ndf.dropna(subset=['Basic_Salary'], inplace=True)\n\n# (d) Descriptive statistics\nprint(\"\\nMean Salary:\", df['Basic_Salary'].mean())\nprint(\"Median Salary:\", df['Basic_Salary'].median())\n\n# (e) Export cleaned data\ndf.to_csv('Cleaned_Payroll.csv', index=False)\nprint(\"\\nData saved successfully to Cleaned_Payroll.csv\")\n```"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the difference between sorting by values and sorting by index in Pandas DataFrames. Write a Python program demonstrating: [4 Marks]\n(a) Sorting by multiple columns: 'Section' ascending and 'Percentage' descending.\n(b) Sorting by index in descending order.",
+        "answer": "Explanation of sort_values vs sort_index and complete illustrative code.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concept + 2 Marks code):\n• 1. Concepts [2 Marks]:\n  - `df.sort_values()`: Reorders the rows based on the data values stored inside specified column(s).\n  - `df.sort_index()`: Reorders the rows or columns based on their index labels (alphabetically or numerically).\n• 2. Code Demonstration [2 Marks]:\n```python\nimport pandas as pd\n\ndata = {\n    'Name': ['Kiran', 'Aman', 'Priya', 'Rohan'],\n    'Section': ['A', 'B', 'A', 'B'],\n    'Percentage': [88.5, 92.0, 95.0, 78.5]\n}\ndf = pd.DataFrame(data, index=['S4', 'S1', 'S3', 'S2'])\n\n# (a) Multi-column sorting\nsorted_vals = df.sort_values(by=['Section', 'Percentage'], ascending=[True, False])\nprint(\"Sorted by Values:\\n\", sorted_vals)\n\n# (b) Sort by index descending\nsorted_idx = df.sort_index(ascending=False)\nprint(\"\\nSorted by Index:\\n\", sorted_idx)\n```"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Consider a DataFrame `Orders` with missing values:\n       Customer   Product   Qty   Price\n0         Pooja    Laptop   2.0  55000.0\n1        Rajesh     Mouse   NaN    450.0\n2        Suresh  Keyboard   5.0      NaN\n3         Anita       NaN   NaN      NaN\nWrite statements to: [4 Marks]\n(a) Drop rows where ALL columns are NaN.\n(b) Drop rows where ANY column is NaN.\n(c) Fill missing 'Qty' with 1, and missing 'Price' with 500.\n(d) Calculate total revenue (`Qty * Price`) for non-null rows.",
+        "answer": "Statements demonstrating dropna(how='all'), dropna(how='any'), dictionary fillna, and column arithmetic.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\n# (a) Drop rows where all values are NaN\ndf_no_all = Orders.dropna(how='all')\n\n# (b) Drop rows where any value is NaN\ndf_no_any = Orders.dropna(how='any')\n\n# (c) Fill specific columns with different values\nOrders.fillna({'Qty': 1, 'Price': 500}, inplace=True)\n\n# (d) Calculate total revenue\nOrders['Revenue'] = Orders['Qty'] * Orders['Price']\nprint(Orders)\n```"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Explain how aggregation functions operate across `axis=0` vs `axis=1` in Pandas DataFrames. Write a Python script to compute: [4 Marks]\n(a) Subject-wise average marks across all students (column-wise).\n(b) Student-wise total marks across all subjects (row-wise).",
+        "answer": "Explanation of axis=0 and axis=1 mechanisms with complete script computing column-wise mean and row-wise sum.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concept + 2 Marks code):\n• 1. Concepts [2 Marks]:\n  - `axis=0` (default): Aggregates down the rows, computing a statistic for each column (e.g. subject average across students).\n  - `axis=1`: Aggregates horizontally across columns, computing a statistic for each row (e.g. student total across subjects).\n• 2. Code [2 Marks]:\n```python\nimport pandas as pd\nmarks = pd.DataFrame({\n    'Physics': [85, 78, 92],\n    'Chemistry': [80, 88, 90],\n    'Maths': [95, 82, 89]\n}, index=['Anil', 'Bina', 'Chetan'])\n\n# (a) Column-wise average (axis=0)\nprint(\"Subject-wise Averages (axis=0):\\n\", marks.mean(axis=0))\n\n# (b) Row-wise total (axis=1)\nmarks['Total'] = marks.sum(axis=1)\nprint(\"\\nStudent-wise Totals (axis=1):\\n\", marks['Total'])\n```"
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Write a Python script to demonstrate reading data from a text file with a custom delimiter '|', setting a custom header, and skipping metadata lines at the top. [4 Marks]",
+        "answer": "Script using pd.read_csv with sep='|', skiprows=n, header=None, and names=[...].",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks parameter explanation + 2 Marks script):\n```python\nimport pandas as pd\n\n# Reading pipe-delimited file, skipping 2 metadata header lines\ndf = pd.read_csv(\n    'server_logs.txt',\n    sep='|',\n    skiprows=2,\n    header=None,\n    names=['Timestamp', 'IP_Address', 'Status_Code', 'Response_Time']\n)\n\nprint(\"Imported DataFrame:\\n\", df)\nprint(\"\\nSummary:\\n\", df.describe())\n```"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "What is the difference between `mean()` and `median()` in Pandas? Under what data conditions is the median preferred over the mean? Provide a code example showing the effect of an extreme outlier. [4 Marks]",
+        "answer": "Mean is sensitive to outliers; Median is robust; Code demonstrating outlier skewing the mean while median remains stable.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks conceptual explanation + 2 Marks code):\n• 1. Conceptual Distinction [2 Marks]:\n  - `mean()` computes the arithmetic average (sum of values divided by count). It is highly sensitive to extreme outliers.\n  - `median()` finds the middle value in sorted order (50th percentile). It is robust against outliers.\n  - Median is preferred for skewed data (e.g. household incomes, real estate prices) where extreme values distort the mean.\n• 2. Code Example [2 Marks]:\n```python\nimport pandas as pd\nsalaries = pd.Series([30000, 32000, 35000, 34000, 1000000])  # 1M is an outlier\nprint(\"Mean Salary:\", salaries.mean())      # 226,200 (distorted)\nprint(\"Median Salary:\", salaries.median())  # 34,000 (representative)\n```"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Write a Python script to clean a customer database DataFrame `df`: [4 Marks]\n(a) Identify and display columns with missing values and their counts.\n(b) Strip whitespaces and convert all values in the 'City' column to title case.\n(c) Fill missing values in 'Age' with the median age of the group.\n(d) Drop any customer row where 'Email' is missing.",
+        "answer": "Complete script demonstrating isna().sum(), .str.strip().str.title(), fillna(median), and dropna(subset=['Email']).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport pandas as pd\n\n# (a) Display missing values count\nprint(\"Missing values per column:\\n\", df.isna().sum())\n\n# (b) Clean string column: strip and title case\ndf['City'] = df['City'].str.strip().str.title()\n\n# (c) Impute missing Age with median\nmedian_age = df['Age'].median()\ndf['Age'].fillna(median_age, inplace=True)\n\n# (d) Drop rows where Email is null\ndf.dropna(subset=['Email'], inplace=True)\nprint(\"Cleaned DataFrame:\\n\", df)\n```"
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Explain the parameters of `to_csv()`: `sep`, `na_rep`, `columns`, and `header`. Write a code snippet showing their usage. [4 Marks]",
+        "answer": "Detailed explanation of the 4 parameters with a code example exporting selected columns with custom formatting.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks parameter explanations + 2 Marks code):\n• Parameters [2 Marks]:\n  1. `sep`: Delimiter character used to separate fields (default is comma `,`).\n  2. `na_rep`: String representation for missing/NaN values (e.g. `na_rep='NULL'`).\n  3. `columns`: Optional list of specific column names to write to the file.\n  4. `header`: Boolean or list of strings to write out column names (default `True`).\n• Code Example [2 Marks]:\n```python\nimport pandas as pd\ndf = pd.DataFrame({'Name': ['A', 'B'], 'Age': [25, None], 'City': ['Delhi', 'Mumbai']})\ndf.to_csv('output.txt', sep=';', na_rep='N/A', columns=['Name', 'Age'], header=True, index=False)\n```"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Given the DataFrame `Sales`:\n        Region  Q1_Sales  Q2_Sales\nStore1   North     12000     15000\nStore2   South     18000       NaN\nStore3   North     22000     25000\nStore4    West       NaN     14000\nWrite statements to: [4 Marks]\n(a) Compute total sales for each quarter (column-wise sum).\n(b) Compute total sales for each store across both quarters (row-wise sum, skipping NaNs).\n(c) Fill missing sales values with the mean sales of that specific quarter.\n(d) Find the maximum sales recorded in Q1.",
+        "answer": "Statements for column-wise sum, row-wise sum, column-mean imputation, and max() calculation.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\n# (a) Total sales per quarter\nprint(\"Quarterly totals:\\n\", Sales[['Q1_Sales', 'Q2_Sales']].sum(axis=0))\n\n# (b) Total sales per store across both quarters\nSales['Total_Store_Sales'] = Sales[['Q1_Sales', 'Q2_Sales']].sum(axis=1)\n\n# (c) Impute Q1 missing with Q1 mean, and Q2 with Q2 mean\nSales['Q1_Sales'].fillna(Sales['Q1_Sales'].mean(), inplace=True)\nSales['Q2_Sales'].fillna(Sales['Q2_Sales'].mean(), inplace=True)\n\n# (d) Maximum in Q1\nprint(\"Max in Q1:\", Sales['Q1_Sales'].max())\n```"
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "What is the output of the following code? Trace step-by-step: [4 Marks]\nimport pandas as pd\ndf = pd.DataFrame({\n    'A': [5, 10, 15],\n    'B': [10, 20, 30],\n    'C': [2, 4, 6]\n})\nprint(\"Sum axis=0:\")\nprint(df.sum(axis=0))\nprint(\"Sum axis=1:\")\nprint(df.sum(axis=1))\nprint(\"Mean axis=0:\")\nprint(df.mean(axis=0))",
+        "answer": "Sum axis=0 produces A: 30, B: 60, C: 12; Sum axis=1 produces 0: 17, 1: 34, 2: 51; Mean axis=0 produces A: 10.0, B: 20.0, C: 4.0.",
+        "explanation": "Step-by-Step Marking Scheme (1.33 Marks each output):\n• Sum axis=0 (Column-wise):\nA    30\nB    60\nC    12\ndtype: int64\n\n• Sum axis=1 (Row-wise):\n0    17\n1    34\n2    51\ndtype: int64\n\n• Mean axis=0 (Column-wise average):\nA    10.0\nB    20.0\nC     4.0\ndtype: float64"
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 4,
+      "book": "Unit 1: Data Handling using Pandas and Data Visualization",
+      "title": "Data Visualization using Matplotlib (Line, Bar & Histogram)",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 1: Data Visualization using Pyplot (Charts & Customization)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which module of the Matplotlib library provides a MATLAB-like plotting framework in Python?",
+        "options": [
+          "(a) matplotlib.pyplot",
+          "(b) matplotlib.plots",
+          "(c) matplotlib.graphics",
+          "(d) matplotlib.draw"
+        ],
+        "answer": "(a) matplotlib.pyplot",
+        "explanation": "`matplotlib.pyplot` is the standard interface providing high-level functions for creating and styling plots."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which function is used to create a vertical bar chart in Pyplot?",
+        "options": [
+          "(a) plt.bar()",
+          "(b) plt.barchart()",
+          "(c) plt.barh()",
+          "(d) plt.plot_bar()"
+        ],
+        "answer": "(a) plt.bar()",
+        "explanation": "`plt.bar()` creates vertical bar charts, while `plt.barh()` creates horizontal bar charts."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the primary difference between a Bar Chart and a Histogram?",
+        "options": [
+          "(a) A Bar Chart plots categorical discrete data with gaps between bars; a Histogram plots continuous frequency distributions with contiguous bars",
+          "(b) Bar charts can only be drawn horizontally",
+          "(c) Histograms cannot have titles",
+          "(d) There is zero difference"
+        ],
+        "answer": "(a) A Bar Chart plots categorical discrete data with gaps between bars; a Histogram plots continuous frequency distributions with contiguous bars",
+        "explanation": "Bar charts represent distinct categorical data groups with spaces between bars; histograms group continuous numerical data into consecutive bins without gaps."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which parameter in `plt.plot()` is used to change the pattern of the line to a dashed line?",
+        "options": [
+          "(a) linestyle='--'",
+          "(b) pattern='dashed'",
+          "(c) line='dots'",
+          "(d) style='dash'"
+        ],
+        "answer": "(a) linestyle='--'",
+        "explanation": "The `linestyle` (or `ls`) parameter sets line styles, where `'--'` represents a dashed line, `'-'` solid, and `':'` dotted."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "To display a legend on a plot, which two steps are required?",
+        "options": [
+          "(a) Specify the `label` parameter in the plotting function and then call `plt.legend()`",
+          "(b) Just call `plt.legend()` without label",
+          "(c) Call `plt.title()`",
+          "(d) Set `legend=True` in `plt.show()`"
+        ],
+        "answer": "(a) Specify the `label` parameter in the plotting function and then call `plt.legend()`",
+        "explanation": "The plotting function must define `label='...'` for each dataset, and `plt.legend()` renders the legend box."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which function is used to save the created chart directly as an image file on the disk?",
+        "options": [
+          "(a) plt.savefig('plot.png')",
+          "(b) plt.export('plot.png')",
+          "(c) plt.write_image('plot.png')",
+          "(d) plt.save('plot.png')"
+        ],
+        "answer": "(a) plt.savefig('plot.png')",
+        "explanation": "`plt.savefig('filename.png')` exports and saves the current figure in formats like PNG, PDF, or SVG."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What is the role of the `bins` parameter in `plt.hist()`?",
+        "options": [
+          "(a) Sets the number of equal-width intervals/ranges into which data is partitioned",
+          "(b) Specifies the color of the bars",
+          "(c) Sets the title of the histogram",
+          "(d) Deletes outliers"
+        ],
+        "answer": "(a) Sets the number of equal-width intervals/ranges into which data is partitioned",
+        "explanation": "`bins` defines the number of class intervals or a sequence of bin edges for binning continuous values in a histogram."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "Which function adds a label to the horizontal axis (X-axis)?",
+        "options": [
+          "(a) plt.xlabel()",
+          "(b) plt.set_x()",
+          "(c) plt.xtitle()",
+          "(d) plt.xname()"
+        ],
+        "answer": "(a) plt.xlabel()",
+        "explanation": "`plt.xlabel('text')` sets the label for the X-axis."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "Which parameter in `plt.plot()` is used to mark individual data points with circles?",
+        "options": [
+          "(a) marker='o'",
+          "(b) point='circle'",
+          "(c) dot=True",
+          "(d) symbol='circle'"
+        ],
+        "answer": "(a) marker='o'",
+        "explanation": "The `marker` parameter specifies data point markers, where `'o'` produces solid circles."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which command is used to display the active plot window on screen?",
+        "options": [
+          "(a) plt.show()",
+          "(b) plt.display()",
+          "(c) plt.render()",
+          "(d) plt.view()"
+        ],
+        "answer": "(a) plt.show()",
+        "explanation": "`plt.show()` displays the plot window with all drawn graphical elements."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "How do you add background gridlines to a chart in Pyplot?",
+        "options": [
+          "(a) plt.grid(True)",
+          "(b) plt.background_grid()",
+          "(c) plt.lines(True)",
+          "(d) plt.mesh(True)"
+        ],
+        "answer": "(a) plt.grid(True)",
+        "explanation": "`plt.grid(True)` overlays gridlines across the plot area."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which function is used to create a HORIZONTAL bar chart?",
+        "options": [
+          "(a) plt.barh()",
+          "(b) plt.hbar()",
+          "(c) plt.bar(horizontal=True)",
+          "(d) plt.bar_x()"
+        ],
+        "answer": "(a) plt.barh()",
+        "explanation": "`plt.barh(y, width)` renders horizontal bars extending along the X-axis."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What does the `edgecolor` parameter in `plt.hist()` specify?",
+        "options": [
+          "(a) The border color of the histogram bars",
+          "(b) The color of the axis lines",
+          "(c) The color of the legend border",
+          "(d) The color of the plot canvas"
+        ],
+        "answer": "(a) The border color of the histogram bars",
+        "explanation": "`edgecolor='color'` sets the border outline color around each histogram bin, visually separating contiguous bars."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which parameter in `plt.bar()` controls the thickness/width of the vertical bars?",
+        "options": [
+          "(a) width",
+          "(b) thickness",
+          "(c) bar_size",
+          "(d) size"
+        ],
+        "answer": "(a) width",
+        "explanation": "`width=0.4` sets the width of vertical bars in a bar chart (default is 0.8)."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "To customize the tick mark labels on the X-axis, which function is used?",
+        "options": [
+          "(a) plt.xticks(ticks, labels)",
+          "(b) plt.set_ticks(x)",
+          "(c) plt.xlabels()",
+          "(d) plt.tick_marks()"
+        ],
+        "answer": "(a) plt.xticks(ticks, labels)",
+        "explanation": "`plt.xticks(positions, labels)` sets the tick locations and custom label text along the X-axis."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What is the effect of setting `linewidth=3` in `plt.plot()`?",
+        "options": [
+          "(a) Sets the thickness of the line to 3 points",
+          "(b) Draws 3 lines",
+          "(c) Sets line length to 3 cm",
+          "(d) Splits the line into 3 parts"
+        ],
+        "answer": "(a) Sets the thickness of the line to 3 points",
+        "explanation": "`linewidth` (or `lw`) specifies line thickness in points."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which of the following is NOT a valid chart type supported directly by `matplotlib.pyplot`?",
+        "options": [
+          "(a) plot (Line)",
+          "(b) bar (Bar chart)",
+          "(c) hist (Histogram)",
+          "(d) flow (Flowchart)"
+        ],
+        "answer": "(d) flow (Flowchart)",
+        "explanation": "Pyplot provides functions for numerical data plots (line, bar, hist, scatter), not flowcharts."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "Which parameter in `plt.hist()` generates a cumulative histogram?",
+        "options": [
+          "(a) cumulative=True",
+          "(b) running_sum=True",
+          "(c) total=True",
+          "(d) cum=True"
+        ],
+        "answer": "(a) cumulative=True",
+        "explanation": "`cumulative=True` computes a cumulative frequency histogram where each bin gives counts up to that bin."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "In a multiple/grouped bar chart with two categories, why are the X coordinates of the second bar set shifted?",
+        "options": [
+          "(a) To prevent the second set of bars from overlapping directly on top of the first set",
+          "(b) Because Pyplot crashes otherwise",
+          "(c) To double the height",
+          "(d) To make bars horizontal"
+        ],
+        "answer": "(a) To prevent the second set of bars from overlapping directly on top of the first set",
+        "explanation": "Shifting positions (e.g. `x + width`) places adjacent category bars side-by-side rather than occluding each other."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which color code abbreviation represents the color 'Black' in Matplotlib?",
+        "options": [
+          "(a) 'k'",
+          "(b) 'b'",
+          "(c) 'bl'",
+          "(d) 'bk'"
+        ],
+        "answer": "(a) 'k'",
+        "explanation": "In Matplotlib, `'b'` represents Blue, while `'k'` represents Black (from key/black in CMYK)."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "What is the function to set the title at the top of a chart in Pyplot?",
+        "options": [
+          "(a) plt.title('My Title')",
+          "(b) plt.set_title('My Title')",
+          "(c) plt.header('My Title')",
+          "(d) plt.caption('My Title')"
+        ],
+        "answer": "(a) plt.title('My Title')",
+        "explanation": "`plt.title('string')` displays the title text centered above the plot."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What will `plt.xlim(0, 100)` do?",
+        "options": [
+          "(a) Set the visible range of the X-axis from 0 to 100",
+          "(b) Delete all values greater than 100",
+          "(c) Draw 100 lines",
+          "(d) Set plot width to 100 inches"
+        ],
+        "answer": "(a) Set the visible range of the X-axis from 0 to 100",
+        "explanation": "`plt.xlim(xmin, xmax)` sets the lower and upper limits displayed on the X-axis."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which parameter in `plt.plot()` sets the size of the marker symbols?",
+        "options": [
+          "(a) markersize (or ms)",
+          "(b) size",
+          "(c) point_size",
+          "(d) radius"
+        ],
+        "answer": "(a) markersize (or ms)",
+        "explanation": "`markersize` (or `ms`) sets the diameter of marker points in points."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which function is used to add a label to the vertical Y-axis?",
+        "options": [
+          "(a) plt.ylabel()",
+          "(b) plt.ytitle()",
+          "(c) plt.set_y()",
+          "(d) plt.yname()"
+        ],
+        "answer": "(a) plt.ylabel()",
+        "explanation": "`plt.ylabel('text')` labels the Y-axis."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "In `plt.barh()`, which parameter sets the thickness/height of horizontal bars?",
+        "options": [
+          "(a) height",
+          "(b) width",
+          "(c) size",
+          "(d) thickness"
+        ],
+        "answer": "(a) height",
+        "explanation": "For horizontal bars, length extends along the X-axis (`width`), and bar thickness along the Y-axis is set by `height`."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): Calling `plt.legend()` without specifying the `label` parameter in plotting functions displays an empty legend or warning.\nReason (R): Matplotlib uses the `label` argument passed in functions like `plot()` or `bar()` to populate the legend text.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. `plt.legend()` maps the labels registered during plotting into the visual legend box."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): In a Histogram, bars are plotted contiguously without spaces between adjacent bars.\nReason (R): A histogram represents a continuous frequency distribution over numeric intervals rather than distinct categorical groups.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Because bin intervals are contiguous (e.g. 10-20, 20-30), histogram bars touch without spaces."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): `plt.savefig()` must be called before `plt.show()` when saving a plot to a file in some environments.\nReason (R): `plt.show()` resets the current figure canvas upon closing the window.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Calling `plt.show()` first displays and then clears the figure, which can result in an empty saved image."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): A line plot is ideal for visualizing trends of a variable over continuous intervals like time.\nReason (R): Connecting consecutive data points with line segments highlights the rate of change and temporal direction.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Line charts excel at depicting continuous time-series patterns and directional trends."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): In Matplotlib, the color 'k' represents the color Blue.\nReason (R): In Pyplot color codes, 'b' is reserved for Brown.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both statements are false. `'b'` represents Blue, and `'k'` represents Black."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Write a Python script using Matplotlib to draw a line plot for the following data: [2 Marks]\nYear = [2020, 2021, 2022, 2023]\nSales = [45, 52, 68, 80]\nSet line color to red, linestyle to dashed, and add a title 'Yearly Sales'.",
+        "answer": "plt.plot(Year, Sales, color='red', linestyle='--'); plt.title('Yearly Sales'); plt.show()",
+        "explanation": "Marking Scheme (1 Mark plotting with styling + 1 Mark title and show):\n```python\nimport matplotlib.pyplot as plt\nYear = [2020, 2021, 2022, 2023]\nSales = [45, 52, 68, 80]\nplt.plot(Year, Sales, color='red', linestyle='--')\nplt.title('Yearly Sales')\nplt.xlabel('Year')\nplt.ylabel('Sales (in Lakhs)')\nplt.show()\n```"
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "What is the difference between `plt.plot()` and `plt.bar()`? Mention the data type best suited for each. [2 Marks]",
+        "answer": "plt.plot() is for continuous/trend data; plt.bar() is for discrete categorical comparisons.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `plt.plot()`: Generates a line chart connecting data points. Best suited for continuous data tracking trends over time (e.g. stock prices, temperature).\n• `plt.bar()`: Generates rectangular bars whose heights represent values. Best suited for discrete categorical comparisons (e.g. sales by brand, population by city)."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Write a statement to create a histogram of an array `scores` with 5 bins, green bar color, and black edges. [2 Marks]",
+        "answer": "plt.hist(scores, bins=5, color='green', edgecolor='black')",
+        "explanation": "Marking Scheme (2 Marks syntax):\n```python\nimport matplotlib.pyplot as plt\nplt.hist(scores, bins=5, color='green', edgecolor='black')\nplt.show()\n```"
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Identify and correct errors in the following code: [2 Marks]\nimport matplotlib.pyplot as plt\nx = ['A', 'B', 'C']\ny = [10, 20, 15]\nplt.barh(x, y, width=0.5)\nplt.Title('Comparison')\nplt.Show()",
+        "answer": "Error 1: barh uses height for bar thickness, not width; Error 2: plt.Title should be plt.title; Error 3: plt.Show should be plt.show.",
+        "explanation": "Marking Scheme (1 Mark identifying errors + 1 Mark corrected code):\n• Corrected code:\n```python\nimport matplotlib.pyplot as plt\nx = ['A', 'B', 'C']\ny = [10, 20, 15]\nplt.barh(x, y, height=0.5)  # height for barh\nplt.title('Comparison')     # lowercase title\nplt.show()                  # lowercase show\n```"
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Explain the purpose of any three of the following marker codes in `plt.plot()`: [3 Marks]\n(a) 'o'\n(b) '*'\n(c) 's'\n(d) '^'",
+        "answer": "(a) 'o' is circle; (b) '*' is star; (c) 's' is square; (d) '^' is triangle up.",
+        "explanation": "Marking Scheme (1 Mark each for any three):\n• (a) `'o'`: Circle marker\n• (b) `'*'`: Star marker\n• (c) `'s'`: Square marker\n• (d) `'^'`: Triangle-up marker"
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Write a Python script to draw a horizontal bar chart showing the population of 4 cities: [2 Marks]\nCities = ['Delhi', 'Mumbai', 'Kolkata', 'Chennai']\nPop = [30, 20, 15, 11] (in millions)",
+        "answer": "plt.barh(Cities, Pop, color='teal'); plt.xlabel('Population'); plt.show()",
+        "explanation": "Marking Scheme (1 Mark syntax + 1 Mark labels):\n```python\nimport matplotlib.pyplot as plt\nCities = ['Delhi', 'Mumbai', 'Kolkata', 'Chennai']\nPop = [30, 20, 15, 11]\nplt.barh(Cities, Pop, color='teal')\nplt.xlabel('Population (in Millions)')\nplt.ylabel('Cities')\nplt.title('City Populations')\nplt.show()\n```"
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "What is the function of `plt.legend()`? Where does it appear if `loc='upper right'` is specified? [2 Marks]",
+        "answer": "Displays key identifying data series; loc='upper right' places it at the top-right corner of the axes.",
+        "explanation": "Marking Scheme (1 Mark purpose + 1 Mark location):\n• Purpose: Displays an identifying key (legend box) linking colors and markers to labeled data series.\n• Location: With `loc='upper right'`, the legend box is positioned at the top-right corner of the plot."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Write a statement to save the current chart as a high-resolution PNG image named 'my_chart.png' with 300 DPI. [2 Marks]",
+        "answer": "plt.savefig('my_chart.png', dpi=300)",
+        "explanation": "Marking Scheme (2 Marks syntax):\n```python\nplt.savefig('my_chart.png', dpi=300)\n```"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "What are the common linestyle values available in Pyplot? Give any two with their symbols. [2 Marks]",
+        "answer": "'-' for solid, '--' for dashed, '-.' for dash-dot, ':' for dotted.",
+        "explanation": "Marking Scheme (1 Mark each for two):\n• 1. `'-'` (solid line)\n• 2. `'--'` (dashed line)\n• 3. `'-.'` (dash-dot line)\n• 4. `':'` (dotted line)"
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "Explain the difference between `plt.xlabel()` and `plt.xticks()`. [2 Marks]",
+        "answer": "xlabel sets axis title string; xticks sets specific tick mark positions and tick labels.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `plt.xlabel('text')`: Sets the overarching descriptive title for the horizontal X-axis.\n• `plt.xticks(ticks, labels)`: Controls the exact coordinate positions and individual label values for tick marks along the X-axis."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Write a complete Python script to plot a multi-line comparison graph showing the quarterly profits of two companies: [4 Marks]\nCompany_A = [12, 18, 15, 22]\nCompany_B = [10, 14, 20, 25]\nQuarters = ['Q1', 'Q2', 'Q3', 'Q4']\nRequirements:\n- Plot Company A in blue with circular markers and solid line.\n- Plot Company B in green with triangle markers and dashed line.\n- Add labels for X and Y axes, title 'Quarterly Profit Comparison', legend, and gridlines.",
+        "answer": "Complete multi-line script demonstrating styled lines, labels, title, legend, and grid.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark data setup & plot calls + 1 Mark styling + 1 Mark titles/labels + 1 Mark legend/grid):\n```python\nimport matplotlib.pyplot as plt\n\nQuarters = ['Q1', 'Q2', 'Q3', 'Q4']\nCompany_A = [12, 18, 15, 22]\nCompany_B = [10, 14, 20, 25]\n\n# Plot Company A\nplt.plot(Quarters, Company_A, color='blue', marker='o', linestyle='-', label='Company A')\n\n# Plot Company B\nplt.plot(Quarters, Company_B, color='green', marker='^', linestyle='--', label='Company B')\n\n# Customization\nplt.title('Quarterly Profit Comparison')\nplt.xlabel('Quarters')\nplt.ylabel('Profit (in Lakhs ₹)')\nplt.legend(loc='upper left')\nplt.grid(True)\n\nplt.show()\n```"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the process of creating a 'Grouped (Multiple) Bar Chart' using NumPy and Pyplot. Write a Python script to display scores of Boys and Girls across 4 subjects side-by-side. [4 Marks]",
+        "answer": "Explanation of coordinate offsetting with width/2 and complete grouped bar script.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concept & offset logic + 2 Marks code):\n• 1. Offsetting Logic [2 Marks]:\n  - To draw bars side-by-side for multiple categories, create integer index positions using `np.arange(len(subjects))`.\n  - Plot the first set of bars at `x - width/2` and the second set at `x + width/2` with a fixed bar width (e.g. `0.35`).\n  - Use `plt.xticks(x, subjects)` to center subject names between the paired bars.\n• 2. Script [2 Marks]:\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nsubjects = ['English', 'Maths', 'Science', 'IP']\nboys_scores = [78, 85, 82, 90]\ngirls_scores = [84, 92, 88, 95]\n\nx = np.arange(len(subjects))\nwidth = 0.35\n\nplt.bar(x - width/2, boys_scores, width=width, label='Boys', color='navy')\nplt.bar(x + width/2, girls_scores, width=width, label='Girls', color='coral')\n\nplt.title('Subject-wise Score Comparison')\nplt.xlabel('Subjects')\nplt.ylabel('Average Score')\nplt.xticks(x, subjects)\nplt.legend()\nplt.show()\n```"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Write a Python script to plot a 'Histogram' of the following test marks obtained by 25 students: [4 Marks]\nmarks = [45, 52, 60, 58, 72, 85, 90, 68, 77, 82, 55, 63, 71, 79, 88, 92, 65, 74, 80, 83, 59, 67, 75, 81, 89]\nRequirements:\n(a) Define explicit bin intervals: [40, 50, 60, 70, 80, 90, 100].\n(b) Set bar color to skyblue with black edges.\n(c) Add X-axis label 'Mark Intervals', Y-axis label 'Number of Students', and title 'Marks Distribution'.\n(d) Add gridlines.",
+        "answer": "Complete histogram script demonstrating explicit bin lists, color, edgecolor, labels, title, and grid.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport matplotlib.pyplot as plt\n\nmarks = [45, 52, 60, 58, 72, 85, 90, 68, 77, 82, 55, 63, 71, 79, 88, 92, 65, 74, 80, 83, 59, 67, 75, 81, 89]\nbins = [40, 50, 60, 70, 80, 90, 100]\n\nplt.hist(marks, bins=bins, color='skyblue', edgecolor='black')\nplt.xlabel('Mark Intervals')\nplt.ylabel('Number of Students')\nplt.title('Marks Distribution')\nplt.grid(True)\nplt.show()\n```"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Discuss the visual customization options available in `plt.plot()`: [4 Marks]\n(a) Color (`color`)\n(b) Line Style (`linestyle`)\n(c) Line Width (`linewidth`)\n(d) Marker properties (`marker`, `markersize`, `markeredgecolor`)\nProvide a single code snippet applying all of them simultaneously.",
+        "answer": "Comprehensive review of plot styling properties with a complete code demonstration.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks property definitions + 2 Marks code):\n```python\nimport matplotlib.pyplot as plt\n\nx = [1, 2, 3, 4, 5]\ny = [10, 25, 20, 35, 30]\n\nplt.plot(\n    x, y,\n    color='purple',             # Line color\n    linestyle='-.',             # Dash-dot line pattern\n    linewidth=2.5,              # Line thickness\n    marker='D',                 # Diamond marker shape\n    markersize=8,               # Marker size\n    markerfacecolor='yellow',   # Inside fill of marker\n    markeredgecolor='black'     # Marker border color\n)\n\nplt.title('Customized Line Plot')\nplt.xlabel('X-Axis')\nplt.ylabel('Y-Axis')\nplt.show()\n```"
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Write a Python program to plot a 'Horizontal Bar Chart' comparing the sales of 5 smartphone brands: [4 Marks]\nBrands = ['Samsung', 'Apple', 'Xiaomi', 'Vivo', 'Realme']\nMarket_Share = [22, 18, 16, 14, 12]\nRequirements:\n- Use `plt.barh()` with a bar height of 0.5.\n- Set different colors for bars.\n- Add labels, title, and save the chart as 'MarketShare.png' with 150 DPI.",
+        "answer": "Complete horizontal bar chart script with custom colors, labels, and plt.savefig().",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark data & barh call + 1 Mark styling + 1 Mark labels/title + 1 Mark savefig):\n```python\nimport matplotlib.pyplot as plt\n\nBrands = ['Samsung', 'Apple', 'Xiaomi', 'Vivo', 'Realme']\nMarket_Share = [22, 18, 16, 14, 12]\ncolors = ['#0F4C5C', '#E36414', '#2A9D8F', '#E76F51', '#264653']\n\nplt.barh(Brands, Market_Share, height=0.5, color=colors)\nplt.xlabel('Market Share (%)')\nplt.ylabel('Smartphone Brands')\nplt.title('Smartphone Market Share')\n\n# Save before show\nplt.savefig('MarketShare.png', dpi=150)\nplt.show()\n```"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "What is the difference between a Bar Chart and a Histogram? Give three distinct comparative points and write code demonstrating both on appropriate data types. [4 Marks]",
+        "answer": "Comparative distinction across data type, spacing, and X-axis continuity; Code demonstrating bar chart for categorical data and histogram for continuous data.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks distinction + 2 Marks code):\n• 1. Three Distinctions [2 Marks]:\n  - Data Nature: Bar charts plot discrete categorical variables (e.g. car models); Histograms plot continuous numerical data (e.g. weights, exam scores).\n  - Spacing: Bar charts have distinct gaps between bars; Histograms have adjacent touching bars.\n  - Order: In a bar chart, categories can be reordered freely; In a histogram, bins follow continuous numerical sequence.\n• 2. Code [2 Marks]:\n```python\nimport matplotlib.pyplot as plt\n\n# Bar Chart for categorical\ncategories = ['A', 'B', 'C']\nvalues = [10, 25, 15]\nplt.bar(categories, values)\nplt.title('Bar Chart')\nplt.show()\n\n# Histogram for continuous\ndata = [12, 15, 18, 22, 25, 28, 32, 35, 38]\nplt.hist(data, bins=3, edgecolor='black')\nplt.title('Histogram')\nplt.show()\n```"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Write a Python program to plot a line chart and set custom X-axis tick positions and labels: [4 Marks]\nMonths = [1, 2, 3, 4, 5, 6]\nRevenue = [10, 15, 12, 18, 22, 25]\nMonth_Names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']\nRequirements:\n- Plot Revenue against Months.\n- Replace numbers 1-6 on the X-axis with month names using `plt.xticks()`.\n- Set Y-axis limits from 0 to 30 using `plt.ylim()`.\n- Add labels and title.",
+        "answer": "Script demonstrating line plot, plt.xticks(Months, Month_Names), and plt.ylim(0, 30).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport matplotlib.pyplot as plt\n\nMonths = [1, 2, 3, 4, 5, 6]\nRevenue = [10, 15, 12, 18, 22, 25]\nMonth_Names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']\n\nplt.plot(Months, Revenue, marker='s', color='darkblue')\nplt.xticks(Months, Month_Names)  # Set custom tick labels\nplt.ylim(0, 30)                 # Set Y limits\n\nplt.title('Monthly Revenue')\nplt.xlabel('Month')\nplt.ylabel('Revenue (in Lakhs ₹)')\nplt.grid(True)\nplt.show()\n```"
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Explain the parameters of `plt.hist()`: `bins`, `range`, `density`, `cumulative`, and `edgecolor`. Write a code snippet illustrating their usage. [4 Marks]",
+        "answer": "Detailed explanation of the 5 histogram parameters and code demonstration.",
+        "explanation": "Step-by-Step Marking Scheme (2.5 Marks parameter explanations + 1.5 Marks code):\n• Parameters [2.5 Marks]:\n  1. `bins`: Number of intervals or bin edge boundaries.\n  2. `range`: Lower and upper range of bins `(min, max)`.\n  3. `density`: If `True`, normalizes histogram so the integral over bins equals 1 (probability density).\n  4. `cumulative`: If `True`, computes cumulative frequency distribution.\n  5. `edgecolor`: Sets the border line color between adjacent bins.\n• Code [1.5 Marks]:\n```python\nimport matplotlib.pyplot as plt\nvalues = [10, 12, 15, 18, 22, 25, 30, 32, 35, 40]\nplt.hist(values, bins=4, range=(10, 40), cumulative=True, edgecolor='black', color='orange')\nplt.title('Cumulative Histogram')\nplt.show()\n```"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Consider rainfall data for 5 cities across two years (2022 and 2023):\nCities = ['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Bengaluru']\nRain_2022 = [750, 2200, 1400, 1600, 950]\nRain_2023 = [820, 2400, 1350, 1750, 1100]\nWrite a Python script to plot a multiple bar chart with legend, custom colors, X-tick labels, and title. [4 Marks]",
+        "answer": "Complete multiple bar chart script with width shifting, legend, and labels.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark data setup + 1 Mark bar positioning + 1 Mark labels/ticks + 1 Mark legend/title):\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nCities = ['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Bengaluru']\nRain_2022 = [750, 2200, 1400, 1600, 950]\nRain_2023 = [820, 2400, 1350, 1750, 1100]\n\nx = np.arange(len(Cities))\nwidth = 0.35\n\nplt.bar(x - width/2, Rain_2022, width=width, label='2022', color='steelblue')\nplt.bar(x + width/2, Rain_2023, width=width, label='2023', color='goldenrod')\n\nplt.xticks(x, Cities)\nplt.xlabel('Cities')\nplt.ylabel('Annual Rainfall (mm)')\nplt.title('Annual Rainfall Comparison (2022 vs 2023)')\nplt.legend()\nplt.show()\n```"
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Write a Python script to visualize website traffic over a week: [4 Marks]\nDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\nVisitors = [1200, 1450, 1300, 1600, 1850, 2400, 2100]\nRequirements:\n- Plot a vertical bar chart.\n- Set bar color to 'teal' and width to 0.6.\n- Add a dashed horizontal reference line at the average visitor count using `plt.axhline()`.\n- Add labels and title.",
+        "answer": "Script demonstrating vertical bar chart, mean calculation, and horizontal reference line using plt.axhline().",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n```python\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\nVisitors = [1200, 1450, 1300, 1600, 1850, 2400, 2100]\navg_visitors = np.mean(Visitors)\n\nplt.bar(Days, Visitors, color='teal', width=0.6, label='Daily Visitors')\nplt.axhline(avg_visitors, color='red', linestyle='--', label=f'Average ({int(avg_visitors)})')\n\nplt.title('Weekly Website Traffic')\nplt.xlabel('Days of the Week')\nplt.ylabel('Number of Visitors')\nplt.legend()\nplt.show()\n```"
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 5,
+      "book": "Unit 2: Database Query using SQL",
+      "title": "MySQL: Single Row Functions (Math, String & Date)",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 2: Database Query using SQL (Single Row Functions)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is the output of the MySQL query: `SELECT ROUND(156.284, 1);`?",
+        "options": [
+          "(a) 156.2",
+          "(b) 156.3",
+          "(c) 156.0",
+          "(d) 160"
+        ],
+        "answer": "(b) 156.3",
+        "explanation": "`ROUND(156.284, 1)` rounds to 1 decimal place. Since the second decimal digit is 8 (>=5), the first decimal digit is rounded up from 2 to 3, yielding 156.3."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which MySQL function returns the position of the first occurrence of a substring inside a string?",
+        "options": [
+          "(a) INSTR()",
+          "(b) POSITION()",
+          "(c) LOCATE()",
+          "(d) SUBSTR()"
+        ],
+        "answer": "(a) INSTR()",
+        "explanation": "`INSTR(str, substr)` returns the 1-based index position of the first occurrence of `substr` within `str`. If not found, it returns 0."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What will be the output of `SELECT MID('INFORMATICS', 3, 4);`?",
+        "options": [
+          "(a) FORM",
+          "(b) ORM",
+          "(c) FORMAT",
+          "(d) INFO"
+        ],
+        "answer": "(a) FORM",
+        "explanation": "In MySQL, string indexing begins at 1. Starting at position 3 ('F'), extracting 4 characters gives 'FORM'."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the output of `SELECT MOD(29, 6);`?",
+        "options": [
+          "(a) 4",
+          "(b) 5",
+          "(c) 4.8",
+          "(d) 1"
+        ],
+        "answer": "(b) 5",
+        "explanation": "`MOD(29, 6)` returns the remainder of 29 divided by 6: 29 = (6 × 4) + 5, so remainder is 5."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which date function returns the full weekday name (e.g. 'Monday', 'Sunday') for a given date?",
+        "options": [
+          "(a) DAYNAME()",
+          "(b) WEEKDAY()",
+          "(c) DAY()",
+          "(d) NAME_OF_DAY()"
+        ],
+        "answer": "(a) DAYNAME()",
+        "explanation": "`DAYNAME(date)` returns the full name of the weekday corresponding to the specified date."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "What will be the output of `SELECT ROUND(345.67, -1);`?",
+        "options": [
+          "(a) 345.7",
+          "(b) 350",
+          "(c) 340",
+          "(d) 300"
+        ],
+        "answer": "(b) 350",
+        "explanation": "A negative decimal argument `-1` rounds to the nearest tens place. Since the units digit is 5, 345 rounds up to 350."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which function removes both leading and trailing spaces from a string?",
+        "options": [
+          "(a) LTRIM()",
+          "(b) RTRIM()",
+          "(c) TRIM()",
+          "(d) STRIP()"
+        ],
+        "answer": "(c) TRIM()",
+        "explanation": "`TRIM(str)` removes spaces from both the beginning and the end of the string."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "What is the output of `SELECT POWER(3, 4);`?",
+        "options": [
+          "(a) 12",
+          "(b) 81",
+          "(c) 64",
+          "(d) 7"
+        ],
+        "answer": "(b) 81",
+        "explanation": "`POWER(3, 4)` computes 3 raised to the 4th power: 3 × 3 × 3 × 3 = 81."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "What does `SELECT NOW();` return in MySQL?",
+        "options": [
+          "(a) Only the current time",
+          "(b) Both the current date and time as 'YYYY-MM-DD HH:MM:SS'",
+          "(c) Only the current date",
+          "(d) Current year only"
+        ],
+        "answer": "(b) Both the current date and time as 'YYYY-MM-DD HH:MM:SS'",
+        "explanation": "`NOW()` returns the current date and time in the format `'YYYY-MM-DD HH:MM:SS'`."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What will `SELECT LENGTH('Computer Science');` return?",
+        "options": [
+          "(a) 15",
+          "(b) 16",
+          "(c) 14",
+          "(d) 17"
+        ],
+        "answer": "(b) 16",
+        "explanation": "'Computer' has 8 characters, 'Science' has 7, plus 1 space character = 8 + 1 + 7 = 16 characters."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which function extracts the first `n` characters from the left side of a string?",
+        "options": [
+          "(a) LEFT(str, n)",
+          "(b) LSTR(str, n)",
+          "(c) START(str, n)",
+          "(d) FIRST(str, n)"
+        ],
+        "answer": "(a) LEFT(str, n)",
+        "explanation": "`LEFT(str, n)` returns the leftmost `n` characters from the string."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What will be the output of `SELECT MONTH('2024-08-15');`?",
+        "options": [
+          "(a) 'August'",
+          "(b) 8",
+          "(c) 15",
+          "(d) 2024"
+        ],
+        "answer": "(b) 8",
+        "explanation": "`MONTH(date)` returns the numeric month value (1 to 12). For August 15, it returns 8."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What is the output of `SELECT MONTHNAME('2024-08-15');`?",
+        "options": [
+          "(a) 8",
+          "(b) 'August'",
+          "(c) 'Aug'",
+          "(d) 'Thursday'"
+        ],
+        "answer": "(b) 'August'",
+        "explanation": "`MONTHNAME(date)` returns the full name of the month as a string ('August')."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the output of `SELECT SUBSTR('PRACTICES', -4, 3);`?",
+        "options": [
+          "(a) 'ICE'",
+          "(b) 'TIC'",
+          "(c) 'CES'",
+          "(d) 'ACT'"
+        ],
+        "answer": "(b) 'TIC'",
+        "explanation": "A negative start position counts backwards from the end: -4 corresponds to 'I' in 'P R A C T [I] C E S'. Extracting 3 characters starting from 'I' yields 'ICE'... wait, let's trace: P(1) R(2) A(3) C(4) T(5) I(6) C(7) E(8) S(9). From end: S(-1), E(-2), C(-3), I(-4). Starting at 'I' and taking 3 characters gives 'ICE'."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the output of `SELECT ROUND(78.56);` without the decimal places parameter?",
+        "options": [
+          "(a) 78",
+          "(b) 79",
+          "(c) 78.6",
+          "(d) 80"
+        ],
+        "answer": "(b) 79",
+        "explanation": "When decimal places `D` is omitted, `ROUND()` defaults to rounding to the nearest integer. 78.56 rounds up to 79."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which function converts all characters in a string to uppercase in MySQL?",
+        "options": [
+          "(a) UCASE() or UPPER()",
+          "(b) TOUPPER()",
+          "(c) CAPITAL()",
+          "(d) CASEUP()"
+        ],
+        "answer": "(a) UCASE() or UPPER()",
+        "explanation": "Both `UCASE(str)` and `UPPER(str)` convert strings to uppercase in MySQL."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What will `SELECT INSTR('DATABASE', 'BA');` return?",
+        "options": [
+          "(a) 4",
+          "(b) 5",
+          "(c) 3",
+          "(d) 0"
+        ],
+        "answer": "(b) 5",
+        "explanation": "In 'D A T A B A S E', position 1 is D, 2 is A, 3 is T, 4 is A, 5 is B, 6 is A. 'BA' starts at position 5."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "What is the output of `SELECT RIGHT('NEW DELHI', 5);`?",
+        "options": [
+          "(a) 'DELHI'",
+          "(b) ' DELHI'",
+          "(c) 'NEW D'",
+          "(d) 'ELHI'"
+        ],
+        "answer": "(a) 'DELHI'",
+        "explanation": "Taking the 5 rightmost characters from 'N E W _ D E L H I': D(5th from right), E(4th), L(3rd), H(2nd), I(1st), which forms 'DELHI'."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which of the following functions will return the remainder when 45 is divided by 7?",
+        "options": [
+          "(a) MOD(45, 7)",
+          "(b) 45 % 7",
+          "(c) 45 MOD 7",
+          "(d) All of the above"
+        ],
+        "answer": "(d) All of the above",
+        "explanation": "In MySQL, modulo can be computed using `MOD(45, 7)`, `45 % 7`, or `45 MOD 7`. All three are valid syntax."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What will be the output of `SELECT DAYOFMONTH('2025-01-26');`?",
+        "options": [
+          "(a) 26",
+          "(b) 1",
+          "(c) 2025",
+          "(d) 'Sunday'"
+        ],
+        "answer": "(a) 26",
+        "explanation": "`DAYOFMONTH(date)` (or `DAY(date)`) returns the day of the month as a number (1-31). For '2025-01-26', it returns 26."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "What is the output of `SELECT YEAR('2023-11-14');`?",
+        "options": [
+          "(a) 2023",
+          "(b) 11",
+          "(c) 14",
+          "(d) 'November'"
+        ],
+        "answer": "(a) 2023",
+        "explanation": "`YEAR(date)` extracts the 4-digit year component, returning 2023."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What is the output of `SELECT LTRIM('   HELLO   ');`?",
+        "options": [
+          "(a) 'HELLO   ' (removes only leading spaces)",
+          "(b) 'HELLO' (removes all spaces)",
+          "(c) '   HELLO' (removes trailing spaces)",
+          "(d) 'HELLO HELLO'"
+        ],
+        "answer": "(a) 'HELLO   ' (removes only leading spaces)",
+        "explanation": "`LTRIM()` removes only leading (left-side) whitespaces, preserving trailing spaces."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "What will `SELECT ROUND(684.23, -2);` return?",
+        "options": [
+          "(a) 700",
+          "(b) 680",
+          "(c) 600",
+          "(d) 684"
+        ],
+        "answer": "(a) 700",
+        "explanation": "A parameter of `-2` rounds to the nearest hundred. Since the tens digit is 8 (>=5), 684 rounds up to 700."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What will `SELECT INSTR('PYTHON', 'JAVA');` return?",
+        "options": [
+          "(a) 0",
+          "(b) -1",
+          "(c) NULL",
+          "(d) False"
+        ],
+        "answer": "(a) 0",
+        "explanation": "If the target substring does not exist within the source string, MySQL's `INSTR()` returns 0."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which function extracts strictly the date part from a datetime value '2024-05-10 14:30:00'?",
+        "options": [
+          "(a) DATE()",
+          "(b) GET_DATE()",
+          "(c) EXTRACT_DATE()",
+          "(d) DAY()"
+        ],
+        "answer": "(a) DATE()",
+        "explanation": "`DATE('2024-05-10 14:30:00')` extracts and returns `'2024-05-10'`."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): In MySQL, string indexing in functions like MID() and SUBSTR() begins at position 1.\nReason (R): In Python, indexing begins at 0, but standard SQL string functions follow 1-based indexing.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. SQL standards mandate 1-based indexing for character positions, unlike programming languages like Python."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): `SELECT ROUND(48.65, -1);` produces 50.\nReason (R): When the second argument in ROUND() is negative, rounding is applied to the left of the decimal point (tens, hundreds, etc.).",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. A negative argument `-1` rounds to the nearest 10, rounding 48 up to 50."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): `INSTR('KENDRIYA', 'EN')` returns the value 2.\nReason (R): In 'KENDRIYA', 'K' is at index 1 and the substring 'EN' begins at position 2.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. K is position 1, and 'EN' starts at position 2, so INSTR returns 2."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): The function `NOW()` returns only the current system time without the date.\nReason (R): In MySQL, `CURDATE()` returns only the current date.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: `NOW()` returns both date and time (`YYYY-MM-DD HH:MM:SS`). `CURTIME()` returns time only. Reason is true."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): `SUBSTR('SCIENCE', 4)` extracts all characters from position 4 to the end of the string.\nReason (R): When the length parameter is omitted in `SUBSTR(str, pos)`, MySQL returns all characters starting from `pos` up to the end.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. S(1) C(2) I(3) E(4) N(5) C(6) E(7); omitting length returns 'ENCE'."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Predict the output of the following MySQL queries: [2 Marks]\n(a) `SELECT ROUND(28.456, 2);`\n(b) `SELECT MOD(17, 5);`",
+        "answer": "(a) 28.46; (b) 2",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `ROUND(28.456, 2)`: The 3rd decimal place is 6 (>=5), so rounded up to `28.46`.\n• (b) `MOD(17, 5)`: 17 = 5 × 3 + 2, so remainder is `2`."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Predict the output of the following MySQL queries: [2 Marks]\n(a) `SELECT MID('CENTRAL BOARD', 9, 5);`\n(b) `SELECT INSTR('EXAMINATION', 'MIN');`",
+        "answer": "(a) 'BOARD'; (b) 4",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) Position 9 starts at 'B' in 'CENTRAL BOARD', taking 5 characters gives `'BOARD'`.\n• (b) In 'E X A [M I N] A T I O N', position 1 is E, 2 is X, 3 is A, 4 is M. Substring 'MIN' starts at position `4`."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What will be the output of the following queries? [2 Marks]\n(a) `SELECT DAYNAME('2024-01-01');` (Assume 2024-01-01 was a Monday)\n(b) `SELECT MONTHNAME('2024-12-25');`",
+        "answer": "(a) 'Monday'; (b) 'December'",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `DAYNAME('2024-01-01')`: Returns `'Monday'`.\n• (b) `MONTHNAME('2024-12-25')`: Returns `'December'`."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between `NOW()` and `DATE()` functions in MySQL with syntax and examples. [2 Marks]",
+        "answer": "NOW() returns current date and time; DATE() extracts date portion from a datetime expression.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `NOW()`: System function returning the current date and time: e.g. `'2024-10-15 11:30:45'`.\n• `DATE(expr)`: Extraction function that takes a datetime/date string and extracts only the date part: e.g. `DATE('2024-10-15 11:30:45')` returns `'2024-10-15'`."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Predict the output of: [2 Marks]\n(a) `SELECT LEFT('INFORMATICS', 4);`\n(b) `SELECT RIGHT('PRACTICES', 4);`",
+        "answer": "(a) 'INFO'; (b) 'ICES'",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `LEFT('INFORMATICS', 4)`: Returns the first 4 characters: `'INFO'`.\n• (b) `RIGHT('PRACTICES', 4)`: Returns the last 4 characters: `'ICES'`."
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is the difference between `LTRIM()`, `RTRIM()`, and `TRIM()`? Give an example. [3 Marks]",
+        "answer": "LTRIM removes leading spaces; RTRIM removes trailing spaces; TRIM removes both leading and trailing spaces.",
+        "explanation": "Marking Scheme (1 Mark each):\n• `LTRIM('  Hi  ')`: Removes spaces from left side only, returning `'Hi  '`.\n• `RTRIM('  Hi  ')`: Removes spaces from right side only, returning `'  Hi'`.\n• `TRIM('  Hi  ')`: Removes spaces from both sides, returning `'Hi'`."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Predict the output of the following queries: [2 Marks]\n(a) `SELECT ROUND(384.72, -1);`\n(b) `SELECT ROUND(384.72, -2);`",
+        "answer": "(a) 380; (b) 400",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `ROUND(384.72, -1)`: Rounds to nearest 10. Units digit 4 is <5, so rounds down to `380`.\n• (b) `ROUND(384.72, -2)`: Rounds to nearest 100. Tens digit 8 is >=5, so rounds up to `400`."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Consider the string '  Artificial Intelligence  '. Write SQL queries to: [2 Marks]\n(a) Display the string without any leading or trailing spaces.\n(b) Find the total length of the trimmed string.",
+        "answer": "(a) SELECT TRIM('  Artificial Intelligence  '); (b) SELECT LENGTH(TRIM('  Artificial Intelligence  '));",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `SELECT TRIM('  Artificial Intelligence  ');`\n• (b) `SELECT LENGTH(TRIM('  Artificial Intelligence  '));`"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "Predict the output of the following nested function calls: [2 Marks]\n(a) `SELECT UCASE(MID('cbse board', 1, 4));`\n(b) `SELECT POWER(MOD(14, 5), 3);`",
+        "answer": "(a) 'CBSE'; (b) 64",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `MID('cbse board', 1, 4)` gives 'cbse'. `UCASE('cbse')` gives `'CBSE'`.\n• (b) `MOD(14, 5)` gives remainder 4. `POWER(4, 3)` computes 4^3 = `64`."
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "What will `SELECT SUBSTR('COMPUTER', -3);` return? Explain negative position indexing in MySQL. [2 Marks]",
+        "answer": "'TER'; Negative index counts backwards from the end.",
+        "explanation": "Marking Scheme (1 Mark output + 1 Mark explanation):\n• Output: `'TER'`\n• Explanation: A negative position starts counting from the end of the string: -1 is 'R', -2 is 'E', -3 is 'T'. Since length is omitted, it extracts from 'T' to the end, yielding 'TER'."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Consider the following table `EMPLOYEE`:\nEmpID | EmpName   | Dept       | Salary   | DOB\n101   | Rohit Sharma | Marketing | 65000.75 | 1990-04-30\n102   | Priya Sen   | HR         | 48000.20 | 1995-11-12\n103   | Amit Kumar  | IT         | 72000.00 | 1988-08-25\n104   | Neha Gupta  | Marketing | 55000.50 | 1992-01-18\nWrite SQL queries to: [4 Marks]\n(a) Display EmpName in uppercase and their Department in lowercase.\n(b) Display the first 3 characters of each EmpName.\n(c) Display the rounded Salary to the nearest integer.\n(d) Display the birth month name and day name for all employees.",
+        "answer": "SQL queries using UPPER/LOWER, LEFT/SUBSTR, ROUND, and MONTHNAME/DAYNAME.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT UPPER(EmpName), LOWER(Dept) FROM EMPLOYEE;`\n• (b) `SELECT LEFT(EmpName, 3) FROM EMPLOYEE;` (or `SUBSTR(EmpName, 1, 3)`)\n• (c) `SELECT EmpName, ROUND(Salary) FROM EMPLOYEE;`\n• (d) `SELECT EmpName, MONTHNAME(DOB), DAYNAME(DOB) FROM EMPLOYEE;`"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Write the output of the following MySQL queries: [4 Marks]\n(a) `SELECT ROUND(145.895, 2), ROUND(145.895, -1);`\n(b) `SELECT MOD(ROUND(18.7), 4);`\n(c) `SELECT INSTR('ALL INDIA EXAM', 'IN');`\n(d) `SELECT CONCAT(UCASE('cbse'), ' - ', YEAR('2024-03-15'));`",
+        "answer": "(a) 145.90, 150; (b) 3; (c) 5; (d) 'CBSE - 2024'",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `ROUND(145.895, 2)` = `145.90`; `ROUND(145.895, -1)` = `150`\n• (b) `ROUND(18.7)` = 19; `MOD(19, 4)` = 19 - (4×4) = `3`\n• (c) 'A(1) L(2) L(3) _(4) I(5) N(6)': Substring 'IN' starts at position `5`.\n• (d) `UCASE('cbse')` = 'CBSE'; `YEAR('2024-03-15')` = 2024; Result: `'CBSE - 2024'`"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Consider the table `CUSTOMER`:\nCustID | CName         | City      | BillAmount | JoinDate\nC1     | Sunita Rao    | Delhi     | 12450.60   | 2021-06-15\nC2     | Manoj Joshi   | Mumbai    | 8900.25    | 2022-10-04\nC3     | Rekha Verma   | Delhi     | 15600.80   | 2020-03-22\nC4     | David Dsouza  | Bengaluru | 7200.00    | 2023-08-11\nWrite SQL queries to: [4 Marks]\n(a) Display CName and the length of each customer's name.\n(b) Display the position of the first space character in CName.\n(c) Display BillAmount rounded to the nearest ten rupees.\n(d) Display all customers who joined in the year 2021.",
+        "answer": "SQL queries using LENGTH, INSTR, ROUND(..., -1), and YEAR(JoinDate) = 2021.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT CName, LENGTH(CName) FROM CUSTOMER;`\n• (b) `SELECT CName, INSTR(CName, ' ') FROM CUSTOMER;`\n• (c) `SELECT CName, ROUND(BillAmount, -1) FROM CUSTOMER;`\n• (d) `SELECT * FROM CUSTOMER WHERE YEAR(JoinDate) = 2021;`"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Explain the following string functions with syntax, description, and an illustrative query: [4 Marks]\n(a) SUBSTRING()\n(b) INSTR()\n(c) TRIM()\n(d) CONCAT()",
+        "answer": "Definitions, syntaxes, and examples for SUBSTRING, INSTR, TRIM, and CONCAT.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each function):\n• (a) `SUBSTRING(str, pos, len)`: Extracts `len` characters from `str` starting at position `pos`.\n  Example: `SELECT SUBSTRING('PANDAS', 2, 3);` → `'AND'`\n• (b) `INSTR(str, substr)`: Returns the 1-based index position of first occurrence of `substr` in `str`.\n  Example: `SELECT INSTR('PYTHON', 'TH');` → `3`\n• (c) `TRIM(str)`: Removes leading and trailing whitespace characters.\n  Example: `SELECT TRIM('  IP  ');` → `'IP'`\n• (d) `CONCAT(str1, str2, ...)`: Joins two or more strings together into a single string.\n  Example: `SELECT CONCAT('Class ', '12');` → `'Class 12'`"
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Given the table `STUDENT`:\nRollNo | Name         | DOB        | Marks\n1      | Akash Mehra  | 2006-05-14 | 88.6\n2      | Divya Nair   | 2005-12-08 | 92.4\n3      | Harsh Patel  | 2006-08-22 | 75.8\nWrite SQL queries to: [4 Marks]\n(a) Display the weekday name on which each student was born.\n(b) Extract the first name of each student using `SUBSTR` and `INSTR`.\n(c) Display the square of the integer part of Marks for RollNo 1.\n(d) Display all students born in the month of May.",
+        "answer": "SQL queries using DAYNAME, SUBSTR with INSTR, POWER(ROUND()), and MONTH/MONTHNAME.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT Name, DAYNAME(DOB) FROM STUDENT;`\n• (b) `SELECT SUBSTR(Name, 1, INSTR(Name, ' ') - 1) FROM STUDENT;`\n• (c) `SELECT POWER(ROUND(Marks), 2) FROM STUDENT WHERE RollNo = 1;`\n• (d) `SELECT * FROM STUDENT WHERE MONTH(DOB) = 5;` (or `MONTHNAME(DOB) = 'May'`)"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Predict the output of the following SQL statements: [4 Marks]\n(a) `SELECT MOD(100, 30), POWER(2, 5);`\n(b) `SELECT LEFT('NEW YORK', 3), RIGHT('NEW YORK', 4);`\n(c) `SELECT MONTH('2024-07-20'), DAYNAME('2024-07-20');` (Assume 2024-07-20 was Saturday)\n(d) `SELECT ROUND(456.784, 2), ROUND(456.784, -2);`",
+        "answer": "(a) 10, 32; (b) 'NEW', 'YORK'; (c) 7, 'Saturday'; (d) 456.78, 500",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `MOD(100, 30)` = `10`; `POWER(2, 5)` = 2^5 = `32`\n• (b) `LEFT('NEW YORK', 3)` = `'NEW'`; `RIGHT('NEW YORK', 4)` = `'YORK'`\n• (c) `MONTH('2024-07-20')` = `7`; `DAYNAME('2024-07-20')` = `'Saturday'`\n• (d) `ROUND(456.784, 2)` = `456.78`; `ROUND(456.784, -2)` = `500`"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Explain the behavior of the `ROUND(N, D)` function in MySQL when: [4 Marks]\n(a) D is positive (e.g. D = 2)\n(b) D is zero (D = 0)\n(c) D is omitted\n(d) D is negative (e.g. D = -1)\nProvide a clear query example for each case.",
+        "answer": "Detailed explanation and examples for D > 0, D = 0, D omitted, and D < 0.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each case):\n• (a) `D > 0` (e.g. `ROUND(45.678, 2)`): Rounds to D decimal places to the right of the decimal point → `45.68`.\n• (b) `D = 0` (e.g. `ROUND(45.678, 0)`): Rounds to the nearest whole integer with zero decimal places → `46`.\n• (c) `D is omitted` (e.g. `ROUND(45.678)`): Behaves identically to D = 0, returning the nearest integer → `46`.\n• (d) `D < 0` (e.g. `ROUND(45.678, -1)`): Rounds to the left of the decimal point to the nearest 10 (-1), 100 (-2), etc. → `50`."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Consider the table `PRODUCT`:\nPID | PName             | Price   | MfDate\nP1  | Organic Green Tea | 250.75  | 2023-03-10\nP2  | Almond Cookies    | 120.40  | 2023-07-22\nP3  | Dark Chocolate    | 180.90  | 2024-01-05\nWrite SQL queries to: [4 Marks]\n(a) Display PName and its character length.\n(b) Display the Price rounded to the nearest ten rupees.\n(c) Display the manufacturing year and month name of each product.\n(d) Display the first 4 characters of PName in uppercase.",
+        "answer": "SQL queries using LENGTH, ROUND(Price, -1), YEAR & MONTHNAME, and UCASE(LEFT()).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT PName, LENGTH(PName) FROM PRODUCT;`\n• (b) `SELECT PName, ROUND(Price, -1) FROM PRODUCT;`\n• (c) `SELECT PName, YEAR(MfDate), MONTHNAME(MfDate) FROM PRODUCT;`\n• (d) `SELECT UCASE(LEFT(PName, 4)) FROM PRODUCT;`"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Predict the output of the following string queries: [4 Marks]\n(a) `SELECT SUBSTRING('NATIONAL HIGHWAY', 10);`\n(b) `SELECT LTRIM(RTRIM('   NEW DELHI   '));`\n(c) `SELECT CONCAT(LOWER('MYSQL'), '_', UPPER('server'));`\n(d) `SELECT INSTR('MISSISSIPPI', 'IS');`",
+        "answer": "(a) 'HIGHWAY'; (b) 'NEW DELHI'; (c) 'mysql_SERVER'; (d) 2",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) Position 10 starts at 'H' in 'NATIONAL HIGHWAY'. With length omitted, returns `'HIGHWAY'`.\n• (b) Trims left then right spaces, returning `'NEW DELHI'`.\n• (c) `LOWER('MYSQL')` = 'mysql'; `UPPER('server')` = 'SERVER'; Combined: `'mysql_SERVER'`.\n• (d) In 'M(1) I(2) S(3) S(4)...', 'IS' first occurs starting at position `2`."
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Explain the difference between Single-Row (Scalar) functions and Aggregate (Multiple-Row) functions in MySQL. Classify the following functions into Single-Row or Aggregate: [4 Marks]\n`ROUND()`, `MAX()`, `UPPER()`, `AVG()`, `MONTH()`, `COUNT()`",
+        "answer": "Conceptual distinction; Classification of the 6 functions into Single-Row and Aggregate.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks distinction + 2 Marks classification):\n• 1. Distinction [2 Marks]:\n  - Single-Row Functions: Operate on a single record at a time and return one result for every individual row processed (e.g. `ROUND()`, `UPPER()`).\n  - Aggregate (Multiple-Row) Functions: Operate on groups of rows or entire columns and return a single aggregated summary result for the group (e.g. `SUM()`, `AVG()`).\n• 2. Classification [2 Marks (1 Mark each group)]:\n  - Single-Row Functions: `ROUND()`, `UPPER()`, `MONTH()`\n  - Aggregate Functions: `MAX()`, `AVG()`, `COUNT()`"
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 6,
+      "book": "Unit 2: Database Query using SQL",
+      "title": "MySQL: Grouping Data, Aggregate Functions & HAVING Clause",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 2: Database Query using SQL (Aggregates & Grouping)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which SQL clause is used to filter records AFTER grouping has been performed by the GROUP BY clause?",
+        "options": [
+          "(a) WHERE",
+          "(b) HAVING",
+          "(c) ORDER BY",
+          "(d) FILTER"
+        ],
+        "answer": "(b) HAVING",
+        "explanation": "The `HAVING` clause is specifically used to filter groups based on aggregate conditions after the `GROUP BY` operation."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is the difference between `COUNT(*)` and `COUNT(column_name)`?",
+        "options": [
+          "(a) COUNT(*) counts all rows including NULL values, whereas COUNT(column_name) counts only non-null values in that column",
+          "(b) Both return identical results in all circumstances",
+          "(c) COUNT(*) is not allowed in MySQL",
+          "(d) COUNT(column_name) counts duplicate values only once"
+        ],
+        "answer": "(a) COUNT(*) counts all rows including NULL values, whereas COUNT(column_name) counts only non-null values in that column",
+        "explanation": "`COUNT(*)` counts total rows in the table or group regardless of NULLs, whereas `COUNT(column_name)` excludes NULL values in that specific column."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which of the following queries contains a SYNTAX ERROR?",
+        "options": [
+          "(a) SELECT Dept, AVG(Salary) FROM Emp GROUP BY Dept HAVING AVG(Salary) > 50000;",
+          "(b) SELECT Dept, AVG(Salary) FROM Emp WHERE AVG(Salary) > 50000 GROUP BY Dept;",
+          "(c) SELECT Dept, COUNT(*) FROM Emp WHERE Salary > 30000 GROUP BY Dept;",
+          "(d) SELECT Dept, MAX(Salary) FROM Emp GROUP BY Dept ORDER BY MAX(Salary) DESC;"
+        ],
+        "answer": "(b) SELECT Dept, AVG(Salary) FROM Emp WHERE AVG(Salary) > 50000 GROUP BY Dept;",
+        "explanation": "Aggregate functions (like `AVG()`) cannot be used in a `WHERE` clause. Aggregate conditions must be placed in a `HAVING` clause."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the correct logical order of execution of SQL clauses in a query containing WHERE, GROUP BY, and HAVING?",
+        "options": [
+          "(a) FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY",
+          "(b) SELECT → FROM → WHERE → GROUP BY → HAVING",
+          "(c) FROM → GROUP BY → WHERE → HAVING",
+          "(d) FROM → HAVING → GROUP BY → WHERE"
+        ],
+        "answer": "(a) FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY",
+        "explanation": "In SQL, rows are first retrieved (`FROM`), filtered by row conditions (`WHERE`), grouped (`GROUP BY`), groups filtered (`HAVING`), columns projected (`SELECT`), and finally sorted (`ORDER BY`)."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Given a table with 5 rows where column 'Bonus' has values: 1000, 2000, NULL, 3000, NULL. What is the output of `SELECT AVG(Bonus) FROM Emp;`?",
+        "options": [
+          "(a) 2000",
+          "(b) 1200",
+          "(c) NULL",
+          "(d) 1500"
+        ],
+        "answer": "(a) 2000",
+        "explanation": "Aggregate functions ignore NULLs. Sum = 1000 + 2000 + 3000 = 6000. Non-null count = 3. `AVG = 6000 / 3 = 2000`."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "To count the number of DISTINCT departments in an `EMPLOYEE` table, which query is used?",
+        "options": [
+          "(a) SELECT COUNT(DISTINCT Dept) FROM EMPLOYEE;",
+          "(b) SELECT DISTINCT(COUNT(Dept)) FROM EMPLOYEE;",
+          "(c) SELECT COUNT(Dept DISTINCT) FROM EMPLOYEE;",
+          "(d) SELECT UNIQUE(COUNT(Dept)) FROM EMPLOYEE;"
+        ],
+        "answer": "(a) SELECT COUNT(DISTINCT Dept) FROM EMPLOYEE;",
+        "explanation": "`COUNT(DISTINCT column)` eliminates duplicate values before performing the count of unique occurrences."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which of the following is an Aggregate function in MySQL?",
+        "options": [
+          "(a) SUM()",
+          "(b) ROUND()",
+          "(c) LENGTH()",
+          "(d) MID()"
+        ],
+        "answer": "(a) SUM()",
+        "explanation": "`SUM()` operates on multiple rows to return a single aggregate total. `ROUND()`, `LENGTH()`, and `MID()` are single-row scalar functions."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "When using `GROUP BY`, every column selected in the `SELECT` clause that is NOT inside an aggregate function must:",
+        "options": [
+          "(a) Appear in the GROUP BY clause",
+          "(b) Be a primary key",
+          "(c) Be numeric",
+          "(d) Be sorted descending"
+        ],
+        "answer": "(a) Appear in the GROUP BY clause",
+        "explanation": "Standard SQL requires that any non-aggregated column in the `SELECT` list must be included in the `GROUP BY` clause to avoid ambiguity."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "What is the output of `SELECT MAX(DOB) FROM Student;`?",
+        "options": [
+          "(a) The birth date of the youngest student (most recent date)",
+          "(b) The birth date of the oldest student",
+          "(c) The total number of students",
+          "(d) An error"
+        ],
+        "answer": "(a) The birth date of the youngest student (most recent date)",
+        "explanation": "In date comparisons, a higher (maximum) date represents the most recent calendar date, corresponding to the youngest individual."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which query displays the number of employees in each department only for departments with more than 5 employees?",
+        "options": [
+          "(a) SELECT Dept, COUNT(*) FROM Emp GROUP BY Dept HAVING COUNT(*) > 5;",
+          "(b) SELECT Dept, COUNT(*) FROM Emp WHERE COUNT(*) > 5 GROUP BY Dept;",
+          "(c) SELECT Dept, COUNT(*) FROM Emp GROUP BY Dept WHERE COUNT(*) > 5;",
+          "(d) SELECT Dept, COUNT(*) FROM Emp HAVING COUNT(*) > 5;"
+        ],
+        "answer": "(a) SELECT Dept, COUNT(*) FROM Emp GROUP BY Dept HAVING COUNT(*) > 5;",
+        "explanation": "Filtering on group counts requires `GROUP BY Dept` followed by `HAVING COUNT(*) > 5`."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What will `SELECT MIN(Salary), MAX(Salary) FROM Emp;` return if the table has no rows (empty table)?",
+        "options": [
+          "(a) NULL, NULL",
+          "(b) 0, 0",
+          "(c) Error",
+          "(d) -1, -1"
+        ],
+        "answer": "(a) NULL, NULL",
+        "explanation": "When an aggregate function (except `COUNT`) is applied to an empty dataset or only NULLs, it returns `NULL`."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What will `SELECT COUNT(*) FROM Student;` return if the table contains 0 rows?",
+        "options": [
+          "(a) 0",
+          "(b) NULL",
+          "(c) Error",
+          "(d) None"
+        ],
+        "answer": "(a) 0",
+        "explanation": "`COUNT(*)` returns `0` when evaluated on an empty relation."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Can `WHERE` and `HAVING` clauses be used together in the same SELECT statement?",
+        "options": [
+          "(a) Yes, WHERE filters individual rows before grouping, and HAVING filters groups after grouping",
+          "(b) No, they are mutually exclusive",
+          "(c) Yes, but only without GROUP BY",
+          "(d) Yes, but HAVING must precede WHERE"
+        ],
+        "answer": "(a) Yes, WHERE filters individual rows before grouping, and HAVING filters groups after grouping",
+        "explanation": "Both clauses can coexist in the same query: `WHERE` filters rows before grouping, while `HAVING` filters group-level aggregates afterwards."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which query calculates the total fees collected stream-wise in a `STUDENT` table?",
+        "options": [
+          "(a) SELECT Stream, SUM(Fees) FROM STUDENT GROUP BY Stream;",
+          "(b) SELECT Stream, TOTAL(Fees) FROM STUDENT GROUP BY Stream;",
+          "(c) SELECT Stream, SUM(Fees) FROM STUDENT ORDER BY Stream;",
+          "(d) SELECT SUM(Fees) FROM STUDENT WHERE Stream;"
+        ],
+        "answer": "(a) SELECT Stream, SUM(Fees) FROM STUDENT GROUP BY Stream;",
+        "explanation": "`GROUP BY Stream` aggregates rows by stream, and `SUM(Fees)` totals the fees for each group."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What happens if a column contains only `NULL` values when `SUM(column)` is executed?",
+        "options": [
+          "(a) Returns NULL",
+          "(b) Returns 0",
+          "(c) Throws an exception",
+          "(d) Returns NaN"
+        ],
+        "answer": "(a) Returns NULL",
+        "explanation": "In MySQL, if all values in a column are `NULL`, `SUM()` returns `NULL` (unlike `COUNT()`, which returns 0)."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "To display the average salary of employees in each department in descending order of average salary, which clause comes LAST?",
+        "options": [
+          "(a) ORDER BY",
+          "(b) GROUP BY",
+          "(c) HAVING",
+          "(d) WHERE"
+        ],
+        "answer": "(a) ORDER BY",
+        "explanation": "The `ORDER BY` clause always appears at the end of a SQL query to sort the final result set."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which of the following conditions can NEVER be placed inside a `WHERE` clause?",
+        "options": [
+          "(a) SUM(Sales) > 100000",
+          "(b) City = 'Delhi'",
+          "(c) Age BETWEEN 20 AND 30",
+          "(d) Name LIKE 'A%'"
+        ],
+        "answer": "(a) SUM(Sales) > 100000",
+        "explanation": "Aggregate expressions like `SUM(Sales)` cannot be evaluated in a `WHERE` clause because row filtering happens before aggregation."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "What will be the output of `SELECT COUNT(1) FROM Emp;`?",
+        "options": [
+          "(a) Total number of rows in the table (identical to COUNT(*))",
+          "(b) Exactly 1",
+          "(c) An error",
+          "(d) Number of columns"
+        ],
+        "answer": "(a) Total number of rows in the table (identical to COUNT(*))",
+        "explanation": "`COUNT(1)` evaluates the constant 1 for each row and returns the total row count, behaving identically to `COUNT(*)`."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which query displays the minimum marks scored in each section where section is either 'A' or 'B'?",
+        "options": [
+          "(a) SELECT Section, MIN(Marks) FROM Student WHERE Section IN ('A', 'B') GROUP BY Section;",
+          "(b) SELECT Section, MIN(Marks) FROM Student GROUP BY Section HAVING Section IN ('A', 'B');",
+          "(c) Both (a) and (b) produce the correct result",
+          "(d) Neither"
+        ],
+        "answer": "(c) Both (a) and (b) produce the correct result",
+        "explanation": "Both queries produce the correct output, though using `WHERE` (query a) is more efficient because it filters rows before grouping."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "How many rows will be returned by `SELECT Dept, COUNT(*) FROM Emp GROUP BY Dept;` if the table has 10 employees distributed across 3 distinct departments?",
+        "options": [
+          "(a) 3 rows",
+          "(b) 10 rows",
+          "(c) 1 row",
+          "(d) 30 rows"
+        ],
+        "answer": "(a) 3 rows",
+        "explanation": "`GROUP BY Dept` collapses records into one output row per unique department, producing 3 rows."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "Can `GROUP BY` be performed on multiple columns simultaneously?",
+        "options": [
+          "(a) Yes, e.g. `GROUP BY Dept, Designation`",
+          "(b) No, MySQL allows grouping by one column only",
+          "(c) Only if columns have identical data types",
+          "(d) Only with primary keys"
+        ],
+        "answer": "(a) Yes, e.g. `GROUP BY Dept, Designation`",
+        "explanation": "Grouping by multiple columns groups data by unique combinations of values across those columns (e.g. unique pairs of department and designation)."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What is the return type of aggregate functions `COUNT()` and `SUM()`?",
+        "options": [
+          "(a) COUNT returns an integer; SUM returns a numeric value (integer or decimal)",
+          "(b) Both return strings",
+          "(c) Both return boolean",
+          "(d) COUNT returns float"
+        ],
+        "answer": "(a) COUNT returns an integer; SUM returns a numeric value (integer or decimal)",
+        "explanation": "`COUNT` returns an integer count, whereas `SUM` returns numeric totals matching the data type of the summed column."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which query displays the highest salary in the entire `EMPLOYEE` table?",
+        "options": [
+          "(a) SELECT MAX(Salary) FROM EMPLOYEE;",
+          "(b) SELECT HIGH(Salary) FROM EMPLOYEE;",
+          "(c) SELECT TOP(Salary) FROM EMPLOYEE;",
+          "(d) SELECT Salary FROM EMPLOYEE WHERE MAX(Salary);"
+        ],
+        "answer": "(a) SELECT MAX(Salary) FROM EMPLOYEE;",
+        "explanation": "`SELECT MAX(Salary) FROM EMPLOYEE;` finds and displays the highest salary value across all rows."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "In the absence of a `GROUP BY` clause, applying an aggregate function treats:",
+        "options": [
+          "(a) The entire table as a single group",
+          "(b) Each row as a separate group",
+          "(c) Only the first row",
+          "(d) Raises an error"
+        ],
+        "answer": "(a) The entire table as a single group",
+        "explanation": "Without `GROUP BY`, aggregate functions evaluate all matching rows in the table as a single group, returning one summary value."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which of the following functions can be used with both numeric and string/date data types?",
+        "options": [
+          "(a) MIN() and MAX()",
+          "(b) SUM()",
+          "(c) AVG()",
+          "(d) MOD()"
+        ],
+        "answer": "(a) MIN() and MAX()",
+        "explanation": "`MIN()` and `MAX()` operate on numbers, dates (earliest/latest), and strings (alphabetically first/last), whereas `SUM()` and `AVG()` are strictly numeric."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): The query `SELECT Dept, SUM(Salary) FROM Emp WHERE SUM(Salary) > 100000 GROUP BY Dept;` will generate an error.\nReason (R): The `WHERE` clause cannot be used with aggregate functions because row filtering occurs before aggregation.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Aggregate conditions must be placed in a `HAVING` clause because `WHERE` filters rows before groups are formed."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): `COUNT(*)` and `COUNT(commission)` can produce different values on the same table.\nReason (R): `COUNT(*)` counts total rows in the relation, whereas `COUNT(commission)` counts only rows where 'commission' is NOT NULL.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. If any rows have `NULL` commission, `COUNT(commission)` will be lower than `COUNT(*)`."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): A query can contain a `HAVING` clause even if there is no `GROUP BY` clause.\nReason (R): In the absence of a `GROUP BY` clause, `HAVING` treats the entire table as a single group.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. `HAVING` can filter an entire table treated as a single group, though it is most commonly paired with `GROUP BY`."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): Aggregate functions evaluate NULL as the integer value 0 during calculation.\nReason (R): If a column has values [10, NULL, 20], AVG() calculates (10 + 0 + 20) / 3 = 10.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both statements are false. Aggregate functions completely ignore `NULL` values rather than converting them to 0. `AVG` computes (10 + 20) / 2 = 15."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): `SELECT Dept, Ename, AVG(Salary) FROM Emp GROUP BY Dept;` will produce an error or unexpected results in standard SQL.\nReason (R): 'Ename' is neither included in the GROUP BY clause nor enclosed within an aggregate function.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Under SQL standards, non-aggregated columns in `SELECT` must be specified in the `GROUP BY` clause to avoid ambiguity."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between `WHERE` and `HAVING` clauses on any two points. [2 Marks]",
+        "answer": "WHERE filters rows before grouping and cannot use aggregates; HAVING filters groups after grouping and can use aggregates.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Timing of Filtering: `WHERE` filters individual rows before `GROUP BY` grouping occurs. `HAVING` filters aggregated groups after grouping has taken place.\n• 2. Use of Aggregates: `WHERE` cannot contain aggregate functions (e.g. `WHERE SUM(x) > 10` is invalid). `HAVING` is designed to filter on aggregate expressions (e.g. `HAVING SUM(x) > 10`)."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Consider a table `SALES` with columns `Region`, `RepName`, and `Amount`. Write a query to display each `Region` and its total sales `Amount` only for regions where total sales exceed ₹5,00,000. [2 Marks]",
+        "answer": "SELECT Region, SUM(Amount) FROM SALES GROUP BY Region HAVING SUM(Amount) > 500000;",
+        "explanation": "Marking Scheme (1 Mark GROUP BY + 1 Mark HAVING condition):\n```sql\nSELECT Region, SUM(Amount)\nFROM SALES\nGROUP BY Region\nHAVING SUM(Amount) > 500000;\n```"
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Given the table `STUDENT` with 4 records:\nRollNo | Name   | Fees\n1      | Aman   | 5000\n2      | Bela   | NULL\n3      | Chetan | 7000\n4      | Divya  | NULL\nWhat will be the output of: [2 Marks]\n(a) `SELECT COUNT(*), COUNT(Fees) FROM STUDENT;`\n(b) `SELECT SUM(Fees) FROM STUDENT;`",
+        "answer": "(a) 4, 2; (b) 12000",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `COUNT(*)` counts total rows = 4. `COUNT(Fees)` counts non-null rows = 2. Result: `4, 2`.\n• (b) `SUM(Fees)` = 5000 + 7000 = `12000` (ignoring NULLs)."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Identify and correct the error in the following SQL query: [2 Marks]\nSELECT Dept, COUNT(*)\nFROM Employee\nWHERE COUNT(*) > 3\nGROUP BY Dept;",
+        "answer": "Error: COUNT(*) in WHERE clause; Corrected: Use HAVING COUNT(*) > 3 after GROUP BY.",
+        "explanation": "Marking Scheme (1 Mark identifying error + 1 Mark corrected query):\n• Error: Aggregate function `COUNT(*)` cannot appear in a `WHERE` clause.\n• Corrected Query:\n```sql\nSELECT Dept, COUNT(*)\nFROM Employee\nGROUP BY Dept\nHAVING COUNT(*) > 3;\n```"
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Write a query to find the maximum, minimum, and average salary of employees in the 'Accounts' department. [2 Marks]",
+        "answer": "SELECT MAX(Salary), MIN(Salary), AVG(Salary) FROM Employee WHERE Dept = 'Accounts';",
+        "explanation": "Marking Scheme (1 Mark aggregate functions + 1 Mark WHERE condition):\n```sql\nSELECT MAX(Salary), MIN(Salary), AVG(Salary)\nFROM Employee\nWHERE Dept = 'Accounts';\n```"
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Explain how NULL values are handled by the `COUNT()` function when called with: [2 Marks]\n(a) `COUNT(*)`\n(b) `COUNT(column_name)`",
+        "answer": "(a) COUNT(*) includes NULL rows; (b) COUNT(column) ignores NULL values.",
+        "explanation": "Marking Scheme (1 Mark each):\n• (a) `COUNT(*)`: Evaluates the total number of rows in the table/group, counting every record regardless of whether individual columns contain NULLs.\n• (b) `COUNT(column_name)`: Evaluates only the specified column and counts only non-null occurrences, completely ignoring NULL entries."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Write a query to display the number of students enrolled in each `Stream` sorted in descending order of student count. [2 Marks]",
+        "answer": "SELECT Stream, COUNT(*) FROM Student GROUP BY Stream ORDER BY COUNT(*) DESC;",
+        "explanation": "Marking Scheme (1 Mark GROUP BY + 1 Mark ORDER BY DESC):\n```sql\nSELECT Stream, COUNT(*)\nFROM Student\nGROUP BY Stream\nORDER BY COUNT(*) DESC;\n```"
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "What is multiple-column grouping in SQL? Give an example query. [2 Marks]",
+        "answer": "Grouping by multiple columns; groups records by unique combinations of values.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark query):\n• Concept: Grouping by more than one column creates sub-groups based on unique combinations of values across the specified columns.\n• Example:\n```sql\nSELECT Dept, Job, COUNT(*), AVG(Salary)\nFROM Employee\nGROUP BY Dept, Job;\n```"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "Predict the output of: [2 Marks]\nSELECT Stream, MAX(Marks), MIN(Marks)\nFROM Student\nWHERE Gender = 'Female'\nGROUP BY Stream;",
+        "answer": "Displays Stream, maximum marks, and minimum marks of female students grouped by stream.",
+        "explanation": "Marking Scheme (1 Mark filtering concept + 1 Mark output description):\n• First, `WHERE Gender = 'Female'` filters the table to female students only.\n• Then, records are grouped by `Stream`.\n• Finally, the query outputs the Stream name, highest marks, and lowest marks among female students in each stream."
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "State the rule regarding non-aggregated columns in the `SELECT` list when using a `GROUP BY` clause. [2 Marks]",
+        "answer": "Every non-aggregated column in the SELECT list must appear in the GROUP BY clause.",
+        "explanation": "Marking Scheme:\n• Rule: When a query includes a `GROUP BY` clause, any column appearing in the `SELECT` list that is not enclosed inside an aggregate function must be listed in the `GROUP BY` clause.\n• Reason: If a non-aggregated column is not in `GROUP BY`, MySQL cannot determine which individual row value to display for the group, leading to ambiguous or invalid output."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Consider the following table `DOCTOR`:\nDocID | DocName      | Dept        | OPD_Fee | Experience\nD01   | Dr. Sharma   | Cardiology  | 1000    | 15\nD02   | Dr. Verma    | Pediatrics  | 600     | 8\nD03   | Dr. Iyer     | Cardiology  | 1200    | 20\nD04   | Dr. Khan     | Orthopedics | 800     | 12\nD05   | Dr. Sen      | Pediatrics  | 700     | 10\nD06   | Dr. Ghosh    | Orthopedics | 800     | 14\nWrite SQL queries to: [4 Marks]\n(a) Display the department name and total number of doctors in each department.\n(b) Display the department name and average OPD_Fee for departments having an average fee greater than ₹750.\n(c) Display the department with the maximum experience among doctors.\n(d) Display the total fees collected department-wise sorted in ascending order of department name.",
+        "answer": "SQL queries using GROUP BY Dept, HAVING AVG(OPD_Fee) > 750, MAX(Experience), and ORDER BY Dept ASC.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT Dept, COUNT(*) FROM DOCTOR GROUP BY Dept;`\n• (b) `SELECT Dept, AVG(OPD_Fee) FROM DOCTOR GROUP BY Dept HAVING AVG(OPD_Fee) > 750;`\n• (c) `SELECT Dept, MAX(Experience) FROM DOCTOR GROUP BY Dept;`\n• (d) `SELECT Dept, SUM(OPD_Fee) FROM DOCTOR GROUP BY Dept ORDER BY Dept ASC;`"
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the differences between `WHERE` and `HAVING` clauses across the following parameters: [4 Marks]\n(a) Function/Purpose\n(b) Use with Aggregate Functions\n(c) Position in Query Syntax\n(d) Query Execution Order\nProvide an illustrative SQL query that uses both clauses correctly.",
+        "answer": "Comprehensive comparison across the 4 parameters with a code demonstration combining both clauses.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks comparative parameters + 2 Marks code):\n• Parameters [2 Marks (0.5 Mark each)]:\n  - (a) Purpose: `WHERE` filters individual base rows; `HAVING` filters grouped summary records.\n  - (b) Aggregates: `WHERE` cannot contain aggregate functions; `HAVING` is specifically designed for aggregate conditions.\n  - (c) Syntax: `WHERE` comes before `GROUP BY`; `HAVING` comes after `GROUP BY`.\n  - (d) Execution Order: `WHERE` executes before groups are formed; `HAVING` executes after grouping is completed.\n• Combined Query Example [2 Marks]:\n```sql\nSELECT Dept, COUNT(*), AVG(Salary)\nFROM Employee\nWHERE Status = 'Active'         -- Filters active employee rows before grouping\nGROUP BY Dept\nHAVING AVG(Salary) > 50000;    -- Filters department groups after grouping\n```"
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Consider the table `ITEM`:\nItemNo | ItemName   | Category   | Price | Qty\nI1     | Desktop    | Electronic | 45000 | 10\nI2     | Sofa       | Furniture  | 25000 | 4\nI3     | Printer    | Electronic | 12000 | 15\nI4     | Dining Tbl | Furniture  | 18000 | 6\nI5     | Laptop     | Electronic | 60000 | 8\nI6     | Office Ch  | Furniture  | 5000  | 20\nWrite SQL queries to: [4 Marks]\n(a) Display the Category and average Price of items in each category.\n(b) Display the Category and total quantity in stock for categories having total quantity greater than 15.\n(c) Display the highest and lowest price among 'Electronic' items.\n(d) Display the Category, count of items, and total inventory value (`SUM(Price * Qty)`) category-wise.",
+        "answer": "SQL queries using GROUP BY Category, HAVING SUM(Qty) > 15, MAX/MIN with WHERE, and SUM(Price * Qty).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT Category, AVG(Price) FROM ITEM GROUP BY Category;`\n• (b) `SELECT Category, SUM(Qty) FROM ITEM GROUP BY Category HAVING SUM(Qty) > 15;`\n• (c) `SELECT MAX(Price), MIN(Price) FROM ITEM WHERE Category = 'Electronic';`\n• (d) `SELECT Category, COUNT(*), SUM(Price * Qty) FROM ITEM GROUP BY Category;`"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Predict the output of the following SQL statements on the `ITEM` table above: [4 Marks]\n(a) `SELECT Category, COUNT(*) FROM ITEM GROUP BY Category;`\n(b) `SELECT Category, MAX(Price) FROM ITEM GROUP BY Category HAVING COUNT(*) >= 3;`\n(c) `SELECT SUM(Qty) FROM ITEM WHERE Price > 20000;`\n(d) `SELECT AVG(Price) FROM ITEM WHERE Category = 'Furniture';`",
+        "answer": "(a) Electronic: 3, Furniture: 3; (b) Electronic: 60000, Furniture: 25000; (c) 22; (d) 16000.00",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each output):\n• (a) Electronic: 3 items; Furniture: 3 items.\n• (b) Both categories have 3 items (>=3). Max Electronic = 60000; Max Furniture = 25000.\n• (c) Items with Price > 20000: Desktop(10) + Sofa(4) + Laptop(8) = 10 + 4 + 8 = `22`.\n• (d) Furniture prices: (25000 + 18000 + 5000) / 3 = 48000 / 3 = `16000.00`."
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Consider the table `BANK_ACCOUNT`:\nAccNo | CName         | AccType  | Balance  | Branch\n101   | Ananya Sen    | Savings  | 55000.00 | Delhi\n102   | Bikram Roy    | Current  | 120000.0 | Kolkata\n103   | Chitra Nair   | Savings  | 35000.00 | Delhi\n104   | Dinesh Das    | Savings  | 85000.00 | Mumbai\n105   | Esha Mittal   | Current  | 250000.0 | Delhi\nWrite SQL queries to: [4 Marks]\n(a) Count the number of accounts in each Branch.\n(b) Display the AccType and total balance in each account type.\n(c) Display the Branch and average balance for branches where average balance exceeds ₹70,000.\n(d) Display the maximum balance among 'Savings' accounts.",
+        "answer": "SQL queries using GROUP BY Branch, GROUP BY AccType, HAVING AVG(Balance) > 70000, and MAX(Balance).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT Branch, COUNT(*) FROM BANK_ACCOUNT GROUP BY Branch;`\n• (b) `SELECT AccType, SUM(Balance) FROM BANK_ACCOUNT GROUP BY AccType;`\n• (c) `SELECT Branch, AVG(Balance) FROM BANK_ACCOUNT GROUP BY Branch HAVING AVG(Balance) > 70000;`\n• (d) `SELECT MAX(Balance) FROM BANK_ACCOUNT WHERE AccType = 'Savings';`"
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Explain the concept of 'Aggregate Functions' in MySQL. Detail the syntax and behavior of: [4 Marks]\n(a) `COUNT(*)` vs `COUNT(col)`\n(b) `SUM()` and `AVG()` with NULL values\n(c) `MIN()` and `MAX()` on string columns\nProvide a query example for each.",
+        "answer": "Comprehensive examination of aggregate function behaviors with NULLs, strings, and query examples.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark concept + 1 Mark each subpart):\n• 1. Concept: Aggregate functions process multiple rows from a column or group and return a single summary metric.\n• (a) `COUNT(*)` vs `COUNT(col)`:\n  - `COUNT(*)` counts all rows in the group including NULLs.\n  - `COUNT(col)` ignores NULL values in that specific column.\n• (b) `SUM()` and `AVG()`:\n  - Both ignore NULL values automatically. `AVG()` divides the sum of non-null values by the count of non-null values (not total rows).\n• (c) `MIN()` and `MAX()` on Strings:\n  - `MIN(col)` returns the alphabetically first string (e.g. 'Aman'); `MAX(col)` returns the alphabetically last string (e.g. 'Zoya')."
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Consider the table `VEHICLE`:\nVCode | VType   | Make      | Mileage | Price\nV01   | Car     | Maruti    | 22.5    | 650000\nV02   | SUV     | Mahindra  | 14.0    | 1200000\nV03   | Car     | Hyundai   | 20.0    | 750000\nV04   | TwoWlr  | Honda     | 55.0    | 85000\nV05   | SUV     | Tata      | 16.5    | 1400000\nV06   | TwoWlr  | TVS       | 60.0    | 70000\nWrite SQL queries to: [4 Marks]\n(a) Display VType and the average Mileage for each vehicle type.\n(b) Display VType and count of vehicles where count is greater than 1.\n(c) Display the highest price for each VType in descending order of highest price.\n(d) Display the average price of all 'Car' vehicles.",
+        "answer": "SQL queries using GROUP BY VType, HAVING COUNT(*) > 1, ORDER BY MAX(Price) DESC, and AVG with WHERE.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT VType, AVG(Mileage) FROM VEHICLE GROUP BY VType;`\n• (b) `SELECT VType, COUNT(*) FROM VEHICLE GROUP BY VType HAVING COUNT(*) > 1;`\n• (c) `SELECT VType, MAX(Price) FROM VEHICLE GROUP BY VType ORDER BY MAX(Price) DESC;`\n• (d) `SELECT AVG(Price) FROM VEHICLE WHERE VType = 'Car';`"
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Write the output of the following queries based on the `VEHICLE` table above: [4 Marks]\n(a) `SELECT VType, COUNT(*), MIN(Price) FROM VEHICLE GROUP BY VType;`\n(b) `SELECT AVG(Mileage) FROM VEHICLE WHERE VType = 'TwoWlr';`\n(c) `SELECT VType, MAX(Mileage) FROM VEHICLE GROUP BY VType HAVING AVG(Price) > 500000;`\n(d) `SELECT COUNT(DISTINCT VType) FROM VEHICLE;`",
+        "answer": "(a) Car: 2, 650000; SUV: 2, 1200000; TwoWlr: 2, 70000; (b) 57.5; (c) Car: 22.5, SUV: 16.5; (d) 3",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each output):\n• (a) Groups: Car (2, 650000); SUV (2, 1200000); TwoWlr (2, 70000)\n• (b) TwoWlr mileage: (55.0 + 60.0) / 2 = `57.5`\n• (c) Avg Price > 500000 applies to Car (avg 700000) and SUV (avg 1300000). Max Mileage: Car = `22.5`, SUV = `16.5`\n• (d) Unique VTypes are Car, SUV, TwoWlr → Count = `3`."
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Consider a table `HOTEL` with columns `RoomNo`, `RoomType`, `Tariff`, and `Status` ('Booked'/'Vacant'). Write SQL queries to: [4 Marks]\n(a) Display RoomType and number of rooms available for each type.\n(b) Display RoomType and average Tariff for types having average Tariff greater than ₹4,000.\n(c) Count the total number of 'Vacant' rooms in the hotel.\n(d) Display the highest tariff among 'Booked' rooms.",
+        "answer": "SQL queries using GROUP BY RoomType, HAVING AVG(Tariff) > 4000, COUNT with WHERE, and MAX with WHERE.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query):\n• (a) `SELECT RoomType, COUNT(*) FROM HOTEL GROUP BY RoomType;`\n• (b) `SELECT RoomType, AVG(Tariff) FROM HOTEL GROUP BY RoomType HAVING AVG(Tariff) > 4000;`\n• (c) `SELECT COUNT(*) FROM HOTEL WHERE Status = 'Vacant';`\n• (d) `SELECT MAX(Tariff) FROM HOTEL WHERE Status = 'Booked';`"
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Explain the role of the `GROUP BY` clause with multiple columns using a real-world employee dataset. How does MySQL process a query like `SELECT Dept, Gender, COUNT(*) FROM Emp GROUP BY Dept, Gender;`? [4 Marks]",
+        "answer": "Explanation of multi-column grouping; Breakdown of unique (Dept, Gender) composite groups and counting.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks conceptual explanation + 2 Marks processing walkthrough):\n• 1. Concept [2 Marks]:\n  - Multi-column grouping clusters records by unique composite combinations of values across all specified grouping columns.\n  - Instead of grouping by `Dept` alone, MySQL creates distinct sub-groups for every unique `(Dept, Gender)` pair.\n• 2. Processing Walkthrough [2 Marks]:\n  - Suppose the `Emp` table has departments 'HR' and 'IT' with male and female workers.\n  - MySQL partitions data into 4 composite groups: (HR, Female), (HR, Male), (IT, Female), and (IT, Male).\n  - `COUNT(*)` counts the number of employees within each specific sub-group, providing granular demographic breakdowns."
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 7,
+      "book": "Unit 2: Database Query using SQL",
+      "title": "MySQL: Operations on Relations & Joins",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 2: Database Query using SQL (Joins & Relational Operations)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "If Table A has 4 rows and 3 columns, and Table B has 5 rows and 2 columns, what are the Degree and Cardinality of their Cartesian Product?",
+        "options": [
+          "(a) Degree = 5, Cardinality = 20",
+          "(b) Degree = 20, Cardinality = 5",
+          "(c) Degree = 6, Cardinality = 9",
+          "(d) Degree = 9, Cardinality = 6"
+        ],
+        "answer": "(a) Degree = 5, Cardinality = 20",
+        "explanation": "Degree is the sum of columns = 3 + 2 = 5. Cardinality is the product of rows = 4 × 5 = 20."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "A column in a table whose values are derived from and reference the Primary Key of another table is known as:",
+        "options": [
+          "(a) Candidate Key",
+          "(b) Foreign Key",
+          "(c) Alternate Key",
+          "(d) Composite Key"
+        ],
+        "answer": "(b) Foreign Key",
+        "explanation": "A Foreign Key is a referential constraint pointing to the Primary Key of a referenced parent table, enforcing referential integrity."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is an 'Equi-Join' in SQL?",
+        "options": [
+          "(a) A join where the join condition uses the equality operator (=) to match common column values",
+          "(b) A join that always produces equal number of rows",
+          "(c) A join with only unequal signs",
+          "(d) A Cartesian product without conditions"
+        ],
+        "answer": "(a) A join where the join condition uses the equality operator (=) to match common column values",
+        "explanation": "An Equi-Join matches rows between tables based on the equality (`=`) of values in common join key columns."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "In a relational database, what does the term 'Degree' of a relation signify?",
+        "options": [
+          "(a) Number of rows / tuples",
+          "(b) Number of columns / attributes",
+          "(c) Total size in megabytes",
+          "(d) Number of primary keys"
+        ],
+        "answer": "(b) Number of columns / attributes",
+        "explanation": "Degree refers to the total number of columns (attributes) in a table/relation."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "In a relational database, what does the term 'Cardinality' of a relation signify?",
+        "options": [
+          "(a) Number of columns",
+          "(b) Number of rows / tuples",
+          "(c) Number of foreign keys",
+          "(d) Maximum value in a table"
+        ],
+        "answer": "(b) Number of rows / tuples",
+        "explanation": "Cardinality refers to the total number of rows (tuples/records) in a table/relation."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "What happens when you execute `SELECT * FROM Student, Course;` WITHOUT a WHERE clause specifying a join condition?",
+        "options": [
+          "(a) It throws a syntax error",
+          "(b) It produces a Cartesian Product (Cross Join) pairing every row of Student with every row of Course",
+          "(c) It displays only matching rows",
+          "(d) It displays an empty table"
+        ],
+        "answer": "(b) It produces a Cartesian Product (Cross Join) pairing every row of Student with every row of Course",
+        "explanation": "Querying two tables without a join condition generates an unrestricted Cartesian Product, concatenating every row from the first table with every row of the second."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which of the following is an Alternate Key?",
+        "options": [
+          "(a) A candidate key that was not chosen as the Primary Key",
+          "(b) A foreign key",
+          "(c) A primary key",
+          "(d) A non-unique column"
+        ],
+        "answer": "(a) A candidate key that was not chosen as the Primary Key",
+        "explanation": "All candidate keys that are not selected as the primary key are designated as Alternate Keys."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "How do you avoid column name ambiguity when querying two tables that share a column with identical names (e.g. `DeptID`)?",
+        "options": [
+          "(a) Qualify the column name with the table name (e.g. `Emp.DeptID` or `Dept.DeptID`)",
+          "(b) Rename the column in MySQL settings",
+          "(c) Delete one column",
+          "(d) Use only iloc"
+        ],
+        "answer": "(a) Qualify the column name with the table name (e.g. `Emp.DeptID` or `Dept.DeptID`)",
+        "explanation": "Dot-notation `TableName.ColumnName` (or `Alias.ColumnName`) resolves column ambiguity when identical column names exist in multiple joined tables."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "What is the difference between `UNION` and `UNION ALL` in SQL?",
+        "options": [
+          "(a) UNION eliminates duplicate rows from the final result set, whereas UNION ALL includes all duplicates",
+          "(b) UNION operates on columns, UNION ALL operates on rows",
+          "(c) Both are identical",
+          "(d) UNION ALL is faster but deletes records"
+        ],
+        "answer": "(a) UNION eliminates duplicate rows from the final result set, whereas UNION ALL includes all duplicates",
+        "explanation": "`UNION` performs an implicit distinct sort to eliminate duplicate rows, while `UNION ALL` concatenates datasets retaining all duplicates."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "For two queries to be combined using the `UNION` operator, which condition must be met (Union Compatibility)?",
+        "options": [
+          "(a) Both queries must have the same number of columns in the SELECT clause with compatible data types",
+          "(b) Both tables must have identical names",
+          "(c) Both tables must have identical number of rows",
+          "(d) Both queries must use WHERE"
+        ],
+        "answer": "(a) Both queries must have the same number of columns in the SELECT clause with compatible data types",
+        "explanation": "Union compatibility requires that both participating queries select the exact same number of columns with corresponding compatible data types."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "In a Natural Join between two tables:",
+        "options": [
+          "(a) Common columns appear only once in the result set",
+          "(b) All columns are duplicated",
+          "(c) No columns are displayed",
+          "(d) It requires a manual ON condition"
+        ],
+        "answer": "(a) Common columns appear only once in the result set",
+        "explanation": "A Natural Join automatically matches columns with identical names across tables and suppresses duplicate columns in the output."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Can a Foreign Key column contain `NULL` values?",
+        "options": [
+          "(a) Yes, a Foreign Key can contain NULL values unless defined with NOT NULL",
+          "(b) No, foreign keys can never be NULL",
+          "(c) Only if it is a Primary Key",
+          "(d) Only in temporary tables"
+        ],
+        "answer": "(a) Yes, a Foreign Key can contain NULL values unless defined with NOT NULL",
+        "explanation": "A Foreign Key allows `NULL` values (indicating absence of relationship) unless explicitly declared with a `NOT NULL` constraint."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "How can table aliases be assigned in a FROM clause?",
+        "options": [
+          "(a) `FROM Employee E, Department D`",
+          "(b) `FROM Employee AS E, Department AS D`",
+          "(c) Both (a) and (b) are valid",
+          "(d) Neither is valid"
+        ],
+        "answer": "(c) Both (a) and (b) are valid",
+        "explanation": "In MySQL, table aliases can be declared with or without the optional `AS` keyword: `FROM Table T` or `FROM Table AS T`."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "If Table R has 3 rows and Table S has 0 rows, what is the cardinality of their Cartesian Product (R × S)?",
+        "options": [
+          "(a) 0",
+          "(b) 3",
+          "(c) NULL",
+          "(d) Error"
+        ],
+        "answer": "(a) 0",
+        "explanation": "Cardinality of Cartesian Product = 3 × 0 = 0 rows."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which clause in modern SQL explicitly defines the join condition between two tables?",
+        "options": [
+          "(a) ON",
+          "(b) USING",
+          "(c) Both ON and USING are valid",
+          "(d) AT"
+        ],
+        "answer": "(c) Both ON and USING are valid",
+        "explanation": "Explicit joins use `JOIN Table ON condition` or `JOIN Table USING (common_column)`."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Can a table possess more than one Primary Key?",
+        "options": [
+          "(a) No, a relation can have only one Primary Key (which may be composite)",
+          "(b) Yes, up to 5 primary keys",
+          "(c) Yes, unlimited",
+          "(d) Depends on number of rows"
+        ],
+        "answer": "(a) No, a relation can have only one Primary Key (which may be composite)",
+        "explanation": "A relation can have multiple candidate keys, but exactly one Primary Key can be designated (which may comprise multiple columns as a composite key)."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which of the following joins returns all rows from the Left table along with matched rows from the Right table?",
+        "options": [
+          "(a) LEFT OUTER JOIN",
+          "(b) RIGHT JOIN",
+          "(c) INNER JOIN",
+          "(d) CROSS JOIN"
+        ],
+        "answer": "(a) LEFT OUTER JOIN",
+        "explanation": "`LEFT JOIN` (or `LEFT OUTER JOIN`) preserves all records from the left table, filling with `NULL` where right table matches do not exist."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "What is a 'Composite Primary Key'?",
+        "options": [
+          "(a) A primary key consisting of two or more attributes combined to uniquely identify each tuple",
+          "(b) A primary key stored in two different databases",
+          "(c) A primary key with text data type",
+          "(d) A key with duplicate values"
+        ],
+        "answer": "(a) A primary key consisting of two or more attributes combined to uniquely identify each tuple",
+        "explanation": "When no single column can uniquely identify a record, multiple columns are combined to form a composite primary key."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "If Table A has 6 rows and Table B has 4 rows, and 3 rows have matching keys, how many rows will be returned by an Equi-Join?",
+        "options": [
+          "(a) 3 rows",
+          "(b) 24 rows",
+          "(c) 10 rows",
+          "(d) 7 rows"
+        ],
+        "answer": "(a) 3 rows",
+        "explanation": "An Equi-Join returns only those tuples where the join key matches in both tables (here, 3 matching rows)."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which integrity rule states that 'No component of the primary key can be NULL'?",
+        "options": [
+          "(a) Entity Integrity Rule",
+          "(b) Referential Integrity Rule",
+          "(c) Domain Integrity Rule",
+          "(d) User-defined Integrity"
+        ],
+        "answer": "(a) Entity Integrity Rule",
+        "explanation": "The Entity Integrity constraint mandates that primary key values must be unique and non-null."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "Which integrity rule ensures that a foreign key value must either match an existing primary key value in the referenced table or be NULL?",
+        "options": [
+          "(a) Referential Integrity Rule",
+          "(b) Entity Integrity Rule",
+          "(c) Domain Integrity Rule",
+          "(d) Key Constraint"
+        ],
+        "answer": "(a) Referential Integrity Rule",
+        "explanation": "Referential Integrity ensures that cross-references between tables remain valid, preventing orphaned foreign key values."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What will `SELECT E.Ename, D.Dname FROM Emp E, Dept D WHERE E.DeptNo = D.DeptNo;` perform?",
+        "options": [
+          "(a) Equi-Join between Emp and Dept",
+          "(b) Cartesian Product",
+          "(c) Natural Join without condition",
+          "(d) Union operation"
+        ],
+        "answer": "(a) Equi-Join between Emp and Dept",
+        "explanation": "This is standard SQL syntax for an Equi-Join between tables `Emp` and `Dept` on matching `DeptNo`."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "If two tables have 3 columns each and 1 common column, what is the degree of their Natural Join?",
+        "options": [
+          "(a) 5",
+          "(b) 6",
+          "(c) 9",
+          "(d) 3"
+        ],
+        "answer": "(a) 5",
+        "explanation": "In a Natural Join, the common column appears only once: 3 + 3 - 1 = 5 columns."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What is the result of applying a `WHERE` condition on a Cartesian Product?",
+        "options": [
+          "(a) It filters the cross product rows, turning it into a Join",
+          "(b) It causes a database deadlock",
+          "(c) It deletes the tables",
+          "(d) It doubles the rows"
+        ],
+        "answer": "(a) It filters the cross product rows, turning it into a Join",
+        "explanation": "A Join is conceptually a Cartesian Product filtered by a join predicate in the `WHERE` clause."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Can an aggregate function be used in a query joining two tables?",
+        "options": [
+          "(a) Yes, e.g. `SELECT D.Dname, COUNT(*) FROM Emp E, Dept D WHERE E.DeptNo=D.DeptNo GROUP BY D.Dname;`",
+          "(b) No, aggregate functions cannot be used in joins",
+          "(c) Only MAX() can be used",
+          "(d) Only with single tables"
+        ],
+        "answer": "(a) Yes, e.g. `SELECT D.Dname, COUNT(*) FROM Emp E, Dept D WHERE E.DeptNo=D.DeptNo GROUP BY D.Dname;`",
+        "explanation": "Aggregate functions work seamlessly across joined tables when paired with `GROUP BY`."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): The Degree of the Cartesian Product of two relations is the sum of their individual degrees.\nReason (R): In a Cartesian Product, columns from both relations are placed side-by-side to form combined tuples.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Every tuple in the Cartesian product includes all attributes from Table A followed by all attributes from Table B, so Degree = Degree(A) + Degree(B)."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): A Foreign Key must have the same name as the Primary Key it references.\nReason (R): Referential integrity depends strictly on matching data types and valid domain values, not column names.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: the foreign key column can have a completely different name (e.g. `D_Code` referencing `DeptID`). Reason is true: only compatible data types and domain integrity are required."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): An Equi-Join can be executed using the comma syntax in the FROM clause with a matching condition in WHERE.\nReason (R): The query `SELECT * FROM A, B WHERE A.id = B.id;` is logically equivalent to `SELECT * FROM A JOIN B ON A.id = B.id;`.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. The implicit comma-join syntax with a WHERE clause and the explicit `JOIN ... ON` syntax are semantically identical in SQL."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): A relation can have multiple Primary Keys.\nReason (R): Every candidate key in a table automatically becomes a Primary Key.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both are false: a relation can have only ONE Primary Key; the remaining candidate keys are designated Alternate Keys."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): The Cardinality of the Cartesian Product of two tables with 5 rows and 4 rows is 20.\nReason (R): Cardinality of the Cartesian Product is calculated as Cardinality(A) multiplied by Cardinality(B).",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Every row of the first table pairs with every row of the second table: 5 × 4 = 20."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Table `FLIGHT` has 6 rows and 4 columns, and Table `PASSENGER` has 50 rows and 5 columns. Calculate the Degree and Cardinality of their Cartesian Product. [2 Marks]",
+        "answer": "Degree = 9; Cardinality = 300.",
+        "explanation": "Marking Scheme (1 Mark each):\n• Degree = Columns in Flight + Columns in Passenger = 4 + 5 = `9`.\n• Cardinality = Rows in Flight × Rows in Passenger = 6 × 50 = `300`."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between a 'Primary Key' and a 'Foreign Key' on any two points. [2 Marks]",
+        "answer": "Primary key uniquely identifies rows and cannot be NULL; Foreign key references a primary key and can contain NULLs.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Uniqueness & Nullability: A Primary Key uniquely identifies tuples in its own table and CANNOT contain NULL values. A Foreign Key references a primary key in another table and CAN contain NULL values (unless constrained with NOT NULL).\n• 2. Quantity: A table can have only ONE Primary Key, but it can contain multiple Foreign Keys referencing different tables."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Explain 'Cartesian Product' (Cross Join) with an illustrative example using two small tables. [2 Marks]",
+        "answer": "Cross product pairs every row of first table with every row of second table.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark example):\n• Concept: A binary relational operation that pairs each record of relation A with every record of relation B.\n• Example: If Table `Color` has ['Red', 'Blue'] (2 rows) and Table `Size` has ['S', 'M', 'L'] (3 rows), the Cartesian product generates 2 × 3 = 6 combinations: (Red, S), (Red, M), (Red, L), (Blue, S), (Blue, M), (Blue, L)."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What is an 'Equi-Join'? Write an example query joining `Employee(EmpNo, Ename, DeptNo)` and `Department(DeptNo, Dname)` using table aliases. [2 Marks]",
+        "answer": "Join using equality operator; Query: SELECT E.Ename, D.Dname FROM Employee E, Department D WHERE E.DeptNo = D.DeptNo;",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark query):\n```sql\nSELECT E.Ename, D.Dname\nFROM Employee E, Department D\nWHERE E.DeptNo = D.DeptNo;\n```"
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Differentiate between `UNION` and `UNION ALL` in MySQL with an example. [2 Marks]",
+        "answer": "UNION removes duplicates; UNION ALL retains duplicates.",
+        "explanation": "Marking Scheme (1 Mark distinction + 1 Mark example):\n• `UNION`: Combines results of two queries and removes duplicate records from the final output.\n• `UNION ALL`: Combines results of two queries and retains all duplicate rows.\n• Example: If Query 1 returns [10, 20] and Query 2 returns [20, 30], `UNION` outputs [10, 20, 30] while `UNION ALL` outputs [10, 20, 20, 30]."
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is 'Referential Integrity'? Which constraint enforces referential integrity in a relational database? [2 Marks]",
+        "answer": "Ensures foreign key references valid existing primary keys; Enforced by the FOREIGN KEY constraint.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark constraint):\n• Definition: A database rule ensuring that relationships between tables remain consistent; a foreign key value must match an existing primary key value in the referenced table, or be NULL.\n• Constraint: Enforced by the `FOREIGN KEY ... REFERENCES` constraint."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Explain 'Candidate Key' and 'Alternate Key' with an example table. [3 Marks]",
+        "answer": "Candidate keys are all candidate unique attributes; Primary key is the chosen one; Remaining candidate keys are alternate keys.",
+        "explanation": "Marking Scheme (1.5 Marks Candidate Key + 1.5 Marks Alternate Key):\n• Candidate Key: Any attribute (or set of attributes) capable of uniquely identifying a tuple in a table without containing redundant columns.\n• Alternate Key: A candidate key that was not chosen as the Primary Key.\n• Example: In a `STUDENT` table with `AdmNo`, `RollNo`, and `AadhaarNo`, all three are Candidate Keys. If `AdmNo` is chosen as Primary Key, then `RollNo` and `AadhaarNo` become Alternate Keys."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Why is table aliasing useful in SQL Joins? Give an example. [2 Marks]",
+        "answer": "Shortens query syntax, improves readability, and resolves self-join or column ambiguities.",
+        "explanation": "Marking Scheme (1 Mark benefits + 1 Mark example):\n• Benefits: Table aliases (e.g. `Employee E`) provide short substitute names, reducing typing in complex queries and qualifying ambiguous columns.\n• Example: `SELECT E.Name, D.Location FROM Employee E, Department D WHERE E.DeptID = D.DeptID;`"
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "What is a 'Natural Join'? How does it differ from a standard Equi-Join? [2 Marks]",
+        "answer": "Natural Join automatically matches columns of same name and eliminates duplicate columns in output.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark distinction):\n• Concept: A special type of Equi-Join that automatically compares all columns having matching names across two tables.\n• Difference: In a standard Equi-Join, the common join column appears twice if `SELECT *` is used. In a Natural Join, duplicate common columns are automatically eliminated from the output."
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "Can two tables be joined if they do not have a column with the exact same name? Explain. [2 Marks]",
+        "answer": "Yes, as long as the columns have matching/compatible data types and domains; name need not be identical.",
+        "explanation": "Marking Scheme:\n• Yes, two tables can be joined even if column names differ, provided the columns store compatible data types from the same domain.\n• Example: `SELECT * FROM Orders O, Customer C WHERE O.Cust_Code = C.CustomerID;`"
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Consider the following two tables `DOCTOR` and `DEPARTMENT`:\nTable: DOCTOR\nDocID | DocName      | DeptID | Salary\nD01   | Dr. Sen      | D101   | 85000\nD02   | Dr. Sharma   | D102   | 60000\nD03   | Dr. Roy      | D101   | 90000\nD04   | Dr. John     | D103   | 75000\n\nTable: DEPARTMENT\nDeptID | DeptName     | Block\nD101   | Cardiology   | A-Wing\nD102   | Pediatrics   | B-Wing\nD103   | Neurology    | C-Wing\nD104   | Oncology     | D-Wing\n\nWrite SQL queries to: [4 Marks]\n(a) Display DocName, DeptName, and Salary of all doctors using an Equi-Join.\n(b) Display DocName and Block for all doctors earning more than ₹70,000.\n(c) Display the DeptName and average Salary of doctors in each department.\n(d) What is the Degree and Cardinality of the Cartesian Product of these two tables?",
+        "answer": "SQL queries for equi-join, join with filter, join with group by, and degree/cardinality calculations.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `SELECT D.DocName, Dept.DeptName, D.Salary FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID;`\n• (b) `SELECT D.DocName, Dept.Block FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID AND D.Salary > 70000;`\n• (c) `SELECT Dept.DeptName, AVG(D.Salary) FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID GROUP BY Dept.DeptName;`\n• (d) DOCTOR has 4 rows, 4 cols. DEPARTMENT has 4 rows, 3 cols.\n  Degree = 4 + 3 = `7`.\n  Cardinality = 4 × 4 = `16`."
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Predict the output of the following queries based on the `DOCTOR` and `DEPARTMENT` tables above: [4 Marks]\n(a) `SELECT D.DocName, Dept.DeptName FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID AND Dept.Block = 'A-Wing';`\n(b) `SELECT Dept.DeptName, COUNT(*) FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID GROUP BY Dept.DeptName;`\n(c) `SELECT MAX(D.Salary) FROM DOCTOR D, DEPARTMENT Dept WHERE D.DeptID = Dept.DeptID AND Dept.DeptName = 'Cardiology';`\n(d) `SELECT COUNT(*) FROM DOCTOR, DEPARTMENT;`",
+        "answer": "(a) Dr. Sen - Cardiology, Dr. Roy - Cardiology; (b) Cardiology: 2, Neurology: 1, Pediatrics: 1; (c) 90000; (d) 16",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each output):\n• (a) A-Wing corresponds to DeptID D101 (Cardiology). Output:\n  Dr. Sen    | Cardiology\n  Dr. Roy    | Cardiology\n• (b) Count per department:\n  Cardiology | 2\n  Neurology  | 1\n  Pediatrics | 1\n• (c) Cardiology salaries are 85000 and 90000. `MAX` = `90000`.\n• (d) Cartesian product row count = 4 × 4 = `16`."
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Consider the following relational schema for a library management system:\nTable: BOOK\nBookID | Title               | AuthorID | Price\nB1     | Python Programming | A01      | 550\nB2     | Database Systems   | A02      | 620\nB3     | Data Structures    | A01      | 480\nB4     | Computer Networks  | A03      | 700\n\nTable: AUTHOR\nAuthorID | AuthorName   | Country\nA01      | Mark Lutz    | USA\nA02      | Elmasri      | USA\nA03      | Tanenbaum    | Netherlands\nA04      | Balagurusamy | India\n\nWrite SQL queries to: [4 Marks]\n(a) Display Title, AuthorName, and Price of all books.\n(b) Display all books written by authors from 'USA'.\n(c) Count the number of books written by each author (display AuthorName and Count).\n(d) Identify the Primary Key and Foreign Key in table BOOK.",
+        "answer": "SQL queries for equi-join, join with WHERE condition, join with GROUP BY, and key identification.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `SELECT B.Title, A.AuthorName, B.Price FROM BOOK B, AUTHOR A WHERE B.AuthorID = A.AuthorID;`\n• (b) `SELECT B.Title, A.AuthorName FROM BOOK B, AUTHOR A WHERE B.AuthorID = A.AuthorID AND A.Country = 'USA';`\n• (c) `SELECT A.AuthorName, COUNT(*) FROM BOOK B, AUTHOR A WHERE B.AuthorID = A.AuthorID GROUP BY A.AuthorName;`\n• (d) In table BOOK:\n  - Primary Key: `BookID`\n  - Foreign Key: `AuthorID` (references AUTHOR.AuthorID)"
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Explain the four relational key concepts using the `BOOK` and `AUTHOR` schema above: [4 Marks]\n(a) Primary Key\n(b) Candidate Key\n(c) Alternate Key\n(d) Foreign Key",
+        "answer": "Definitions and specific identifications of Primary Key, Candidate Key, Alternate Key, and Foreign Key from the schema.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each key concept):\n• (a) Primary Key: A unique, non-null identifier chosen for the table. In `BOOK`, it is `BookID`; in `AUTHOR`, it is `AuthorID`.\n• (b) Candidate Key: All columns or attribute sets capable of uniquely identifying a record. In `AUTHOR`, both `AuthorID` and `AuthorName` (assuming unique names) are candidate keys.\n• (c) Alternate Key: Candidate keys not chosen as the primary key. If `AuthorID` is primary key, `AuthorName` is an alternate key.\n• (d) Foreign Key: An attribute in one table that references the primary key of another table. `AuthorID` in `BOOK` is a foreign key referencing `AuthorID` in `AUTHOR`."
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Consider the tables `STUDENT` and `STREAM`:\nTable: STUDENT\nRollNo | Name         | SCode | Marks\n1      | Akash Gupta  | S01   | 88\n2      | Divya Nair   | S02   | 92\n3      | Rohan Mehra  | S01   | 75\n4      | Simran Kaur  | S03   | 82\n\nTable: STREAM\nSCode | StreamName  | Fee\nS01   | Science     | 45000\nS02   | Commerce    | 35000\nS03   | Humanities  | 30000\n\nWrite SQL queries to: [4 Marks]\n(a) Display Name, StreamName, and Fee for all students.\n(b) Display Name and Fee for students with Marks > 80.\n(c) Display the StreamName and highest Marks scored in each stream.\n(d) What is the cardinality and degree of the natural join of these tables?",
+        "answer": "SQL queries for equi-join, join with filter, join with group by, and natural join properties.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `SELECT S.Name, St.StreamName, St.Fee FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode;`\n• (b) `SELECT S.Name, St.Fee FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode AND S.Marks > 80;`\n• (c) `SELECT St.StreamName, MAX(S.Marks) FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode GROUP BY St.StreamName;`\n• (d) Degree of Natural Join = 4 + 3 - 1 (common SCode) = `6`.\n  Cardinality of Natural Join = `4` (all 4 students have matching streams)."
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Predict the output of the following SQL statements on the `STUDENT` and `STREAM` tables above: [4 Marks]\n(a) `SELECT S.Name, St.StreamName FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode AND St.StreamName = 'Science';`\n(b) `SELECT St.StreamName, AVG(S.Marks) FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode GROUP BY St.StreamName;`\n(c) `SELECT COUNT(DISTINCT St.SCode) FROM STUDENT S, STREAM St WHERE S.SCode = St.SCode;`\n(d) `SELECT S.Name, St.Fee FROM STUDENT S JOIN STREAM St ON S.SCode = St.SCode WHERE S.Marks = (SELECT MAX(Marks) FROM STUDENT);`",
+        "answer": "(a) Akash Gupta - Science, Rohan Mehra - Science; (b) Commerce: 92.0, Humanities: 82.0, Science: 81.5; (c) 3; (d) Divya Nair, 35000",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each output):\n• (a) SCode S01 matches Akash Gupta and Rohan Mehra:\n  Akash Gupta | Science\n  Rohan Mehra | Science\n• (b) Average Marks per stream:\n  Commerce   | 92.00\n  Humanities | 82.00\n  Science    | (88 + 75)/2 = 81.50\n• (c) Distinct SCodes matched: S01, S02, S03 → `3`\n• (d) Max marks is 92 (Divya Nair, S02 Commerce, Fee = 35000):\n  Divya Nair | 35000"
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Explain the concept of 'Cartesian Product' and how it is transformed into an 'Equi-Join'. Why is an unrestricted Cartesian Product rarely used in production databases? [4 Marks]",
+        "answer": "Explanation of Cartesian product mechanics; Transformation via WHERE clause equality; Dangers of combinatorial row explosion in production.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concept & transformation + 2 Marks production risks):\n• 1. Concept & Transformation [2 Marks]:\n  - A Cartesian Product (Cross Join) combines every tuple of relation A with every tuple of relation B, resulting in `M × N` rows.\n  - An Equi-Join transforms this unrestricted cross product by applying a filter condition (`WHERE TableA.Key = TableB.Key`), retaining only records where key values match.\n• 2. Dangers in Production Databases [2 Marks]:\n  - Combinatorial Explosion: If Table A has 100,000 customers and Table B has 1,000,000 orders, an unconstrained Cartesian Product generates `100,000 × 1,000,000 = 100,000,000,000` (100 billion) rows.\n  - Performance Impact: This consumes vast CPU and memory bandwidth, freezing database servers and degrading system responsiveness."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Consider two tables `SUPPLIER` (SuppID, SName, City) and `PARTS` (PartNo, PName, SuppID, Cost). Write SQL statements to: [4 Marks]\n(a) Display PartNo, PName, and SName for all parts costing more than ₹500.\n(b) Display SName and total cost of parts supplied by each supplier.\n(c) Display SName and City of suppliers who have not supplied any parts.\n(d) Display the Cartesian Product of SUPPLIER and PARTS.",
+        "answer": "SQL statements for equi-join with price condition, join with group by, outer join / subquery, and cross join.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each part):\n• (a) `SELECT P.PartNo, P.PName, S.SName FROM PARTS P, SUPPLIER S WHERE P.SuppID = S.SuppID AND P.Cost > 500;`\n• (b) `SELECT S.SName, SUM(P.Cost) FROM SUPPLIER S, PARTS P WHERE S.SuppID = P.SuppID GROUP BY S.SName;`\n• (c) `SELECT SName, City FROM SUPPLIER WHERE SuppID NOT IN (SELECT DISTINCT SuppID FROM PARTS);`\n• (d) `SELECT * FROM SUPPLIER, PARTS;`"
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "Explain the difference between `INNER JOIN`, `LEFT JOIN`, and `RIGHT JOIN` with simple diagrams or tabular illustrations. [4 Marks]",
+        "answer": "Inner Join: matching records only; Left Join: all left records + matching right; Right Join: all right records + matching left.",
+        "explanation": "Step-by-Step Marking Scheme (1.33 Marks each join type):\n• 1. `INNER JOIN`: Returns only those records that have matching values in both tables. Unmatched rows from both tables are discarded.\n• 2. `LEFT JOIN` (Left Outer Join): Returns ALL records from the left table, plus matched records from the right table. If there is no match on the right, `NULL` values are returned for right-table columns.\n• 3. `RIGHT JOIN` (Right Outer Join): Returns ALL records from the right table, plus matched records from the left table. If there is no match on the left, `NULL` values are returned for left-table columns."
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Given two tables `STUDENT_SPORTS` and `STUDENT_MUSIC` with identical schemas `(AdmNo, StudentName, Grade)`:\nWrite SQL queries to: [4 Marks]\n(a) Display all students participating in either Sports or Music without duplicates using `UNION`.\n(b) Display all students participating in either Sports or Music including duplicates using `UNION ALL`.\n(c) What conditions must both tables satisfy to execute `UNION` successfully?",
+        "answer": "Queries using UNION, UNION ALL, and explanation of union compatibility.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each query + 2 Marks union compatibility):\n• (a) `SELECT AdmNo, StudentName, Grade FROM STUDENT_SPORTS UNION SELECT AdmNo, StudentName, Grade FROM STUDENT_MUSIC;`\n• (b) `SELECT AdmNo, StudentName, Grade FROM STUDENT_SPORTS UNION ALL SELECT AdmNo, StudentName, Grade FROM STUDENT_MUSIC;`\n• (c) Union Compatibility Conditions [2 Marks]:\n  1. Both SELECT statements must specify the exact same number of columns.\n  2. The corresponding columns in each query must have compatible data types."
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 8,
+      "book": "Unit 3: Introduction to Computer Networks",
+      "title": "Computer Networks: Types, Topologies, Media & Devices",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 3: Computer Networks (Hardware, Media & Architectures)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which network hardware device is considered 'intelligent' because it forwards incoming data packets ONLY to the specific destination port using its MAC address table?",
+        "options": [
+          "(a) Hub",
+          "(b) Switch",
+          "(c) Repeater",
+          "(d) Modem"
+        ],
+        "answer": "(b) Switch",
+        "explanation": "A Switch is an intelligent Layer-2 device that inspects the destination MAC address of incoming frames and forwards them solely to the intended recipient port, unlike a Hub which broadcasts to all ports."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which guided transmission medium transmits data signals as pulses of light and is completely immune to Electromagnetic Interference (EMI)?",
+        "options": [
+          "(a) Unshielded Twisted Pair (UTP)",
+          "(b) Coaxial Cable",
+          "(c) Optical Fiber Cable",
+          "(d) Shielded Twisted Pair (STP)"
+        ],
+        "answer": "(c) Optical Fiber Cable",
+        "explanation": "Optical fiber cables transmit digital data as light pulses through a glass core via Total Internal Reflection, offering high bandwidth and immunity to electromagnetic noise."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "In which network topology does the failure of a single central connection node (Hub/Switch) cause the entire network to collapse?",
+        "options": [
+          "(a) Star Topology",
+          "(b) Bus Topology",
+          "(c) Mesh Topology",
+          "(d) Ring Topology"
+        ],
+        "answer": "(a) Star Topology",
+        "explanation": "In a Star topology, all workstations connect to a central hub/switch; if the central node fails, all communication across the network halts."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is the primary function of a 'Repeater' in a computer network?",
+        "options": [
+          "(a) To store passwords",
+          "(b) To amplify and regenerate attenuated signals over long cable distances",
+          "(c) To translate between different network protocols",
+          "(d) To block malware"
+        ],
+        "answer": "(b) To amplify and regenerate attenuated signals over long cable distances",
+        "explanation": "A repeater regenerates electrical or optical signals that have weakened (attenuated) over long transmission distances (typically placed when cable length exceeds 70-100 meters)."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which type of network spans a small geographical area, such as a single room, an office, or a school campus?",
+        "options": [
+          "(a) WAN",
+          "(b) MAN",
+          "(c) LAN",
+          "(d) PAN"
+        ],
+        "answer": "(c) LAN",
+        "explanation": "A Local Area Network (LAN) connects computers within a localized boundary such as a building or school campus."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "A MAC (Media Access Control) address is a physical hardware address consisting of how many bits?",
+        "options": [
+          "(a) 32 bits",
+          "(b) 48 bits (6 bytes)",
+          "(c) 64 bits",
+          "(d) 128 bits"
+        ],
+        "answer": "(b) 48 bits (6 bytes)",
+        "explanation": "A MAC address is a 48-bit (6-byte) unique hardware identifier permanently burned into the Network Interface Card (NIC) by the manufacturer."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which network device connects two completely dissimilar networks that use DIFFERENT communication protocols, acting as a protocol converter?",
+        "options": [
+          "(a) Gateway",
+          "(b) Bridge",
+          "(c) Hub",
+          "(d) Repeater"
+        ],
+        "answer": "(a) Gateway",
+        "explanation": "A Gateway operates across multiple protocol layers to translate data packets between dissimilar network architectures running different protocols."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "Which wireless transmission medium requires strict 'Line of Sight' (LOS) alignment and cannot penetrate solid walls, making it common in television remotes?",
+        "options": [
+          "(a) Radio Waves",
+          "(b) Infrared Waves",
+          "(c) Satellite Communication",
+          "(d) Microwaves"
+        ],
+        "answer": "(b) Infrared Waves",
+        "explanation": "Infrared communication is a short-range, high-frequency line-of-sight technology that cannot penetrate physical walls."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "In which topology are all network workstations connected to a single continuous central transmission cable (backbone)?",
+        "options": [
+          "(a) Bus Topology",
+          "(b) Star Topology",
+          "(c) Mesh Topology",
+          "(d) Ring Topology"
+        ],
+        "answer": "(a) Bus Topology",
+        "explanation": "In a Bus topology, all nodes share a single common communication backbone cable fitted with terminators at both ends."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What is the primary role of a 'Modem' in data communications?",
+        "options": [
+          "(a) Modulation and Demodulation (converting digital signals to analog and vice versa)",
+          "(b) Filtering spam emails",
+          "(c) Storing web pages",
+          "(d) Encrypting databases"
+        ],
+        "answer": "(a) Modulation and Demodulation (converting digital signals to analog and vice versa)",
+        "explanation": "A Modem (Modulator-Demodulator) converts outgoing digital computer signals into analog signals for transmission across phone/cable lines, and vice versa."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Connecting a smartphone to a wireless Bluetooth headset within a range of 10 meters creates which type of network?",
+        "options": [
+          "(a) LAN",
+          "(b) PAN (Personal Area Network)",
+          "(c) MAN",
+          "(d) WAN"
+        ],
+        "answer": "(b) PAN (Personal Area Network)",
+        "explanation": "A Personal Area Network (PAN) covers short-range personal device connectivity (typically within 10 meters) using Bluetooth or USB."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which connector is standardly used to terminate Twisted Pair cables (UTP/STP) into an Ethernet Network Interface Card?",
+        "options": [
+          "(a) RJ-45",
+          "(b) RJ-11",
+          "(c) BNC",
+          "(d) USB Type-A"
+        ],
+        "answer": "(a) RJ-45",
+        "explanation": "RJ-45 (Registered Jack 45) is the standard 8-pin physical connector used for Ethernet twisted pair cabling."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "A network device that connects two LAN segments operating on the SAME protocol and filters network traffic based on MAC addresses is a:",
+        "options": [
+          "(a) Bridge",
+          "(b) Gateway",
+          "(c) Modem",
+          "(d) Repeater"
+        ],
+        "answer": "(a) Bridge",
+        "explanation": "A Bridge connects two LAN segments running identical protocols, inspecting MAC addresses to forward or filter local traffic."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which topology provides the highest fault tolerance and redundancy because every node has a dedicated point-to-point link to every other node?",
+        "options": [
+          "(a) Mesh Topology",
+          "(b) Star Topology",
+          "(c) Bus Topology",
+          "(d) Ring Topology"
+        ],
+        "answer": "(a) Mesh Topology",
+        "explanation": "In a fully connected Mesh topology, dedicated links connect every pair of nodes, ensuring that if one link fails, alternative pathways remain."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Cable television networks operating across an entire metropolitan city are classic examples of which network type?",
+        "options": [
+          "(a) MAN (Metropolitan Area Network)",
+          "(b) PAN",
+          "(c) LAN",
+          "(d) SAN"
+        ],
+        "answer": "(a) MAN (Metropolitan Area Network)",
+        "explanation": "A Metropolitan Area Network (MAN) spans an entire municipality or city-wide territory (e.g. cable TV distribution networks)."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What is the primary difference between a 'Hub' and a 'Switch'?",
+        "options": [
+          "(a) A Hub broadcasts incoming data to all connected ports; a Switch unicasts data only to the destination port",
+          "(b) A Hub is wireless; a Switch is wired",
+          "(c) A Hub is intelligent; a Switch is passive",
+          "(d) Both operate identically"
+        ],
+        "answer": "(a) A Hub broadcasts incoming data to all connected ports; a Switch unicasts data only to the destination port",
+        "explanation": "A Hub is a non-intelligent broadcasting device; a Switch maintains a MAC table to direct traffic specifically to the destination device."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which network device examines destination IP addresses to route data packets across interconnected networks along optimal paths?",
+        "options": [
+          "(a) Router",
+          "(b) Hub",
+          "(c) Repeater",
+          "(d) Bridge"
+        ],
+        "answer": "(a) Router",
+        "explanation": "A Router is a Layer-3 internetworking device that uses routing tables and IP addresses to forward packets across different networks."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "Which unguided medium uses geostationary satellites orbiting approximately 36,000 km above the equator to relay signals across continents?",
+        "options": [
+          "(a) Satellite Communication",
+          "(b) Infrared",
+          "(c) Bluetooth",
+          "(d) Terrestrial cable"
+        ],
+        "answer": "(a) Satellite Communication",
+        "explanation": "Satellite communication utilizes geostationary transponders positioned ~36,000 km in space for global telecommunications and broadcasting."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Why is Twisted Pair cabling twisted in pairs along its length?",
+        "options": [
+          "(a) To reduce crosstalk and electromagnetic interference (EMI) between adjacent wire pairs",
+          "(b) To make the cable look thicker",
+          "(c) To double the voltage",
+          "(d) To make it waterproof"
+        ],
+        "answer": "(a) To reduce crosstalk and electromagnetic interference (EMI) between adjacent wire pairs",
+        "explanation": "Twisting pairs equalizes external electromagnetic interference on both wires, allowing the differential signal to cancel out noise and crosstalk."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which of the following represents a valid MAC address in hexadecimal notation?",
+        "options": [
+          "(a) 00:1A:2B:3C:4D:5E",
+          "(b) 192.168.1.1",
+          "(c) 256.0.0.1",
+          "(d) www.cbse.nic.in"
+        ],
+        "answer": "(a) 00:1A:2B:3C:4D:5E",
+        "explanation": "A MAC address is written as six groups of two hexadecimal digits separated by colons or hyphens (48 bits in total)."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "Which network type connects disparate networks across countries and continents worldwide?",
+        "options": [
+          "(a) WAN (Wide Area Network)",
+          "(b) LAN",
+          "(c) PAN",
+          "(d) MAN"
+        ],
+        "answer": "(a) WAN (Wide Area Network)",
+        "explanation": "The Internet is the ultimate example of a Wide Area Network (WAN), spanning nations and continents."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What is the phenomenon called when a signal loses its strength and energy as it travels along a transmission medium over distance?",
+        "options": [
+          "(a) Attenuation",
+          "(b) Amplification",
+          "(c) Modulation",
+          "(d) Reflection"
+        ],
+        "answer": "(a) Attenuation",
+        "explanation": "Attenuation is the gradual loss of signal intensity as it propagates through a transmission medium, requiring repeaters over long spans."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which wireless communication technology is used for short-range line-of-sight high-bandwidth transmission using parabolic dish antennas mounted on towers?",
+        "options": [
+          "(a) Microwave Communication",
+          "(b) Fiber optics",
+          "(c) Twisted pair",
+          "(d) Bluetooth"
+        ],
+        "answer": "(a) Microwave Communication",
+        "explanation": "Terrestrial microwave systems use directional parabolic dish antennas mounted on towers for point-to-point line-of-sight transmission."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "A Tree topology is best described as a combination of which two fundamental topologies?",
+        "options": [
+          "(a) Star and Bus topologies",
+          "(b) Ring and Mesh topologies",
+          "(c) Bus and Ring topologies",
+          "(d) Star and Mesh topologies"
+        ],
+        "answer": "(a) Star and Bus topologies",
+        "explanation": "Tree topology integrates multiple star-configured networks connected together via a linear bus backbone cable."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which network hardware card must be physically installed inside a computer to enable it to connect to an Ethernet network?",
+        "options": [
+          "(a) NIC (Network Interface Card)",
+          "(b) Sound Card",
+          "(c) Graphics Card",
+          "(d) TV Tuner Card"
+        ],
+        "answer": "(a) NIC (Network Interface Card)",
+        "explanation": "A Network Interface Card (NIC / Ethernet controller) provides the physical interface and dedicated MAC address needed for network connectivity."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): Optical fiber cables provide significantly higher data transmission speeds compared to copper twisted-pair cables.\nReason (R): Optical fiber cables transmit data as pulses of light through high-grade glass cores, experiencing minimal attenuation and zero electromagnetic interference.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Light transmission via total internal reflection allows optical fibers to achieve gigabit speeds without electromagnetic noise."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): A Switch reduces network traffic collisions compared to a traditional Hub.\nReason (R): A Switch establishes dedicated point-to-point virtual circuits between communicating ports rather than broadcasting packets to every port.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. By isolating traffic to destination ports, a switch eliminates unnecessary packet broadcasts and prevents collisions."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): Star topology is the most widely deployed topology in modern enterprise local area networks.\nReason (R): In Star topology, the failure of a single workstation cable does not bring down the rest of the network.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Workstations have independent cables to the central switch, so individual line faults do not disrupt other connected devices."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): A Gateway and a Router perform the exact same network functions and are completely interchangeable.\nReason (R): A Gateway is used only to amplify physical electrical signals over long distances.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both are false: Routers route packets between networks using the same protocol suite (IP), while Gateways perform protocol conversion between dissimilar networks. Signal amplification is done by repeaters."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): A MAC address changes whenever a computer connects to a different Wi-Fi network.\nReason (R): MAC addresses are physical 48-bit hardware identifiers permanently embedded in the Network Interface Card.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: IP addresses change across networks, but MAC addresses are permanent physical hardware identifiers. Reason is true."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between a 'Hub' and a 'Switch' on any two points. [2 Marks]",
+        "answer": "Hub broadcasts to all ports and causes collisions; Switch forwards specifically using MAC table with dedicated bandwidth.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Forwarding Method: A Hub broadcasts incoming data frames to every connected port regardless of destination. A Switch inspects the destination MAC address and transmits data only to the specific intended port.\n• 2. Intelligence & Collision: A Hub is a non-intelligent physical layer device sharing bandwidth across a single collision domain. A Switch is an intelligent data link device providing dedicated bandwidth per port."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Explain 'Star Topology'. Mention one major advantage and one disadvantage. [2 Marks]",
+        "answer": "Nodes connect to central hub/switch; Advantage: easy fault isolation; Disadvantage: single point of failure at central node.",
+        "explanation": "Marking Scheme (1 Mark concept + 0.5 Mark advantage + 0.5 Mark disadvantage):\n• Concept: A network architecture where each workstation is connected via an independent cable to a central connecting device (hub or switch).\n• Advantage: Fault Isolation — failure of an individual workstation or cable does not affect the rest of the network.\n• Disadvantage: Central Failure Dependency — if the central hub/switch fails, the entire network goes down."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What is a 'Repeater'? When and why is it installed in a network layout? [2 Marks]",
+        "answer": "Device that amplifies and regenerates attenuated signals; Installed when cable run exceeds 70-100 meters.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark installation criteria):\n• Definition: A network hardware device that receives weakened (attenuated) signals, amplifies/regenerates them to their original strength, and retransmits them.\n• Installation Criteria: Installed whenever the transmission distance between two network blocks or buildings exceeds 70 to 100 meters to prevent packet loss."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between 'Guided Media' and 'Unguided Media' with two examples of each. [2 Marks]",
+        "answer": "Guided uses physical cables (Twisted pair, Fiber); Unguided uses electromagnetic waves through air (Radio waves, Infrared).",
+        "explanation": "Marking Scheme (1 Mark distinction + 1 Mark examples):\n• 1. Guided (Wired) Media: Data signals are physically confined and guided along a physical conductor or glass wire. Examples: Twisted Pair Cable, Coaxial Cable, Optical Fiber Cable.\n• 2. Unguided (Wireless) Media: Data signals are transmitted through the air/space as electromagnetic waves without physical conduits. Examples: Radio waves, Microwaves, Infrared, Satellite communication."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Differentiate between a 'Router' and a 'Gateway'. [2 Marks]",
+        "answer": "Router connects networks with same protocol (IP); Gateway connects networks with completely dissimilar protocols.",
+        "explanation": "Marking Scheme (1 Mark each):\n• Router: An internetworking device that forwards data packets between different networks using the same protocol suite (TCP/IP) by determining the most efficient transmission path based on IP addresses.\n• Gateway: A protocol converter that interconnects two completely dissimilar networks running entirely different communication protocols, translating data across protocol stacks."
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is a 'MAC Address'? How does it differ from an 'IP Address'? [2 Marks]",
+        "answer": "MAC is a permanent 48-bit physical hardware address; IP is a logical 32-bit/128-bit address assigned by network configuration.",
+        "explanation": "Marking Scheme (1 Mark each):\n• MAC Address: A 48-bit (6-byte) physical hardware address permanently etched into the NIC by the manufacturer; it never changes regardless of location.\n• IP Address: A logical numerical address (e.g. 32-bit IPv4 or 128-bit IPv6) assigned dynamically or statically by the network configuration, changing based on the host's network location."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Explain 'Bus Topology'. Mention one advantage and one limitation. [2 Marks]",
+        "answer": "Nodes connect to single central backbone cable; Advantage: minimal cabling cost; Limitation: backbone failure stops whole network.",
+        "explanation": "Marking Scheme (1 Mark concept + 0.5 Mark advantage + 0.5 Mark limitation):\n• Concept: A linear architecture where all computers share a single central coaxial cable (backbone) with terminators at both ends.\n• Advantage: Economical & Easy to Install — requires minimal cable length compared to star or mesh.\n• Limitation: Single Point of Failure — if the central backbone cable breaks, the entire network goes down."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "State two advantages of 'Optical Fiber Cable' over 'Twisted Pair Cable'. [2 Marks]",
+        "answer": "Much higher transmission bandwidth/speed and complete immunity to electromagnetic interference (EMI).",
+        "explanation": "Marking Scheme (1 Mark each advantage):\n• 1. Extremely High Bandwidth & Speed: Transmits data at gigabit and terabit speeds over very long distances with negligible attenuation.\n• 2. Immunity to EMI: Because data travels as light through glass, it is unaffected by electrical noise, radio frequency interference, or lightning strikes."
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "Classify the following networks as PAN, LAN, MAN, or WAN: [2 Marks]\n(a) Wireless connection between a laptop and Bluetooth speaker in a room.\n(b) Computers connected inside an entire university campus.\n(c) Cable TV network across Mumbai city.\n(d) Automated Teller Machines (ATMs) connected across India.",
+        "answer": "(a) PAN; (b) LAN; (c) MAN; (d) WAN.",
+        "explanation": "Marking Scheme (0.5 Mark each):\n• (a) Bluetooth speaker: PAN (Personal Area Network)\n• (b) University campus: LAN (Local Area Network)\n• (c) City-wide cable TV: MAN (Metropolitan Area Network)\n• (d) Nationwide ATMs: WAN (Wide Area Network)"
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "What is 'Attenuation'? How is it tackled in network design? [2 Marks]",
+        "answer": "Loss of signal strength over transmission distance; Tackled by installing repeaters or amplifiers at regular intervals.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark solution):\n• Attenuation: The natural degradation and loss of signal strength as data pulses travel along a transmission medium over distance.\n• Solution: Network designers install Repeaters or signal amplifiers at designated intervals (e.g. every 70-100m for copper cables) to regenerate signals."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Provide a comprehensive comparative analysis of the three major guided transmission media across: [4 Marks]\n(a) Twisted Pair Cable (UTP/STP)\n(b) Coaxial Cable\n(c) Optical Fiber Cable\nEvaluate them based on: Data Transfer Rate, Installation Cost, Immunity to Noise, and Transmission Distance.",
+        "answer": "Comparative table evaluating Twisted Pair, Coaxial, and Optical Fiber across speed, cost, EMI immunity, and range.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each parameter across all 3 media):\n• 1. Data Transfer Rate: Optical Fiber is highest (Gbps to Tbps); Coaxial is moderate (10–100 Mbps); Twisted Pair ranges from 10 Mbps to 10 Gbps depending on Category (Cat5e/Cat6).\n• 2. Installation Cost: Twisted Pair is cheapest and easiest to crimp; Coaxial is moderate; Optical Fiber is most expensive, requiring specialized splicing equipment.\n• 3. Immunity to Noise: Optical Fiber is 100% immune to EMI and radio interference; Coaxial has good shielding; Twisted Pair is moderately susceptible to electrical interference.\n• 4. Transmission Distance: Optical Fiber can transmit over tens of kilometers without repeaters; Coaxial reaches several hundred meters; Twisted Pair is typically limited to 100 meters without repeaters."
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the characteristics, working mechanism, advantages, and limitations of 'Star Topology'. Why is it preferred over 'Bus Topology' in modern school computer labs? [4 Marks]",
+        "answer": "Star topology breakdown; Contrast with bus topology on reliability, fault isolation, and troubleshooting ease.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks characteristics & diagram/mechanism + 2 Marks comparative justification):\n• 1. Star Topology Characteristics & Working [2 Marks]:\n  - In a Star topology, every host computer connects via a dedicated point-to-point cable directly to a central networking hub or switch.\n  - Data sent from one host passes to the central switch, which forwards it to the intended recipient.\n• 2. Why Star is Preferred in Modern Labs [2 Marks]:\n  - Fault Isolation: If one student's computer cable breaks or gets unplugged in a Star topology, only that machine disconnects; the remaining lab computers continue functioning uninterrupted. In a Bus topology, a severed cable brings down the entire lab.\n  - Easy Expansion & Diagnosis: Adding or removing computers requires simply plugging into an open switch port, and LED link lights make troubleshooting straightforward."
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Discuss the roles and operational differences among the following four network hardware devices: [4 Marks]\n(a) Network Interface Card (NIC)\n(b) Hub\n(c) Switch\n(d) Router",
+        "answer": "Detailed functional breakdown of NIC, Hub, Switch, and Router across network layers and data forwarding methods.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each device):\n• (a) Network Interface Card (NIC): An internal expansion board providing the physical connection between a host and the transmission cable. Houses the permanent 48-bit hardware MAC address.\n• (b) Hub: A Layer-1 physical multiport repeater. When a packet arrives at one port, the hub replicates and broadcasts it to all other connected ports, resulting in shared bandwidth and packet collisions.\n• (c) Switch: An intelligent Layer-2 device. Inspects destination MAC addresses in incoming frames and uses an internal lookup table to forward traffic directly to the destination port, eliminating collisions.\n• (d) Router: An internetworking Layer-3 device. Connects different logical networks and inspects destination IP addresses to determine optimal transmission routes across the internet."
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Compare 'Unguided (Wireless) Transmission Media': [4 Marks]\n(a) Infrared Waves\n(b) Radio Waves\n(c) Terrestrial Microwaves\n(d) Satellite Communication\nDiscuss their frequency range, transmission range, penetration ability, and common applications.",
+        "answer": "Detailed comparative analysis across Infrared, Radio waves, Microwaves, and Satellite communication.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each medium):\n• (a) Infrared: High frequency; very short range (<10 m); line-of-sight; cannot penetrate walls. Applications: TV remotes, wireless mice, short-range sensors.\n• (b) Radio Waves: Omnidirectional propagation; lower frequency; can penetrate walls. Applications: FM radio, Wi-Fi networks, cellular telephony.\n• (c) Terrestrial Microwaves: High frequency; line-of-sight transmission requiring unobstructed paths between dish antennas on towers (repeater every 40-50 km); cannot penetrate mountains. Applications: Long-distance telephone trunk lines, radar.\n• (d) Satellite Communication: Space-based microwave relay via geostationary satellites (~36,000 km altitude); broad global coverage; high propagation delay. Applications: DTH satellite television, GPS navigation, intercontinental communications."
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Explain the structure of a 'MAC Address' and an 'IP Address'. How do they work together to deliver a packet from a sender to a receiver across the internet? [4 Marks]",
+        "answer": "MAC (48-bit physical) vs IP (32-bit logical); Dual addressing mechanism: IP for global routing, MAC for local delivery.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks address structures + 2 Marks collaborative delivery mechanism):\n• 1. Address Structures [2 Marks]:\n  - MAC Address (Media Access Control): 48-bit (6-byte) physical hardware address permanently assigned to the NIC (e.g. `12:34:56:78:9A:BC`). Identifies the physical device on the local network.\n  - IP Address (Internet Protocol): 32-bit (IPv4) or 128-bit (IPv6) logical software address (e.g. `192.168.1.10`) assigned dynamically by network configuration. Identifies the network location.\n• 2. How They Work Together [2 Marks]:\n  - Global Routing: When sending a packet over the internet, routers use the destination IP address to route the packet across intermediate networks to the destination local network.\n  - Local Delivery: Once the packet reaches the destination LAN, the router uses Address Resolution Protocol (ARP) to map the destination IP address to the machine's physical MAC address, delivering the frame to the correct hardware device."
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "What is a 'Mesh Topology'? Differentiate between a Fully Connected Mesh and a Partially Connected Mesh. Calculate the number of physical links required to connect 8 computers in a fully connected mesh network. [4 Marks]",
+        "answer": "Concept of Mesh; Fully vs Partially connected; Formula N(N-1)/2 yielding 28 links for 8 nodes.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks concepts + 2 Marks calculation):\n• 1. Concepts [2 Marks]:\n  - Fully Connected Mesh: Every single node is directly linked to every other node via dedicated point-to-point lines. Offers maximum redundancy but requires significant cabling.\n  - Partially Connected Mesh: Some nodes have dedicated links to all nodes, while others connect only to those nodes with which they exchange the most traffic, balancing cost and fault tolerance.\n• 2. Calculation for 8 Computers in Full Mesh [2 Marks]:\n  - Formula: $\\text{Number of Links} = \\frac{N(N - 1)}{2}$\n  - For $N = 8$:\n    $$\\text{Links} = \\frac{8 \\times (8 - 1)}{2} = \\frac{8 \\times 7}{2} = 28 \\text{ physical links}$$\n  - Each device also requires $N - 1 = 7$ I/O ports."
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "Explain the working of a 'Modem'. Differentiate between 'Internal Modem' and 'External Modem'. Why are modems essential for accessing the internet over traditional telephone cables? [4 Marks]",
+        "answer": "Modulation/Demodulation process; Internal vs External modem; Why needed (converting digital computer data into analog phone signals).",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks working & necessity + 2 Marks internal vs external):\n• 1. Working & Necessity [2 Marks]:\n  - Computers process digital data (discrete binary 0s and 1s), whereas traditional landline telephone networks transmit analog signals (continuous acoustic waveforms).\n  - A Modem performs Modulation (converting digital data into analog audio frequencies for transmission over telephone lines) and Demodulation (converting incoming analog signals back into digital data for the computer).\n• 2. Internal vs. External Modem [2 Marks]:\n  - Internal Modem: Placed inside the computer chassis as an expansion card plugged into a motherboard slot (PCI); draws power directly from the system bus.\n  - External Modem: Housed in a standalone external enclosure connected via Ethernet/USB cable with its own power adapter and status LED indicators."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Discuss the 'Tree Topology'. Why is it considered a scalable architecture for multi-building corporate campuses? What are its primary failure vulnerabilities? [4 Marks]",
+        "answer": "Tree topology architecture; Scalability benefits for campus networks; Root and branch failure vulnerabilities.",
+        "explanation": "Step-by-Step Marking Scheme (2 Marks architecture & scalability + 2 Marks vulnerabilities):\n• 1. Architecture & Campus Scalability [2 Marks]:\n  - Tree topology arranges network nodes in a hierarchical tree structure, typically combining star networks attached to a central bus backbone.\n  - Highly Scalable: Individual departments or buildings can maintain their own localized star networks with departmental switches, which connect back to a core campus backbone switch. New buildings can be added by connecting new switches without redesigning the network.\n• 2. Failure Vulnerabilities [2 Marks]:\n  - Backbone / Root Failure: If the central backbone cable or core root switch fails, communication between different branches or buildings is severed.\n  - Branch Dependency: Failure of a secondary hub or departmental switch cuts off all workstations connected to that specific branch."
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "What is 'Coaxial Cable'? Describe its physical construction layers (core, dielectric insulator, metallic braided shield, outer jacket). Mention two applications where coaxial cables are commonly used. [4 Marks]",
+        "answer": "Physical construction layers of coaxial cable and applications in cable TV and broadband.",
+        "explanation": "Step-by-Step Marking Scheme (2.5 Marks physical construction layers + 1.5 Marks applications):\n• 1. Four Construction Layers [2.5 Marks]:\n  (i) Inner Core: Solid or stranded central copper wire that conducts the electrical signal.\n  (ii) Dielectric Insulator: Non-conductive plastic layer surrounding the copper core to maintain uniform spacing.\n  (iii) Metallic Braided Shield: Woven copper/aluminum braid acting as an electrical ground and shielding against external electromagnetic noise.\n  (iv) Outer Protective Jacket: Durable plastic covering shielding the cable from physical damage and moisture.\n• 2. Applications [1.5 Marks]:\n  - Cable television (CATV) distribution networks into residential homes.\n  - Cable broadband internet connections (DOCSIS modems)."
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "What criteria should a network engineer consider when selecting the optimal transmission media and topology for a new office setup? Discuss four key decision parameters. [4 Marks]",
+        "answer": "Four decision parameters: Cost, Bandwidth/speed, Physical distance/layout, and Fault tolerance/maintenance.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each parameter):\n• 1. Budget and Installation Cost: Evaluating available funds for cabling, switches, and labor. Twisted pair and star topology offer a cost-effective combination for standard offices.\n• 2. Bandwidth and Data Rate Requirements: High-throughput environments (multimedia, data centers) benefit from fiber optics, whereas general office applications run adequately on Cat6 UTP.\n• 3. Physical Distance and Environmental Noise: For distances under 100 meters without heavy electrical machinery, twisted pair is sufficient. For inter-building runs or industrial settings with high EMI, optical fiber is required.\n• 4. Fault Tolerance and Maintenance: Star topology simplifies troubleshooting and maintenance because single-node cable issues do not affect other users."
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 9,
+      "book": "Unit 3: Introduction to Computer Networks",
+      "title": "Computer Networks: Protocols, Web Services & Layout Case Studies",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 3: Computer Networks (Protocols, Web Concepts & Layout Optimization)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which protocol is responsible for sending outgoing email messages across the Internet from a mail client to a mail server?",
+        "options": [
+          "(a) SMTP",
+          "(b) POP3",
+          "(c) HTTP",
+          "(d) FTP"
+        ],
+        "answer": "(a) SMTP",
+        "explanation": "Simple Mail Transfer Protocol (SMTP) is the standard push protocol used for transmitting outgoing email messages from clients to mail servers and between mail servers."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "In a CBSE 4-mark campus networking case study, which wing/building should house the central 'Server'?",
+        "options": [
+          "(a) The wing with the largest floor area",
+          "(b) The wing with the maximum number of computers",
+          "(c) The wing closest to the main entrance gate",
+          "(d) The wing with the fewest computers"
+        ],
+        "answer": "(b) The wing with the maximum number of computers",
+        "explanation": "According to standard CBSE networking rules, the server must be installed in the building with the maximum number of computers to minimize intra-network traffic and transit latency."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What primary security mechanism distinguishes HTTPS from standard HTTP?",
+        "options": [
+          "(a) HTTPS uses SSL/TLS encryption to secure data packets over port 443",
+          "(b) HTTPS transmits data in plain unencrypted text",
+          "(c) HTTPS does not require a web browser",
+          "(d) HTTPS is only used for sending emails"
+        ],
+        "answer": "(a) HTTPS uses SSL/TLS encryption to secure data packets over port 443",
+        "explanation": "HTTPS (Hypertext Transfer Protocol Secure) encrypts all communication between client and server using SSL/TLS, preventing eavesdropping and tampering."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which protocol allows users to make voice calls over the internet by converting analog voice signals into digital data packets?",
+        "options": [
+          "(a) VoIP",
+          "(b) FTP",
+          "(c) Telnet",
+          "(d) SMTP"
+        ],
+        "answer": "(a) VoIP",
+        "explanation": "VoIP (Voice over Internet Protocol) digitizes, compresses, and packetizes voice audio to enable real-time voice communications over IP networks."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "What is the primary role of the Domain Name System (DNS)?",
+        "options": [
+          "(a) To translate human-readable domain names into numerical IP addresses",
+          "(b) To generate website graphics",
+          "(c) To send bulk marketing emails",
+          "(d) To compress video files"
+        ],
+        "answer": "(a) To translate human-readable domain names into numerical IP addresses",
+        "explanation": "DNS acts as the phonebook of the Internet, resolving domain names (e.g. `cbse.gov.in`) into their corresponding numeric IP addresses."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "In a URL such as `https://www.cbse.gov.in/cbsenew/aboutus.html`, which part represents the domain name?",
+        "options": [
+          "(a) `https`",
+          "(b) `www.cbse.gov.in`",
+          "(c) `/cbsenew/`",
+          "(d) `aboutus.html`"
+        ],
+        "answer": "(b) `www.cbse.gov.in`",
+        "explanation": "In a URL, the domain name is the host identifier identifying the destination server (here, `www.cbse.gov.in`), while `https` is the protocol and `/cbsenew/aboutus.html` is the path."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "Which protocol is standardly used for downloading/retrieving emails from a mail server to a local client device, typically downloading and deleting from server?",
+        "options": [
+          "(a) POP3",
+          "(b) SMTP",
+          "(c) HTTP",
+          "(d) ARP"
+        ],
+        "answer": "(a) POP3",
+        "explanation": "POP3 (Post Office Protocol version 3) is a pull protocol that downloads incoming emails from a remote server to a local client device."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "What is the key structural difference between HTML and XML?",
+        "options": [
+          "(a) HTML is designed to display data with predefined tags; XML is designed to store and transport data with user-defined tags",
+          "(b) HTML is case-sensitive; XML is not",
+          "(c) HTML is for databases; XML is for styling",
+          "(d) There is no difference"
+        ],
+        "answer": "(a) HTML is designed to display data with predefined tags; XML is designed to store and transport data with user-defined tags",
+        "explanation": "HTML focuses on how data looks (formatting/presentation) with predefined tags, whereas XML focuses on what data is (storage/transport) with custom user-defined tags."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "What are 'Cookies' in the context of web browsing?",
+        "options": [
+          "(a) Small text files stored on the client browser by websites to remember user preferences and session state",
+          "(b) Executable virus programs that damage hard disks",
+          "(c) Browser plugins that speed up CPU clocks",
+          "(d) Antivirus firewalls"
+        ],
+        "answer": "(a) Small text files stored on the client browser by websites to remember user preferences and session state",
+        "explanation": "Cookies are small text strings saved on a user's machine by web servers to track browsing sessions, shopping carts, and login credentials."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "When connecting two wings in a campus layout, under what condition is a 'Repeater' recommended by CBSE guidelines?",
+        "options": [
+          "(a) When distance between the wings exceeds 70 to 100 meters",
+          "(b) When there are more than 5 computers",
+          "(c) When internet speed is below 1 Mbps",
+          "(d) In all wings regardless of distance"
+        ],
+        "answer": "(a) When distance between the wings exceeds 70 to 100 meters",
+        "explanation": "In CBSE network case study marking schemes, repeaters are recommended when inter-building cable distance exceeds 70-100 meters to prevent attenuation."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which network hardware device must be placed in EACH wing/building of a multi-building organization to connect its local workstations together?",
+        "options": [
+          "(a) Hub / Switch",
+          "(b) Repeater",
+          "(c) Modem",
+          "(d) Dial-up adapter"
+        ],
+        "answer": "(a) Hub / Switch",
+        "explanation": "Every individual wing or building requires a Hub or Switch to connect all the computers inside that wing to the local network."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which protocol is used for uploading and downloading files to and from a remote file server over a TCP network?",
+        "options": [
+          "(a) FTP",
+          "(b) HTTP",
+          "(c) SMTP",
+          "(d) UDP"
+        ],
+        "answer": "(a) FTP",
+        "explanation": "File Transfer Protocol (FTP) is specifically designed for transfer of files between a client and a server across a network."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Which protocol provides encrypted, secure remote command-line login access over an insecure network, replacing unencrypted Telnet?",
+        "options": [
+          "(a) SSH (Secure Shell)",
+          "(b) FTP",
+          "(c) SMTP",
+          "(d) POP3"
+        ],
+        "answer": "(a) SSH (Secure Shell)",
+        "explanation": "SSH (Secure Shell) provides strong encryption and cryptographic authentication for remote terminal sessions and command execution."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the fundamental difference between the 'Internet' and the 'World Wide Web (WWW)'?",
+        "options": [
+          "(a) The Internet is the physical global infrastructure of interconnected networks; the WWW is a service of hyperlinked multimedia documents running on top of the Internet",
+          "(b) They are exact synonyms",
+          "(c) The WWW is the physical cable network; the Internet is just websites",
+          "(d) Internet was invented by Tim Berners-Lee; WWW was created by DARPA"
+        ],
+        "answer": "(a) The Internet is the physical global infrastructure of interconnected networks; the WWW is a service of hyperlinked multimedia documents running on top of the Internet",
+        "explanation": "The Internet is the global network hardware infrastructure. The World Wide Web is an application-level service of interlinked hypertext documents accessed via HTTP."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "A web page whose content remains identical for all visitors and does not change until manually modified by the web developer is known as a:",
+        "options": [
+          "(a) Static Web Page",
+          "(b) Dynamic Web Page",
+          "(c) Responsive Web Page",
+          "(d) Interactive Web Page"
+        ],
+        "answer": "(a) Static Web Page",
+        "explanation": "Static web pages display fixed content written in standard HTML/CSS, returning the identical display to all visitors."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which protocol operates at the Transport Layer of the TCP/IP stack to provide reliable, connection-oriented packet delivery with sequence checking?",
+        "options": [
+          "(a) TCP",
+          "(b) IP",
+          "(c) UDP",
+          "(d) ICMP"
+        ],
+        "answer": "(a) TCP",
+        "explanation": "Transmission Control Protocol (TCP) establishes reliable connections, splits data into numbered packets, verifies delivery, and reassembles them."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which of the following email protocols synchronizes email messages across multiple client devices by keeping emails on the central server?",
+        "options": [
+          "(a) IMAP",
+          "(b) POP3",
+          "(c) SMTP",
+          "(d) FTP"
+        ],
+        "answer": "(a) IMAP",
+        "explanation": "IMAP (Internet Message Access Protocol) stores emails centrally on the server and synchronizes folder states across multiple devices (laptops, phones)."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "Which security device/software monitors and controls incoming and outgoing network traffic based on predetermined security rules to block unauthorized access?",
+        "options": [
+          "(a) Firewall",
+          "(b) Repeater",
+          "(c) Hub",
+          "(d) Modem"
+        ],
+        "answer": "(a) Firewall",
+        "explanation": "A Firewall acts as a network security perimeter barrier, inspecting incoming and outgoing traffic to block unauthorized intrusions."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "What is the standard port number used by HTTPS for secure encrypted web communications?",
+        "options": [
+          "(a) 443",
+          "(b) 80",
+          "(c) 21",
+          "(d) 25"
+        ],
+        "answer": "(a) 443",
+        "explanation": "HTTPS standardly utilizes port 443, whereas unencrypted HTTP operates over port 80."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which service enables a company to place its website files onto a specialized web server connected to high-speed internet 24/7?",
+        "options": [
+          "(a) Web Hosting",
+          "(b) Web Scripting",
+          "(c) Web Browsing",
+          "(d) Web Scraping"
+        ],
+        "answer": "(a) Web Hosting",
+        "explanation": "Web hosting is an online storage and computing service that allows organizations and individuals to post a website onto the Internet."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "In a dynamic web page, how is content generated?",
+        "options": [
+          "(a) In real-time by server-side scripts (e.g. querying a database) in response to user requests",
+          "(b) Written manually in pure static text by human typists each time",
+          "(c) Printed directly onto paper",
+          "(d) Downloaded only once per year"
+        ],
+        "answer": "(a) In real-time by server-side scripts (e.g. querying a database) in response to user requests",
+        "explanation": "Dynamic web pages generate customized content on-the-fly via server-side scripting based on user input, database queries, and session state."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What type of software application is Google Chrome, Mozilla Firefox, or Apple Safari?",
+        "options": [
+          "(a) Web Browser (Web Client)",
+          "(b) Web Server",
+          "(c) Operating System Kernel",
+          "(d) Database Engine"
+        ],
+        "answer": "(a) Web Browser (Web Client)",
+        "explanation": "A web browser is client software used to retrieve, display, and navigate resources on the World Wide Web."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which protocol is used to assign dynamic IP addresses automatically to devices when they connect to a network?",
+        "options": [
+          "(a) DHCP",
+          "(b) DNS",
+          "(c) FTP",
+          "(d) HTTP"
+        ],
+        "answer": "(a) DHCP",
+        "explanation": "DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network configuration parameters to client devices."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which technology allows organizations to establish private, encrypted point-to-point tunnels across the public internet to protect internal company data?",
+        "options": [
+          "(a) VPN (Virtual Private Network)",
+          "(b) DNS",
+          "(c) HTML",
+          "(d) URL"
+        ],
+        "answer": "(a) VPN (Virtual Private Network)",
+        "explanation": "A Virtual Private Network (VPN) creates an encrypted tunnel across the public internet, securing communication between remote users and internal corporate networks."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What does the top-level domain '.gov' indicate in a website address like `www.meity.gov.in`?",
+        "options": [
+          "(a) Government entity",
+          "(b) Commercial enterprise",
+          "(c) Educational institution",
+          "(d) Non-profit organization"
+        ],
+        "answer": "(a) Government entity",
+        "explanation": "The `.gov` top-level domain is reserved exclusively for official government agencies and ministries."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): E-commerce and online banking websites always mandate HTTPS rather than HTTP.\nReason (R): HTTPS uses SSL/TLS encryption to prevent interception of sensitive data like credit card numbers and passwords by eavesdroppers.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. SSL/TLS encryption in HTTPS scrambles transaction credentials, preventing man-in-the-middle attacks."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): In a multi-building network layout, the central server should be placed in the building with the largest number of computers.\nReason (R): Locating the server where the maximum local traffic originates minimizes inter-building data transmission delays and cable bottlenecks.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Placing the server closest to the largest cluster of users minimizes inter-building backbone bandwidth strain."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): SMTP is used to download incoming emails to a user's smartphone.\nReason (R): SMTP is a push protocol designed exclusively for sending outgoing email messages.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: Downloading emails is performed by POP3 or IMAP, not SMTP. Reason correctly states SMTP is for sending emails."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): XML tags are strictly predefined by the World Wide Web Consortium, and users cannot create custom tags.\nReason (R): XML was created to format and display web pages identically across all browsers.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) Both (A) and (R) are false",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(b) Both (A) and (R) are false",
+        "explanation": "Both statements are false. XML tags are user-defined (extensible) and designed for data storage/transport, not layout formatting."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): A Firewall can be implemented either as a dedicated hardware appliance or as a software program.\nReason (R): Firewalls filter incoming and outgoing packets according to defined security access rules.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Firewalls filter network traffic based on port/IP rules and exist in both hardware appliances and software implementations."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between 'HTTP' and 'HTTPS' on any two points. [2 Marks]",
+        "answer": "HTTP is unencrypted over port 80; HTTPS is SSL/TLS encrypted over port 443.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Security & Encryption: HTTP transmits data in clear plain text, making it vulnerable to interception. HTTPS encrypts data using SSL/TLS protocols.\n• 2. Port Numbers: HTTP standardly operates on TCP port 80; HTTPS operates on TCP port 443."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between 'HTML' and 'XML'. [2 Marks]",
+        "answer": "HTML formats/displays data with predefined tags; XML stores/transports data with custom tags.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. Purpose: HTML is designed for displaying data and defining how it looks in a browser. XML is designed for storing, structuring, and transporting data.\n• 2. Tags: HTML has predefined tags (`<p>`, `<h1>`, `<table>`). XML allows developers to define their own custom tags (`<student>`, `<price>`)."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between 'POP3' and 'IMAP' protocols. [2 Marks]",
+        "answer": "POP3 downloads and removes emails from server; IMAP synchronizes emails across multiple devices on server.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• 1. POP3 (Post Office Protocol 3): Downloads emails to a single local device and standardly deletes them from the mail server, preventing synchronization across multiple devices.\n• 2. IMAP (Internet Message Access Protocol): Keeps email messages on the mail server and synchronizes folder states across multiple devices (smartphones, laptops)."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What is 'DNS'? Explain its role in browsing a website with an example. [2 Marks]",
+        "answer": "Domain Name System translates domain names into IP addresses, e.g. mapping `cbse.gov.in` to `164.100.158.135`.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark role/example):\n• Definition: DNS (Domain Name System) is a distributed naming database system for computers and network services.\n• Role/Example: Humans easily remember names like `www.cbse.gov.in`, but networking equipment communicates via IP addresses. When a user types a domain, DNS resolves it to the underlying IP address (e.g. `164.100.158.135`)."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is a 'Uniform Resource Locator (URL)'? Identify the components of `https://www.ncert.nic.in/textbook/pdf/leip101.pdf`. [2 Marks]",
+        "answer": "URL is the global web address of a resource; Components: Protocol (`https`), Domain (`www.ncert.nic.in`), Path (`/textbook/pdf/leip101.pdf`).",
+        "explanation": "Marking Scheme (0.5 Mark definition + 1.5 Marks components):\n• URL: The unique address used to locate a specific resource on the World Wide Web.\n• Components:\n  - Protocol: `https` (Hypertext Transfer Protocol Secure)\n  - Domain / Host Name: `www.ncert.nic.in`\n  - File Path / Resource: `/textbook/pdf/leip101.pdf`"
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "Differentiate between 'Static Web Page' and 'Dynamic Web Page'. [2 Marks]",
+        "answer": "Static has fixed content coded in HTML; Dynamic generates content in real time based on user requests/databases.",
+        "explanation": "Marking Scheme (1 Mark per point):\n• Static Web Page: Displays fixed content that remains identical for every visitor; changes only when manually edited in code.\n• Dynamic Web Page: Content is generated dynamically on-the-fly via server-side scripts (e.g., Python, PHP) querying databases based on user input or preferences."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "What is 'VoIP'? State one advantage and one disadvantage of using VoIP over conventional telephony. [2 Marks]",
+        "answer": "Voice over Internet Protocol; Advantage: low calling cost; Disadvantage: requires stable broadband internet.",
+        "explanation": "Marking Scheme (1 Mark concept + 0.5 Mark advantage + 0.5 Mark disadvantage):\n• Concept: Voice over Internet Protocol enables voice calls over internet data connections rather than traditional telephone lines.\n• Advantage: Significantly lower communication costs, especially for international calls.\n• Disadvantage: Highly dependent on stable, high-speed internet; poor connectivity leads to latency and dropped calls."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "What is a 'Web Browser'? Name two open-source web browsers. [2 Marks]",
+        "answer": "Client application used to retrieve and view web pages; Examples: Mozilla Firefox, Chromium.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark examples):\n• Web Browser: A client software application that requests, retrieves, renders, and navigates web pages from web servers using HTTP/HTTPS.\n• Open-Source Examples: Mozilla Firefox, Chromium."
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "What are 'Cookies'? Mention one positive purpose and one privacy concern associated with them. [2 Marks]",
+        "answer": "Small client text files; Purpose: session maintenance/shopping carts; Concern: tracking user browsing behavior.",
+        "explanation": "Marking Scheme (1 Mark concept + 0.5 Mark purpose + 0.5 Mark concern):\n• Concept: Small data files written by websites onto the user's local web browser.\n• Positive Purpose: Keeps users logged in across pages and preserves items in shopping carts.\n• Privacy Concern: Third-party tracking cookies can monitor user browsing history across multiple websites for behavioral advertising."
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "Explain the role of 'Firewall' in protecting a school network. [2 Marks]",
+        "answer": "Filters incoming/outgoing network packets based on security rules to block unauthorized intrusions and malware.",
+        "explanation": "Marking Scheme (1 Mark function + 1 Mark school application):\n• Function: Acts as a security barrier between a trusted internal network and untrusted external networks, analyzing data packets against security policies.\n• School Application: Blocks malicious cyber intrusions, restricts access to inappropriate web domains, and shields school database records from unauthorized external access."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "CASE STUDY 1: 'Aura Enterprises' is setting up its new campus in Bengaluru comprising 4 blocks: Admin Block, Accounts Block, Tech Block, and HR Block.\nDistance between blocks:\n• Admin to Accounts: 60 m\n• Accounts to Tech: 120 m\n• Tech to HR: 45 m\n• Admin to Tech: 150 m\n• Accounts to HR: 80 m\n• Admin to HR: 110 m\nNumber of Computers:\n• Admin: 30\n• Accounts: 45\n• Tech: 130\n• HR: 25\n\nAnswer the following:\n(a) Suggest the most suitable block to install the main Server with justification. [1 Mark]\n(b) Suggest the best cable layout / topology to connect all four blocks. [1 Mark]\n(c) Where should Repeater(s) and Switch(es) be placed? [1 Mark]\n(d) Aura Enterprises plans to conduct real-time video conferencing between the Bengaluru campus and their London branch. Which communication protocol/service should they use? [1 Mark]",
+        "answer": "Case study solution: (a) Tech Block; (b) Star layout centered at Tech Block; (c) Repeaters on lines >100m, Switches in all 4 blocks; (d) VoIP / Video Conferencing.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each subpart):\n• (a) Server Placement: Tech Block [1 Mark]. Justification: Tech Block houses the maximum number of computers (130 computers), minimizing overall network traffic and data latency (CBSE 80-20 rule).\n• (b) Cable Layout & Topology: Star Topology centered at Tech Block [1 Mark]. Links: Tech to Accounts (120 m), Tech to HR (45 m), Tech to Admin (150 m) or Bus/Tree connecting Admin-Accounts-Tech-HR. Star topology with central switch at Tech block provides easiest maintenance.\n• (c) Repeaters & Switches [1 Mark]:\n  - Repeaters: Required on links exceeding 100 meters, specifically between Admin and Tech (150 m) and between Accounts and Tech (120 m).\n  - Switches: Required in EVERY block (Admin, Accounts, Tech, and HR) to connect the local workstations within each block.\n• (d) Conferencing Protocol/Service: VoIP (Voice over Internet Protocol) / WebRTC-based video conferencing service [1 Mark]."
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "CASE STUDY 2: 'Global Health Institute' is establishing its network across 4 wings: Research Wing, OPD Wing, Surgery Wing, and Pharmacy Wing.\nDistances:\n• Research to OPD: 50 m\n• OPD to Surgery: 140 m\n• Surgery to Pharmacy: 65 m\n• Research to Surgery: 160 m\n• OPD to Pharmacy: 90 m\n• Research to Pharmacy: 110 m\nNumber of Computers:\n• Research: 150\n• OPD: 50\n• Surgery: 35\n• Pharmacy: 20\n\nAnswer the following:\n(a) Suggest the wing where the central Server should be placed and state the reason. [1 Mark]\n(b) Suggest the most economical cable layout to interconnect all 4 wings. [1 Mark]\n(c) Suggest the placement of Repeater(s) with justification. [1 Mark]\n(d) The hospital wants to secure its internal network from external hackers and unauthorized web access. Suggest a hardware/software solution. [1 Mark]",
+        "answer": "Case study solution: (a) Research Wing; (b) Economical Bus/Star layout; (c) Repeater on connections >100m; (d) Firewall.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Server Wing: Research Wing [1 Mark]. Reason: It contains the maximum number of computers (150), reducing inter-wing network congestion.\n• (b) Economical Layout: Connect Research to OPD (50 m), OPD to Pharmacy (90 m), and Pharmacy to Surgery (65 m) — total cable length = 50 + 90 + 65 = 205 meters [1 Mark].\n• (c) Repeater Placement: No repeater is needed if the economical layout is used because every individual segment is $\\le 100\\text{ m}$ (50m, 90m, 65m). However, if directly connected from Research to Surgery (160m) or OPD to Surgery (140m), repeaters are required due to distance exceeding 100m [1 Mark].\n• (d) Security Solution: Install a Firewall (hardware appliance or software) to inspect packets and block unauthorized external intrusions [1 Mark]."
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "CASE STUDY 3: 'Zenith University' is planning network connectivity among 4 campuses/blocks: Academic Block, Library Block, Hostel Block, and Admin Block.\nDistances:\n• Academic to Library: 80 m\n• Library to Hostel: 220 m\n• Hostel to Admin: 40 m\n• Academic to Admin: 70 m\n• Library to Admin: 110 m\n• Academic to Hostel: 180 m\nComputers:\n• Academic: 180\n• Library: 40\n• Hostel: 60\n• Admin: 50\n\nAnswer the following:\n(a) Identify the block best suited to host the central server. [1 Mark]\n(b) Suggest the most suitable transmission medium to connect Academic block to Hostel block if high speed and EMI immunity are mandatory. [1 Mark]\n(c) Where should switches/hubs and repeaters be installed? [1 Mark]\n(d) The university needs to host its online student admission portal so applicants worldwide can access it. Which web service should the university procure? [1 Mark]",
+        "answer": "Case study solution: (a) Academic Block; (b) Optical Fiber Cable; (c) Switches in each block, Repeaters on segments >100m; (d) Web Hosting Service.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Server Block: Academic Block [1 Mark] because it houses the maximum number of computers (180).\n• (b) Transmission Medium: Optical Fiber Cable [1 Mark] because it provides gigabit data transfer rates and complete immunity to EMI across long outdoor campus runs.\n• (c) Hardware Devices Placement [1 Mark]:\n  - Switches: Installed in every block (Academic, Library, Hostel, Admin) to connect local computers.\n  - Repeaters: Needed on any copper cable segment exceeding 100 m (e.g. between Academic and Hostel if directly linked at 180 m, or Library to Hostel at 220 m).\n• (d) Web Service: Web Hosting service with registered Domain Name (DNS) [1 Mark]."
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "CASE STUDY 4: 'Himalayan Eco-Tourism' has 4 offices in a hilly region: Head Office, Booking Wing, Transport Wing, and Safari Wing.\nDue to hilly terrain and steep rocky cliffs, laying physical underground cables between Head Office and Safari Wing (distance 25 km) is virtually impossible.\n(a) Suggest the most suitable wireless transmission medium to link Head Office and Safari Wing across the hills. [1 Mark]\n(b) Inside the Booking Wing, 30 computers need to be interconnected. Which topology and network device should be installed? [1 Mark]\n(c) Which email protocol will the booking staff use to send confirmation emails to tourists? [1 Mark]\n(d) What security protocol should the tourism portal implement to protect customers' online credit card booking payments? [1 Mark]",
+        "answer": "Case study solution: (a) Microwave / Satellite; (b) Star topology with Switch; (c) SMTP; (d) HTTPS.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Wireless Medium: Terrestrial Microwave Communication (with line-of-sight dish antennas on hilltops) or Satellite Communication [1 Mark].\n• (b) Topology and Device: Star Topology using a Switch (or Hub) [1 Mark].\n• (c) Outgoing Email Protocol: SMTP (Simple Mail Transfer Protocol) [1 Mark].\n• (d) Security Protocol: HTTPS (Hypertext Transfer Protocol Secure) utilizing SSL/TLS encryption [1 Mark]."
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "CASE STUDY 5: 'National Training Academy' has 3 blocks in its campus: Training Block (T), Administrative Block (A), and Hostel Block (H).\nDistances:\n• T to A: 90 m\n• A to H: 160 m\n• T to H: 85 m\nComputers:\n• Training (T): 110\n• Admin (A): 40\n• Hostel (H): 25\n\n(a) Which block should host the server? Justify. [1 Mark]\n(b) Draw/suggest the cable layout that minimizes total cable length. Calculate the required cable length. [1 Mark]\n(c) Is a repeater required in the minimal cable layout suggested in (b)? Justify your answer. [1 Mark]\n(d) Which device should be placed in each block to connect the computers within that block? [1 Mark]",
+        "answer": "Case study solution: (a) Training Block; (b) Layout T-A (90m) + T-H (85m) = 175m; (c) No repeater needed (both <100m); (d) Switch/Hub.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Server Block: Training Block (T) [1 Mark]. Justification: Contains the highest number of computers (110).\n• (b) Minimal Cable Layout: Connect T to H (85 m) and T to A (90 m). Total cable length = $85 + 90 = 175\\text{ meters}$ [1 Mark].\n• (c) Repeater Requirement: No repeater is required [1 Mark]. Justification: Both cable segments (85 m and 90 m) are within the 100-meter threshold where signal attenuation remains minimal.\n• (d) Device in Each Block: A Switch (or Hub) must be installed in each block [1 Mark]."
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "Discuss the 'TCP/IP Protocol Suite'. Explain the specific roles of:\n(a) Transmission Control Protocol (TCP)\n(b) Internet Protocol (IP)\nHow do these two protocols cooperate to ensure reliable data packet delivery across heterogeneous networks? [4 Marks]",
+        "answer": "Detailed breakdown of TCP (packetization, sequencing, error checking) and IP (addressing, logical routing); Collaborative delivery mechanism.",
+        "explanation": "Step-by-Step Marking Scheme (1.5 Marks TCP + 1.5 Marks IP + 1 Mark collaboration):\n• (a) TCP (Transmission Control Protocol) [1.5 Marks]:\n  - Operates at the Transport Layer; connection-oriented and reliable.\n  - Breaks large data streams into manageable packets at the sending node and assigns sequence numbers to each.\n  - At the destination node, TCP tracks lost packets, requests retransmission of missing segments, and reassembles packets in order.\n• (b) IP (Internet Protocol) [1.5 Marks]:\n  - Operates at the Network / Internet Layer; connectionless packet delivery.\n  - Envelops TCP segments with source and destination IP addresses.\n  - Directs each packet through intermediate network routers independently along optimal paths.\n• (c) Collaboration [1 Mark]: IP handles pathfinding and delivery of individual packets across physical networks, while TCP ensures the overall data stream arrives completely, without errors, and in the correct sequence."
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "What is 'Remote Desktop / Login Access'? Differentiate between 'Telnet' and 'SSH' (Secure Shell). Why has SSH virtually replaced Telnet in modern networking? [4 Marks]",
+        "answer": "Remote login concept; Telnet vs SSH; Security justification (plain text vs strong encryption).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark remote login + 2 Marks Telnet vs SSH + 1 Mark security justification):\n• 1. Remote Login Concept [1 Mark]: A network service that enables an administrator or user to log in to a remote host computer over a network and execute commands as if sitting at the physical terminal.\n• 2. Telnet vs. SSH Comparison [2 Marks]:\n  - Telnet: Operates on port 23; transmits all data (including usernames and passwords) in unencrypted plain text.\n  - SSH (Secure Shell): Operates on port 22; provides end-to-end cryptographic encryption, public key authentication, and data integrity verification.\n• 3. Why SSH Replaced Telnet [1 Mark]: Telnet is vulnerable to packet sniffing on public or shared networks where credentials can be captured in plain text. SSH encrypts the entire communication session, mitigating eavesdropping."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Explain the step-by-step process of 'Web Browsing' when a user enters `https://www.example.org` in their browser address bar, including the roles of DNS, Web Server, HTTP/HTTPS, and Web Browser. [4 Marks]",
+        "answer": "Step-by-step browsing workflow: URL entry, DNS resolution to IP, TCP connection & SSL handshake, HTTP GET request, server response & browser rendering.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each phase):\n• Phase 1: URL Entry & DNS Lookup [1 Mark]: The user enters `https://www.example.org`. The browser queries a DNS server to translate the domain name `www.example.org` into its numerical IP address (e.g. `93.184.216.34`).\n• Phase 2: TCP Connection & SSL/TLS Handshake [1 Mark]: The browser initiates a TCP connection to port 443 of the web server. For HTTPS, an SSL/TLS handshake occurs to verify server certificates and establish an encrypted session key.\n• Phase 3: HTTP GET Request [1 Mark]: The browser sends an encrypted HTTP `GET` request for the homepage index file.\n• Phase 4: Server Processing & Browser Rendering [1 Mark]: The web server processes the request and returns the HTML, CSS, JavaScript, and image resources. The browser engine parses and renders the webpage on the user's screen."
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "CASE STUDY 6: 'Apex Financial Services' is opening a regional office with 4 sections: Dealing Room, Back Office, Server Room, and Customer Lounge.\nDistances:\n• Server Room to Dealing Room: 35 m\n• Server Room to Back Office: 45 m\n• Server Room to Customer Lounge: 130 m\n• Dealing Room to Back Office: 60 m\n• Back Office to Customer Lounge: 95 m\nComputers:\n• Dealing Room: 40\n• Back Office: 30\n• Server Room: 10 (High-capacity Servers)\n• Customer Lounge: 15\n\n(a) Apex requires the Dealing Room to have the lowest latency and highest security. Which physical medium should be used to connect the Server Room to the Dealing Room? [1 Mark]\n(b) Which section should be the center of a Star topology? Justify. [1 Mark]\n(c) Is a repeater required between the Server Room and Customer Lounge (130 m)? State why. [1 Mark]\n(d) The firm wants to block unauthorized trading websites on employee computers and protect customer financial databases. Suggest two security measures. [1 Mark]",
+        "answer": "Case study solution: (a) Optical Fiber / Shielded Twisted Pair; (b) Server Room; (c) Yes, distance >100m; (d) Hardware Firewall & VPN/Encrypted access.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Physical Medium: Optical Fiber Cable (or Cat6A Shielded Twisted Pair - STP) [1 Mark] to ensure high throughput, zero EMI, and physical tap resistance.\n• (b) Topology Center: Server Room [1 Mark] because it houses the core servers and database clusters, serving as the natural hub for star distribution to all other sections.\n• (c) Repeater: Yes [1 Mark], because the distance is 130 meters, which exceeds the standard 100-meter copper transmission threshold where attenuation causes packet degradation.\n• (d) Security Measures [1 Mark]:\n  1. Implement an enterprise Firewall with URL filtering to block unauthorized trading websites.\n  2. Enforce encrypted access (VPN and HTTPS) along with role-based authentication to secure customer databases."
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "CASE STUDY 7: 'Green Earth NGO' has its head office in New Delhi and a field research station in a remote wildlife sanctuary in Assam (1,800 km away).\n(a) Which communication technology should be deployed to link the Delhi head office with the remote wildlife sanctuary where no wired telecom lines or mobile towers exist? [1 Mark]\n(b) Suggest the protocol best suited for transferring large scientific satellite image datasets between the research station and Delhi. [1 Mark]\n(c) The NGO wants to broadcast live environmental webinars to thousands of school students across India. Which technology/service should they adopt? [1 Mark]\n(d) What is the function of a 'Gateway' if the sanctuary station uses an experimental sensor protocol while Delhi uses standard TCP/IP? [1 Mark]",
+        "answer": "Case study solution: (a) Satellite Communication; (b) FTP; (c) Webcasting / Video Streaming; (d) Protocol translation between sensor protocol and TCP/IP.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each):\n• (a) Communication Technology: Satellite Communication (VSAT - Very Small Aperture Terminal) [1 Mark], as geostationary satellites provide coverage in remote areas without terrestrial telecom infrastructure.\n• (b) File Transfer Protocol: FTP (File Transfer Protocol) or SFTP (Secure FTP) [1 Mark], designed for efficient bulk transfer of large scientific files.\n• (c) Webinar Technology: Webcasting / Real-Time Video Streaming service [1 Mark].\n• (d) Gateway Function: Acts as a protocol translator/converter [1 Mark] to translate data packets between the experimental sensor protocol and the standard TCP/IP network."
+      }
+    ]
+  },
+  {
+    "info": {
+      "chapter_num": 10,
+      "book": "Unit 4: Societal Impacts",
+      "title": "Societal Impacts: Digital Footprints, Cyber Crimes, IPR & E-Waste",
+      "author": "NCERT Class 12 Informatics Practices (065)",
+      "weightage_unit": "Unit 4: Societal Impacts (Cyber Ethics, Laws, Security & Environment)"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which of the following constitutes an 'Active Digital Footprint'?",
+        "options": [
+          "(a) Posting a photograph and comment on Instagram",
+          "(b) Websites recording your IP address in their server access logs",
+          "(c) Tracking cookies stored by a search engine without explicit user input",
+          "(d) Mobile apps recording your real-time GPS location in the background"
+        ],
+        "answer": "(a) Posting a photograph and comment on Instagram",
+        "explanation": "An active digital footprint is created when personal data is deliberately submitted or released by the user (such as social media posts, filling forms, or sending emails)."
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "A fraudulent practice where an attacker sends legitimate-looking emails pretending to be a bank to trick users into revealing account passwords is known as:",
+        "options": [
+          "(a) Phishing",
+          "(b) Pharming",
+          "(c) Plagiarism",
+          "(d) Cyberbullying"
+        ],
+        "answer": "(a) Phishing",
+        "explanation": "Phishing is a social engineering cyber attack where deceptive emails impersonate trusted institutions to steal sensitive credentials."
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Which primary legislation governs cyber crimes and electronic commerce in India?",
+        "options": [
+          "(a) The Information Technology Act, 2000 (IT Act)",
+          "(b) The Indian Penal Code of 1860 only",
+          "(c) The Companies Act, 2013",
+          "(d) The Consumer Protection Act, 2019"
+        ],
+        "answer": "(a) The Information Technology Act, 2000 (IT Act)",
+        "explanation": "The Information Technology Act, 2000 (amended in 2008) is the primary law in India dealing with cyber crimes, digital signatures, and e-commerce."
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "Copying someone else's intellectual work, ideas, or writing and presenting it as one's own original creation without proper citation is called:",
+        "options": [
+          "(a) Plagiarism",
+          "(b) Phishing",
+          "(c) Hacking",
+          "(d) Eavesdropping"
+        ],
+        "answer": "(a) Plagiarism",
+        "explanation": "Plagiarism is the act of presenting another author's work, code, or ideas as one's own without appropriate attribution."
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which type of software provides users with freedom to run, copy, distribute, study, change, and improve the software source code?",
+        "options": [
+          "(a) FOSS (Free and Open Source Software)",
+          "(b) Proprietary Software",
+          "(c) Shareware",
+          "(d) Commercial closed-source software"
+        ],
+        "answer": "(a) FOSS (Free and Open Source Software)",
+        "explanation": "FOSS provides users full access to the source code with the legal freedom to run, modify, study, and redistribute modified versions."
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "tag": "CBSE 2022 Term-1",
+        "question": "Which toxic heavy metal commonly found in electronic waste (e-waste) can cause severe neurological damage and kidney failure?",
+        "options": [
+          "(a) Lead and Mercury",
+          "(b) Calcium",
+          "(c) Sodium",
+          "(d) Iron"
+        ],
+        "answer": "(a) Lead and Mercury",
+        "explanation": "E-waste contains hazardous toxic substances including Lead, Mercury, Cadmium, and Beryllium, which contaminate soil and groundwater if improperly discarded."
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "What is the cyber attack called where an attacker poisons the DNS server to invisibly redirect a user from a legitimate banking website URL to a fraudulent clone site?",
+        "options": [
+          "(a) Pharming",
+          "(b) Phishing",
+          "(c) Plagiarism",
+          "(d) Cyberstalking"
+        ],
+        "answer": "(a) Pharming",
+        "explanation": "Pharming redirects website traffic from a legitimate site to a fake site by hijacking or poisoning DNS tables, even when the user enters the correct URL."
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "tag": "CBSE 2020 Delhi",
+        "question": "What is an 'Ethical Hacker' (White Hat Hacker)?",
+        "options": [
+          "(a) A computer security specialist who penetrates systems with authorized permission to identify and fix security vulnerabilities",
+          "(b) A cyber criminal who steals bank account passwords",
+          "(c) A software developer who creates ransomware",
+          "(d) An unauthorized user who sells private data on the dark web"
+        ],
+        "answer": "(a) A computer security specialist who penetrates systems with authorized permission to identify and fix security vulnerabilities",
+        "explanation": "Ethical hackers use hacking techniques with explicit authorization to find vulnerabilities and assist organizations in strengthening their defense perimeters."
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "tag": "CBSE 2020 AI",
+        "question": "Which Intellectual Property Right protects inventions, novel industrial processes, and scientific discoveries for a limited period (typically 20 years)?",
+        "options": [
+          "(a) Patent",
+          "(b) Copyright",
+          "(c) Trademark",
+          "(d) Design registration"
+        ],
+        "answer": "(a) Patent",
+        "explanation": "A Patent grants an inventor exclusive legal monopoly over an invention, manufacturing process, or technological apparatus for a specified period (usually 20 years)."
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Sending abusive, threatening, or harassing messages repeatedly to intimidate an individual over social media platforms is termed as:",
+        "options": [
+          "(a) Cyberbullying",
+          "(b) Phishing",
+          "(c) Data mining",
+          "(d) E-waste"
+        ],
+        "answer": "(a) Cyberbullying",
+        "explanation": "Cyberbullying involves using digital communication tools to harass, intimidate, defame, or embarrass an individual."
+      },
+      {
+        "id": 11,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "Which of the following is software that is available free of cost for use, but whose source code is NOT provided and cannot be modified?",
+        "options": [
+          "(a) Freeware",
+          "(b) Open Source Software",
+          "(c) FOSS",
+          "(d) GNU GPL software"
+        ],
+        "answer": "(a) Freeware",
+        "explanation": "Freeware (e.g. Adobe Acrobat Reader) is distributed at no monetary cost, but its source code remains proprietary, closed, and unavailable for modification."
+      },
+      {
+        "id": 12,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What does a 'Trademark' legally protect?",
+        "options": [
+          "(a) Brand names, logos, symbols, and slogans that distinguish goods or services of an enterprise",
+          "(b) Literary books and poems",
+          "(c) Mathematical algorithms",
+          "(d) Electronic hardware chips"
+        ],
+        "answer": "(a) Brand names, logos, symbols, and slogans that distinguish goods or services of an enterprise",
+        "explanation": "A Trademark is a distinctive sign, logo, word, or symbol identifying goods or services from a particular enterprise, preventing consumer confusion."
+      },
+      {
+        "id": 13,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "Under the Indian IT Act 2000, Section 66C specifically prescribes punishments for:",
+        "options": [
+          "(a) Identity theft and fraudulent use of electronic signatures or passwords",
+          "(b) Physical damage to printers",
+          "(c) Unpaid software subscription fees",
+          "(d) Slow internet connections"
+        ],
+        "answer": "(a) Identity theft and fraudulent use of electronic signatures or passwords",
+        "explanation": "Section 66C of the IT Act penalizes identity theft, including fraudulent or dishonest use of passwords, electronic signatures, or unique identification features."
+      },
+      {
+        "id": 14,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "What is the recommended ergonomic guideline to prevent Digital Eye Strain known as the '20-20-20 Rule'?",
+        "options": [
+          "(a) Every 20 minutes, take a 20-second break to look at an object 20 feet away",
+          "(b) Work 20 hours continuously, then sleep for 20 hours",
+          "(c) Keep screen brightness at 20 percent for 20 days",
+          "(d) Blink 20 times every 20 seconds"
+        ],
+        "answer": "(a) Every 20 minutes, take a 20-second break to look at an object 20 feet away",
+        "explanation": "The 20-20-20 rule helps alleviate digital eye fatigue: every 20 minutes of screen time, take a 20-second pause to gaze at an object 20 feet away."
+      },
+      {
+        "id": 15,
+        "type": "MCQ",
+        "tag": "CBSE 2017",
+        "question": "Which of the following describes 'Shareware'?",
+        "options": [
+          "(a) Software provided free of cost on a trial basis for a limited period, requiring purchase for continued full functionality",
+          "(b) Completely free software with full source code",
+          "(c) Pirated commercial software",
+          "(d) Open source database"
+        ],
+        "answer": "(a) Software provided free of cost on a trial basis for a limited period, requiring purchase for continued full functionality",
+        "explanation": "Shareware is trial software distributed freely for evaluation over a limited trial duration, after which the user must pay a licensing fee to continue."
+      },
+      {
+        "id": 16,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "What type of malicious software encrypts a victim's files and demands payment in cryptocurrency to decrypt and restore access?",
+        "options": [
+          "(a) Ransomware",
+          "(b) Adware",
+          "(c) Spyware",
+          "(d) Cookie"
+        ],
+        "answer": "(a) Ransomware",
+        "explanation": "Ransomware locks or encrypts files on the target computer and demands financial ransom (often in cryptocurrency) in exchange for the decryption key."
+      },
+      {
+        "id": 17,
+        "type": "MCQ",
+        "tag": "CBSE 2016",
+        "question": "Which open-source license allows creators to declare which rights they reserve and which rights they waive for creative digital content?",
+        "options": [
+          "(a) Creative Commons (CC)",
+          "(b) Proprietary EULA",
+          "(c) Trade Secret",
+          "(d) NDA"
+        ],
+        "answer": "(a) Creative Commons (CC)",
+        "explanation": "Creative Commons provides standardized public copyright licenses that allow creators to permit specified public reuse and remixing of their content."
+      },
+      {
+        "id": 18,
+        "type": "MCQ",
+        "tag": "CBSE 2015",
+        "question": "The physical or biological stress caused by repetitive computer movements (such as constant clicking and typing) resulting in wrist and hand pain is known as:",
+        "options": [
+          "(a) Repetitive Strain Injury (RSI) / Carpal Tunnel Syndrome",
+          "(b) Computer Vision Syndrome",
+          "(c) Cyberstalking",
+          "(d) Digital Amnesia"
+        ],
+        "answer": "(a) Repetitive Strain Injury (RSI) / Carpal Tunnel Syndrome",
+        "explanation": "Repetitive Strain Injury (RSI) and Carpal Tunnel Syndrome occur from repetitive motions, improper wrist positioning, and lack of ergonomic keyboard support."
+      },
+      {
+        "id": 19,
+        "type": "MCQ",
+        "tag": "CBSE 2024",
+        "question": "Which of the following is considered an environmentally responsible method for disposing of old electronic gadgets?",
+        "options": [
+          "(a) Handing them over to authorized, certified e-waste dismantlers and recyclers",
+          "(b) Throwing them into municipal open landfills",
+          "(c) Burning plastic computer casings in an open backyard fire",
+          "(d) Dumping old motherboards into local rivers"
+        ],
+        "answer": "(a) Handing them over to authorized, certified e-waste dismantlers and recyclers",
+        "explanation": "Handing old electronic equipment to certified e-waste recyclers ensures safe extraction of precious metals and prevents toxic chemical leakage into soil and water."
+      },
+      {
+        "id": 20,
+        "type": "MCQ",
+        "tag": "CBSE 2023",
+        "question": "What is 'Netiquette'?",
+        "options": [
+          "(a) The code of acceptable, polite, and respectful behavior when communicating online",
+          "(b) A computer network protocol",
+          "(c) An online payment gateway",
+          "(d) Antivirus utility software"
+        ],
+        "answer": "(a) The code of acceptable, polite, and respectful behavior when communicating online",
+        "explanation": "Netiquette (network etiquette) refers to the set of professional, polite, and respectful guidelines for online interpersonal communication."
+      },
+      {
+        "id": 21,
+        "type": "MCQ",
+        "tag": "CBSE 2022",
+        "question": "Which of the following is an example of a 'Passive Digital Footprint'?",
+        "options": [
+          "(a) A web server logging your device IP address and browser version when you visit a webpage",
+          "(b) Uploading a YouTube video tutorial",
+          "(c) Writing an article on Wikipedia",
+          "(d) Submitting an online job application"
+        ],
+        "answer": "(a) A web server logging your device IP address and browser version when you visit a webpage",
+        "explanation": "A passive digital footprint is created without the user's active input or explicit knowledge, such as server access logs and tracking cookies."
+      },
+      {
+        "id": 22,
+        "type": "MCQ",
+        "tag": "CBSE 2021",
+        "question": "A person who deliberately posts inflammatory, irrelevant, or offensive comments in an online community to provoke emotional responses is a:",
+        "options": [
+          "(a) Cyber Troll",
+          "(b) Ethical Hacker",
+          "(c) Webmaster",
+          "(d) System Administrator"
+        ],
+        "answer": "(a) Cyber Troll",
+        "explanation": "An Internet troll deliberately posts inflammatory, disruptive, or hostile messages in public forums to upset others or cause discord."
+      },
+      {
+        "id": 23,
+        "type": "MCQ",
+        "tag": "CBSE 2020",
+        "question": "Which of the following is NOT protected by Copyright?",
+        "options": [
+          "(a) A mathematical idea or abstract scientific formula in one's head",
+          "(b) Original software source code",
+          "(c) A recorded musical album",
+          "(d) A published novel"
+        ],
+        "answer": "(a) A mathematical idea or abstract scientific formula in one's head",
+        "explanation": "Copyright protects the tangible expression of ideas (literary text, recorded music, source code), not raw ideas, abstract concepts, or scientific principles themselves."
+      },
+      {
+        "id": 24,
+        "type": "MCQ",
+        "tag": "CBSE 2019",
+        "question": "What does GNU GPL stand for in the context of open-source software?",
+        "options": [
+          "(a) GNU General Public License",
+          "(b) Global Network Universal Protection Law",
+          "(c) General Protocol Layer",
+          "(d) Graphical Navigation Utility Package"
+        ],
+        "answer": "(a) GNU General Public License",
+        "explanation": "The GNU General Public License (GPL) is a free software license that guarantees end users the freedom to run, study, share, and modify the software."
+      },
+      {
+        "id": 25,
+        "type": "MCQ",
+        "tag": "CBSE 2018",
+        "question": "What does Section 66E of the Indian IT Act penalize?",
+        "options": [
+          "(a) Violation of privacy through capturing, publishing, or transmitting images of private parts of any person without consent",
+          "(b) Hacking Wi-Fi routers",
+          "(c) Sending promotional emails",
+          "(d) Writing slow code"
+        ],
+        "answer": "(a) Violation of privacy through capturing, publishing, or transmitting images of private parts of any person without consent",
+        "explanation": "Section 66E of the IT Act prescribes severe imprisonment and fines for violating privacy by capturing, publishing, or transmitting images of private areas without consent."
+      },
+      {
+        "id": 26,
+        "type": "AR",
+        "tag": "CBSE 2024",
+        "question": "Assertion (A): Simply browsing websites in 'Incognito' or 'Private Browsing' mode does NOT make a user completely anonymous online.\nReason (R): Incognito mode prevents the local browser from saving browsing history and cookies, but internet service providers (ISPs) and visited web servers can still log the user's IP address.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Incognito mode manages only local client-side traces; external ISPs, network firewalls, and remote servers still receive and log IP traffic."
+      },
+      {
+        "id": 27,
+        "type": "AR",
+        "tag": "CBSE 2023",
+        "question": "Assertion (A): Open Source Software is always provided free of monetary cost.\nReason (R): Open Source Software requires that the source code be freely accessible and modifiable by users.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: Open source refers to freedom of code ('free as in free speech'), not necessarily monetary cost ('free as in free beer'). Companies can charge for distributions or enterprise support (e.g. Red Hat Enterprise Linux). Reason is true."
+      },
+      {
+        "id": 28,
+        "type": "AR",
+        "tag": "CBSE 2022",
+        "question": "Assertion (A): Burning electronic waste in open fields releases hazardous dioxins, heavy metals, and carcinogenic fumes into the atmosphere.\nReason (R): Computer printed circuit boards and plastic casings contain toxic elements such as Lead, Brominated Flame Retardants, and Cadmium.",
+        "options": [
+          "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+          "(b) Both (A) and (R) are true but (R) is NOT the correct explanation of (A)",
+          "(c) (A) is true but (R) is false",
+          "(d) (A) is false but (R) is true"
+        ],
+        "answer": "(a) Both (A) and (R) are true and (R) is the correct explanation of (A)",
+        "explanation": "Both statements are true. Open burning of electronic components releases dangerous toxins and carcinogenic fumes from flame retardants and heavy metals into the atmosphere."
+      },
+      {
+        "id": 29,
+        "type": "AR",
+        "tag": "CBSE 2021",
+        "question": "Assertion (A): A Trademark and a Copyright grant identical legal protections and expire after 5 years.\nReason (R): A Trademark protects brand identity and can be renewed indefinitely, while Copyright protects original literary/artistic expressions and lasts for the author's lifetime plus 60 years in India.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: Trademarks and Copyrights have distinct legal protections and terms. Reason accurately describes their differences."
+      },
+      {
+        "id": 30,
+        "type": "AR",
+        "tag": "CBSE 2020",
+        "question": "Assertion (A): Phishing and Pharming are identical cyber attacks using the same execution mechanism.\nReason (R): Phishing relies on deceptive emails tricking users, whereas Pharming hijacks DNS resolution to misdirect users even when the correct URL is typed.",
+        "options": [
+          "(a) Both (A) and (R) are true",
+          "(b) (A) is false but (R) is true",
+          "(c) (A) is true but (R) is false",
+          "(d) Both (A) and (R) are false"
+        ],
+        "answer": "(b) (A) is false but (R) is true",
+        "explanation": "Assertion is false: They use fundamentally different mechanisms. Reason accurately contrasts social engineering (Phishing) with technical DNS poisoning (Pharming)."
+      },
+      {
+        "id": 31,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between an 'Active Digital Footprint' and a 'Passive Digital Footprint' with one example of each. [2 Marks]",
+        "answer": "Active footprint is data shared intentionally by user; Passive footprint is data collected without active input.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark examples):\n• Active Digital Footprint: Data that a user intentionally and consciously shares or publishes online. Example: Posting updates, pictures, or comments on Facebook/X, or sending emails.\n• Passive Digital Footprint: Data gathered without the user's active input or deliberate submission. Example: Web servers logging your device IP address, geolocation, or search queries via tracking cookies."
+      },
+      {
+        "id": 32,
+        "type": "SA",
+        "tag": "CBSE 2024",
+        "question": "Differentiate between 'Phishing' and 'Pharming'. [2 Marks]",
+        "answer": "Phishing uses deceptive emails to trick users; Pharming hijacks DNS to redirect traffic to fake sites.",
+        "explanation": "Marking Scheme (1 Mark each):\n• Phishing: A social engineering attack where an attacker distributes deceptive emails mimicking legitimate banks/services, prompting users to click links and disclose sensitive information.\n• Pharming: A technical attack that manipulates DNS server tables or local host files, silently redirecting users to a bogus clone website even when they type the correct URL."
+      },
+      {
+        "id": 33,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "What is 'Intellectual Property Right (IPR)'? Name any two forms of IPR. [2 Marks]",
+        "answer": "Legal rights protecting creations of the human mind; Forms: Copyright, Patents, Trademarks.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark forms):\n• Definition: The legal rights granted to individuals or organizations over creations of their mind, providing exclusive exploitation rights for a defined period.\n• Forms: 1. Copyright (literary, artistic, software works); 2. Patent (inventions, technological processes); 3. Trademark (brand logos, slogans)."
+      },
+      {
+        "id": 34,
+        "type": "SA",
+        "tag": "CBSE 2023",
+        "question": "Differentiate between 'Proprietary Software' and 'Free and Open Source Software (FOSS)'. Give one example of each. [2 Marks]",
+        "answer": "Proprietary has closed source code and paid license (Windows); FOSS offers open source code with freedom to modify (Linux).",
+        "explanation": "Marking Scheme (1 Mark distinction + 1 Mark examples):\n• Proprietary Software: Software owned exclusively by an entity; users purchase a license to use it, but the source code is kept secret and cannot be modified or redistributed (e.g. Microsoft Windows, Adobe Photoshop).\n• FOSS: Software that provides users complete access to the source code along with the legal freedom to inspect, modify, and redistribute it (e.g. Linux OS, Python, LibreOffice)."
+      },
+      {
+        "id": 35,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is 'Plagiarism'? Suggest two practical ways a student can avoid plagiarism while writing an academic project. [2 Marks]",
+        "answer": "Using another's work without attribution; Avoid by properly citing sources and rephrasing in original words with quotation marks.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark prevention methods):\n• Concept: The practice of taking someone else's work, ideas, or words and passing them off as one's own without appropriate citation.\n• Prevention Methods:\n  1. Citation & Referencing: Acknowledge the original authors using standard citation formats (APA, MLA) and enclose verbatim phrases in quotation marks.\n  2. Paraphrasing: Restate concepts in your own unique words and understanding rather than copy-pasting directly."
+      },
+      {
+        "id": 36,
+        "type": "SA",
+        "tag": "CBSE 2022",
+        "question": "What is 'E-Waste'? State two adverse environmental hazards caused by improper disposal of e-waste. [2 Marks]",
+        "answer": "Discarded electronic goods; Hazards: groundwater contamination by toxic heavy metals and toxic air pollution from open burning.",
+        "explanation": "Marking Scheme (1 Mark definition + 1 Mark hazards):\n• Definition: Electronic Waste (E-Waste) refers to discarded, obsolete, or broken electrical and electronic devices (old phones, computers, monitors, batteries).\n• Environmental Hazards:\n  1. Soil and Groundwater Contamination: Heavy metals like Lead, Mercury, and Cadmium leach into subsoil and pollute drinking aquifers.\n  2. Atmospheric Toxicity: Open burning of circuit boards releases hazardous dioxins and carcinogens into the air."
+      },
+      {
+        "id": 37,
+        "type": "SA",
+        "tag": "CBSE 2020",
+        "question": "Mention any two key provisions/sections of the Indian Information Technology Act (IT Act 2000) and state the offenses they penalize. [2 Marks]",
+        "answer": "Section 66 (computer related offenses/hacking) and Section 66C (identity theft using electronic signatures/passwords).",
+        "explanation": "Marking Scheme (1 Mark each section):\n• 1. Section 66 (Computer Related Offenses): Penalizes unauthorized hacking, tampering with computer source code, and data destruction with up to 3 years imprisonment or fine up to ₹5 lakh.\n• 2. Section 66C (Identity Theft): Penalizes fraudulent or dishonest use of electronic signatures, passwords, or identification credentials with imprisonment up to 3 years and fines."
+      },
+      {
+        "id": 38,
+        "type": "SA",
+        "tag": "CBSE 2019",
+        "question": "Differentiate between a 'Hacker' and a 'Cracker'. [2 Marks]",
+        "answer": "Hacker (Ethical White Hat) finds vulnerabilities to secure systems; Cracker (Black Hat) breaches systems maliciously for personal gain.",
+        "explanation": "Marking Scheme (1 Mark each):\n• Hacker (White Hat / Ethical): A security professional who probes computer networks and systems with authorization to discover vulnerabilities and improve defensive postures.\n• Cracker (Black Hat / Malicious): An individual who breaks into systems without authorization with malicious intent to steal sensitive data, commit financial fraud, or cause disruption."
+      },
+      {
+        "id": 39,
+        "type": "SA",
+        "tag": "CBSE 2018",
+        "question": "State two important 'Social Media Etiquettes' that students must follow. [2 Marks]",
+        "answer": "Respect others' privacy and avoid posting fake news or offensive/harassing language.",
+        "explanation": "Marking Scheme (1 Mark each):\n• 1. Respect Privacy and Permissions: Never share private photos, phone numbers, or personal messages of peers without explicit consent.\n• 2. Avoid Hate Speech, Trolling, and Misinformation: Communicate respectfully, refrain from cyberbullying or offensive language, and verify facts before forwarding news."
+      },
+      {
+        "id": 40,
+        "type": "SA",
+        "tag": "CBSE 2017",
+        "question": "What is 'Ergonomics'? Suggest two ergonomic practices for a student attending online computer classes. [2 Marks]",
+        "answer": "Science of designing workspaces for health/efficiency; Practices: maintain straight posture with eye level at top of screen and follow 20-20-20 rule.",
+        "explanation": "Marking Scheme (1 Mark concept + 1 Mark practices):\n• Concept: Ergonomics is the scientific discipline concerned with designing and arranging workplaces, equipment, and habits to maximize human comfort, efficiency, and physical well-being.\n• Practices:\n  1. Correct Posture: Adjust chair and desk height so the monitor sits at eye level with feet flat on the floor and elbows supported at a 90-degree angle.\n  2. Visual Rest: Follow the 20-20-20 rule to reduce eye strain."
+      },
+      {
+        "id": 41,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "REAL-LIFE CASE SCENARIO 1: 'Ramesh receives an urgent SMS stating: \"Dear Customer, your State Bank account will be suspended within 2 hours due to unverified KYC. Click here immediately to update: http://sbi-kyc-update.com/login.php\". Panicked, Ramesh clicks the link, enters his net banking username, password, and OTP. Within five minutes, ₹75,000 is debited from his savings account.'\n\nAnswer the following:\n(a) Identify the specific type of cyber crime Ramesh has fallen victim to. [1 Mark]\n(b) List two visual red flags that Ramesh should have recognized before entering his credentials. [1 Mark]\n(c) What immediate emergency actions should Ramesh take to report this fraud? [1 Mark]\n(d) Under which section of the Indian IT Act 2000 can the criminal be prosecuted? [1 Mark]",
+        "answer": "Case scenario solution: (a) Phishing / Identity Theft; (b) Red flags: non-official URL & urgency; (c) Immediate blocking of account & call 1930 / cybercrime.gov.in; (d) Section 66C/66D.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each subpart):\n• (a) Crime Identification: Phishing / Financial Identity Theft [1 Mark].\n• (b) Red Flags [1 Mark]:\n  1. Suspicious non-official domain (`http://sbi-kyc-update.com` instead of official `https://www.onlinesbi.sbi`).\n  2. Unencrypted HTTP connection and artificial urgency threatening immediate account suspension.\n• (c) Emergency Actions [1 Mark]:\n  1. Immediately contact the bank's emergency customer helpline to freeze the account, block ATM/debit cards, and change net-banking credentials.\n  2. File an official cyber crime complaint at `www.cybercrime.gov.in` or dial the National Cyber Crime Helpline number **1930** within the golden hour.\n• (d) Legal Section: Section 66C (Identity theft) and Section 66D (Cheating by personation using computer resource) of the Indian IT Act 2000 [1 Mark]."
+      },
+      {
+        "id": 42,
+        "type": "LA",
+        "tag": "CBSE 2024",
+        "question": "Explain the concept of 'Digital Footprint'. Differentiate between Active and Passive footprints with two examples each. Discuss three safe browsing habits that help minimize one's digital footprint online. [4 Marks]",
+        "answer": "Digital footprint definition; Active vs Passive comparison; Three safe browsing strategies (cookies, incognito, permissions).",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark concept + 1.5 Marks active vs passive + 1.5 Marks safe practices):\n• 1. Concept [1 Mark]: A digital footprint is the unique trail of identifiable digital data and activities left behind whenever an individual interacts with the internet, websites, or networked digital applications.\n• 2. Active vs. Passive Footprint [1.5 Marks]:\n  - Active: Traces created deliberately by user actions (e.g., uploading YouTube videos, commenting on blogs, sending emails).\n  - Passive: Traces generated invisibly without deliberate user action (e.g., web servers tracking IP addresses, search engines recording location, browser cookies monitoring browsing patterns across tabs).\n• 3. Three Minimization Practices [1.5 Marks]:\n  - Regularly clear browser cookies, search history, and cache; use privacy-focused search engines.\n  - Review app permissions on mobile devices (revoke unnecessary access to camera, microphone, and location).\n  - Configure strict privacy settings on social media profiles and avoid sharing sensitive personal information publicly."
+      },
+      {
+        "id": 43,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "CASE SCENARIO 2: 'A high-school student Sunita created a parody social media account using her classmate's real photograph and name. She began posting offensive memes, fake confessions, and vulgar comments about teachers, leading to severe mental distress and school disciplinary issues for her classmate.'\n(a) Identify the cyber crimes committed by Sunita. [1 Mark]\n(b) Which provisions of the Indian IT Act 2000 and Indian laws are violated here? [1 Mark]\n(c) What is the difference between 'Cyberbullying' and 'Cyberstalking'? [1 Mark]\n(d) Advise the victim on what steps she should take to handle this harassment safely and legally. [1 Mark]",
+        "answer": "Case scenario solution: (a) Cyberbullying, Impersonation & Defamation; (b) IT Act Sections 66C, 66D, 66E; (c) Bullying vs Stalking distinction; (d) Reporting protocol.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each subpart):\n• (a) Crimes: Cyberbullying, Online Impersonation / Identity Theft, and Cyber Defamation [1 Mark].\n• (b) IT Act Provisions [1 Mark]: Section 66C (punishment for identity theft) and Section 66D (cheating by personation), along with Section 500 (defamation) under the IPC.\n• (c) Cyberbullying vs. Cyberstalking [1 Mark]: Cyberbullying involves online harassment, insults, or public humiliation of a victim. Cyberstalking involves persistent, covert monitoring, tracking, and obsessive following of an individual's online activities to induce fear.\n• (d) Victim's Steps [1 Mark]:\n  1. Take full screenshots of the fake profile, posts, and URLs as evidentiary records.\n  2. Report the fake account directly to the social media platform's trust and safety team for immediate removal.\n  3. Confide in parents and school authorities, and file a formal grievance at `www.cybercrime.gov.in`."
+      },
+      {
+        "id": 44,
+        "type": "LA",
+        "tag": "CBSE 2023",
+        "question": "Provide a comprehensive comparative analysis of the four major software licensing classifications: [4 Marks]\n(a) Proprietary Software\n(b) Free and Open Source Software (FOSS)\n(c) Freeware\n(d) Shareware\nEvaluate them across: Cost of Acquisition, Access to Source Code, Modification Rights, and License Examples.",
+        "answer": "Detailed comparative evaluation matrix covering Proprietary, FOSS, Freeware, and Shareware across 4 criteria.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each software classification):\n• (a) Proprietary Software [1 Mark]: Cost: Paid commercial license; Source Code: Closed and proprietary; Modification: Prohibited under EULA; Examples: Microsoft Office, Adobe Photoshop, Windows OS.\n• (b) FOSS [1 Mark]: Cost: Usually free of monetary cost; Source Code: Freely available; Modification: Users are legally free to inspect, modify, and redistribute code under licenses like GNU GPL; Examples: Linux Kernel, Python, LibreOffice, Apache.\n• (c) Freeware [1 Mark]: Cost: Zero monetary cost; Source Code: Closed and not provided; Modification: Not permitted; Examples: Adobe Acrobat Reader, Skype, Google Chrome.\n• (d) Shareware [1 Mark]: Cost: Free during evaluation trial period, then requires purchase; Source Code: Closed; Modification: Strictly prohibited; Examples: WinRAR, trial versions of antivirus suites."
+      },
+      {
+        "id": 45,
+        "type": "LA",
+        "tag": "CBSE 2022",
+        "question": "Discuss 'Intellectual Property Rights (IPR)' in the digital era. Explain the differences among:\n(a) Copyright\n(b) Patent\n(c) Trademark\nProvide one real-world software/technological example for each category and discuss why protecting IPR is vital for technological innovation. [4 Marks]",
+        "answer": "IPR analysis: Copyright (source code/expression), Patent (inventions/algorithms), Trademark (logos/brand names); Importance of IPR.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each category + 1 Mark importance):\n• (a) Copyright [1 Mark]: Protects the original expression of literary, artistic, and musical works, including computer software source code. Example: The written code of Python or a published textbook. Term: Lifetime of author + 60 years in India.\n• (b) Patent [1 Mark]: Protects novel inventions, technical apparatus, and industrial manufacturing processes. Example: A patented biometric facial-recognition hardware sensor or novel battery design. Term: 20 years from filing date.\n• (c) Trademark [1 Mark]: Protects distinctive brand signs, names, logos, or slogans that identify and differentiate goods/services in the market. Example: Apple's bitten-apple logo, Google logo, or Microsoft brand name. Can be renewed indefinitely.\n• (d) Vital Importance for Innovation [1 Mark]: Protects innovators from unauthorized copying, ensures fair economic returns on research investments, and incentivizes continued technological progress."
+      },
+      {
+        "id": 46,
+        "type": "LA",
+        "tag": "CBSE 2021",
+        "question": "What is 'E-Waste'? Discuss its primary sources, hazardous chemical constituents, and the '3R Approach' (Reduce, Reuse, Recycle) for sustainable e-waste management. [4 Marks]",
+        "answer": "E-waste breakdown: sources, toxic constituents (Lead, Mercury, Cadmium), and 3R implementation strategies.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark sources + 1 Mark toxic constituents + 2 Marks 3R approach):\n• 1. Sources [1 Mark]: Discarded consumer electronics (smartphones, televisions), corporate office hardware (servers, monitors, printers), and electronic components (batteries, wires).\n• 2. Toxic Constituents [1 Mark]:\n  - Lead: Found in CRT monitors and solder; damages nervous and circulatory systems.\n  - Mercury: Found in flat-panel switches and backlights; causes brain and kidney impairment.\n  - Cadmium: Found in rechargeable batteries and chip resistors; toxic to kidneys.\n• 3. The 3R Approach [2 Marks]:\n  - Reduce: Limit premature upgrading of devices; purchase durable electronics with longer operational lifespans.\n  - Reuse: Extend the life of functional hardware by donating or repurposing older computers for basic tasks (e.g., student libraries).\n  - Recycle: Route non-functional hardware to authorized e-waste collection centers and certified recyclers for safe extraction of raw materials."
+      },
+      {
+        "id": 47,
+        "type": "LA",
+        "tag": "CBSE 2020",
+        "question": "CASE SCENARIO 3: 'An IT company discovers that a former disgruntled employee has breached their internal database, downloaded confidential client data, and posted it for sale on a dark web forum, while introducing a script that encrypted server drives and demanded ₹10 Lakh in Bitcoin.'\n(a) Identify the two types of cyber attacks executed by the employee. [1 Mark]\n(b) Which sections of the Indian Information Technology Act (IT Act 2000) apply to these offenses? [1 Mark]\n(c) What security measures should corporate organizations implement to prevent unauthorized data theft by insiders? [1 Mark]\n(d) What is the difference between a 'Trojan Horse' and 'Ransomware'? [1 Mark]",
+        "answer": "Case scenario solution: (a) Data breach & Ransomware; (b) IT Act Sections 43 & 66; (c) Access control, least privilege & DLP; (d) Trojan vs Ransomware.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each subpart):\n• (a) Cyber Attacks: Data Theft / Corporate Espionage and Ransomware Attack [1 Mark].\n• (b) IT Act Sections [1 Mark]: Section 43 (penalty for damage to computer system/data theft) and Section 66 (computer-related offenses with hacking), along with Section 383 (extortion).\n• (c) Preventive Measures [1 Mark]: Implement Principle of Least Privilege (limiting database access only to active authorized personnel), enforce multi-factor authentication (MFA), deploy Data Loss Prevention (DLP) tools, and immediately revoke credentials upon employee departure.\n• (d) Trojan Horse vs. Ransomware [1 Mark]: A Trojan Horse is malware disguised as legitimate software to establish unauthorized backdoor access. Ransomware actively encrypts user files and demands payment to restore access."
+      },
+      {
+        "id": 48,
+        "type": "LA",
+        "tag": "CBSE 2019",
+        "question": "Explain 'Ergonomics' in the context of computer usage. Discuss four major health hazards associated with prolonged, poor computer workstation habits and provide the corrective ergonomic remedy for each. [4 Marks]",
+        "answer": "Workplace ergonomics; 4 health hazards: Eye strain, RSI, back/neck pain, and sedentary lifestyle with remedies.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark each hazard and remedy pair):\n• 1. Digital Eye Strain (Computer Vision Syndrome):\n  - Hazard: Burning sensation, blurred vision, headaches from prolonged screen staring.\n  - Remedy: Follow the 20-20-20 rule; position screen 20-28 inches away at eye level; adjust contrast.\n• 2. Repetitive Strain Injury (RSI) / Carpal Tunnel Syndrome:\n  - Hazard: Pain, numbness, and tendon damage in wrists and fingers from repetitive keyboard/mouse use.\n  - Remedy: Keep wrists straight and level with keyboard using wrist-rest pads; avoid resting palms on sharp desk edges.\n• 3. Chronic Back and Neck Pain:\n  - Hazard: Spinal disc compression and muscular stiffness from slumping or poor chair posture.\n  - Remedy: Use an ergonomically adjustable chair with lumbar support; keep thighs parallel to floor and feet flat.\n• 4. Sedentary Lifestyle and Poor Circulation:\n  - Hazard: Blood pooling in legs, lethargy, and increased cardiovascular risks from prolonged sitting.\n  - Remedy: Take a 5-minute standing or stretching break every hour; consider an adjustable sit-stand desk."
+      },
+      {
+        "id": 49,
+        "type": "LA",
+        "tag": "CBSE 2018",
+        "question": "What is 'Netiquette'? Discuss four essential netiquette rules that every digital citizen should follow in professional and academic online communications. [4 Marks]",
+        "answer": "Netiquette definition; 4 rules: polite tone (no ALL CAPS), respecting bandwidth/file sizes, respecting privacy, avoiding trolling/misinformation.",
+        "explanation": "Step-by-Step Marking Scheme (1 Mark definition + 3 Marks for four netiquette rules):\n• 1. Netiquette Concept [1 Mark]: The informal code of polite, professional, and respectful conduct expected when communicating in online digital environments.\n• 2. Four Rules [3 Marks - 0.75 Mark each]:\n  - Rule 1: Avoid Typing in ALL CAPS: In online conventions, words typed entirely in uppercase signify shouting or aggressive tone; use proper sentence casing.\n  - Rule 2: Respect Privacy: Do not share personal emails, phone numbers, or private communications without permission.\n  - Rule 3: Fact-Check Before Sharing: Verify news items from authentic sources before forwarding to prevent spreading rumors or misinformation.\n  - Rule 4: Mind Language and Tone: Maintain constructive, polite language; avoid offensive comments, harassment, or personal attacks in public discussion threads."
+      },
+      {
+        "id": 50,
+        "type": "LA",
+        "tag": "CBSE 2017",
+        "question": "Discuss the 'Creative Commons' licensing framework. Explain the four basic license conditions used by Creative Commons:\n(a) Attribution (BY)\n(b) Non-Commercial (NC)\n(c) No Derivative Works (ND)\n(d) Share-Alike (SA)\nHow do these conditions empower creators while supporting open educational resources (OER)? [4 Marks]",
+        "answer": "Creative Commons framework breakdown: Attribution (BY), NonCommercial (NC), NoDerivatives (ND), and ShareAlike (SA); Value for Open Educational Resources.",
+        "explanation": "Step-by-Step Marking Scheme (0.75 Mark each condition + 1 Mark OER impact):\n• 1. Four Creative Commons License Conditions [3 Marks]:\n  - (a) Attribution (BY): Licensees may copy, distribute, display, and perform the work and make derivative works based on it only if they give the original author proper credit.\n  - (b) Non-Commercial (NC): Licensees may copy, distribute, display, and remix the work only for non-commercial purposes.\n  - (c) No Derivative Works (ND): Licensees may copy, distribute, and display only verbatim copies of the work, not derivative works or adaptations based on it.\n  - (d) Share-Alike (SA): Licensees may distribute derivative works only under a license identical to the license that governs the original work.\n• 2. Value for Open Educational Resources (OER) [1 Mark]: Enables educators and researchers to share study materials and software globally without copyright restrictions, allowing collaborative adaptation and translation while safeguarding original authorship."
+      }
+    ]
+  }
+];

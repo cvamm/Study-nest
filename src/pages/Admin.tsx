@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   AlertCircle,
@@ -27,12 +27,20 @@ import { useApp } from "@/context/AppContext";
 import { SUBJECTS, subjectById } from "@/data/subjects";
 import type { Difficulty, Goal, Language, Resource, ResourceType, SourceKind } from "@/lib/types";
 import { cn, RESOURCE_TYPES, TONES, typeMeta } from "@/lib/utils";
+import {
+  hashPassword,
+  ADMIN_PASSWORD_HASH,
+  ADMIN_EMAILS,
+  createSessionToken,
+  validateSessionToken,
+  rateLimit,
+  sanitizeText,
+  isSafeUrl,
+} from "@/lib/security";
 
 type Tab = "directory" | "form" | "reports";
 
-const ADMIN_STORAGE_KEY = "studynest12_admin_session";
-const VALID_ADMIN_EMAILS = ["admingmail.com", "admin@gmail.com"];
-const VALID_ADMIN_PASSWORD = "admin@123";
+const ADMIN_STORAGE_KEY = "studybust12_admin_session";
 
 interface FormState {
   title: string;
@@ -68,13 +76,8 @@ const BLANK: FormState = {
 
 export default function Admin() {
   const app = useApp();
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(ADMIN_STORAGE_KEY) === "true";
-    } catch {
-      return false;
-    }
-  });
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(false);
+  const [isVerifyingSession, setIsVerifyingSession] = useState(true);
 
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
@@ -89,9 +92,39 @@ export default function Admin() {
   const [form, setForm] = useState<FormState>(BLANK);
   const [formError, setFormError] = useState("");
 
-  const handleAdminLogin = (e: FormEvent) => {
+  // Validate existing session token on mount
+  useEffect(() => {
+    let isMounted = true;
+    async function verify() {
+      try {
+        const token = localStorage.getItem(ADMIN_STORAGE_KEY);
+        if (token) {
+          const isValid = await validateSessionToken(token);
+          if (isMounted && isValid) {
+            setIsAdminAuthenticated(true);
+          }
+        }
+      } catch {
+        // ignore storage errors
+      } finally {
+        if (isMounted) setIsVerifyingSession(false);
+      }
+    }
+    verify();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleAdminLogin = async (e: FormEvent) => {
     e.preventDefault();
     setLoginError("");
+
+    if (!rateLimit("admin_login_attempt", 5, 60000)) {
+      setLoginError("Too many login attempts. Please wait 60 seconds before trying again.");
+      return;
+    }
+
     const trimmedEmail = adminEmail.trim().toLowerCase();
     const trimmedPassword = adminPassword.trim();
 
@@ -101,29 +134,35 @@ export default function Admin() {
     }
 
     setIsLoggingIn(true);
-    setTimeout(() => {
-      const emailMatches = VALID_ADMIN_EMAILS.includes(trimmedEmail);
-      const passwordMatches = trimmedPassword === VALID_ADMIN_PASSWORD;
+    try {
+      const inputHash = await hashPassword(trimmedPassword);
+      const emailMatches = ADMIN_EMAILS.includes(trimmedEmail);
+      const passwordMatches = inputHash === ADMIN_PASSWORD_HASH;
 
       if (emailMatches && passwordMatches) {
+        const token = await createSessionToken();
         try {
-          localStorage.setItem(ADMIN_STORAGE_KEY, "true");
+          localStorage.setItem(ADMIN_STORAGE_KEY, token);
         } catch {
           // ignore
         }
         setIsAdminAuthenticated(true);
         setLoginError("");
-        app.toast("Access granted — Welcome to StudyNest Admin Panel!", "success");
+        app.toast("Access granted — Welcome to StudyBust Admin Panel!", "success");
       } else {
-        setLoginError("Invalid credentials. Please enter the authorized email and password.");
+        setLoginError("Invalid credentials. Please enter authorized admin credentials.");
       }
+    } catch {
+      setLoginError("An error occurred during authentication. Please try again.");
+    } finally {
       setIsLoggingIn(false);
-    }, 250);
+    }
   };
 
   const handleAdminLogout = () => {
     try {
       localStorage.removeItem(ADMIN_STORAGE_KEY);
+      localStorage.removeItem("studynest12_admin_session");
     } catch {
       // ignore
     }
@@ -174,27 +213,32 @@ export default function Admin() {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    if (!form.title.trim() || !form.source.trim() || !form.url.trim()) {
+    const sanitizedTitle = sanitizeText(form.title);
+    const sanitizedSource = sanitizeText(form.source);
+    const sanitizedDescription = sanitizeText(form.description);
+    const rawUrl = form.url.trim();
+
+    if (!sanitizedTitle || !sanitizedSource || !rawUrl) {
       setFormError("Title, source (channel/website) and URL are required.");
       return;
     }
-    if (!/^https?:\/\//.test(form.url.trim())) {
-      setFormError("URL must start with http:// or https://");
+    if (!isSafeUrl(rawUrl)) {
+      setFormError("URL must be a valid HTTP or HTTPS protocol link.");
       return;
     }
     const payload = {
-      title: form.title.trim(),
+      title: sanitizedTitle,
       subjectId: form.subjectId,
       chapterId: form.chapterId || null,
       type: form.type,
-      source: form.source.trim(),
+      source: sanitizedSource,
       sourceKind: form.sourceKind,
       language: form.language,
       difficulty: form.difficulty,
       goal: form.goal,
       duration: form.duration ? Number(form.duration) : null,
-      description: form.description.trim() || "No description provided yet.",
-      url: form.url.trim(),
+      description: sanitizedDescription || "No description provided yet.",
+      url: rawUrl,
       recommended: form.recommended,
     };
     if (editingId) {
@@ -212,6 +256,17 @@ export default function Admin() {
   };
 
   const formSubject = subjectById(form.subjectId);
+
+  if (isVerifyingSession) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center space-y-3 text-center bg-navy-950 text-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-400/10 text-gold-400 animate-pulse ring-1 ring-gold-400/30">
+          <Lock className="h-6 w-6" />
+        </div>
+        <p className="text-xs font-semibold tracking-wide text-navy-300">Verifying admin session security…</p>
+      </div>
+    );
+  }
 
   if (!isAdminAuthenticated) {
     return (
@@ -302,21 +357,10 @@ export default function Admin() {
                 </div>
               </div>
 
-              {/* Demo credentials helper chip */}
+              {/* Admin credentials are for demo purposes only */}
               <div className="rounded-lg border border-navy-800 bg-navy-950/50 p-2.5 text-center">
                 <p className="text-[11px] text-navy-400">
-                  Authorized credentials:{" "}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAdminEmail("admingmail.com");
-                      setAdminPassword("admin@123");
-                      setLoginError("");
-                    }}
-                    className="font-mono font-semibold text-gold-300 underline underline-offset-2 hover:text-gold-200"
-                  >
-                    admingmail.com / admin@123
-                  </button>
+                  Demo admin panel — credentials are for authorized administrators only.
                 </p>
               </div>
 

@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import {
   ArrowRight,
   Check,
@@ -11,24 +11,47 @@ import {
   FileCheck2,
   Layers,
   Library,
-  PlayCircle,
+  Loader2,
   Search,
   Sparkles,
   Video,
   X,
-  Zap,
 } from "lucide-react";
 import AnimatedBar from "@/components/AnimatedBar";
 import EmptyState from "@/components/EmptyState";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Reveal from "@/components/Reveal";
 import ResourceCard from "@/components/ResourceCard";
-import PhysicsPyqSection from "@/components/PhysicsPyqSection";
-import ChemistryPyqSection from "@/components/ChemistryPyqSection";
-import MathPyqSection from "@/components/MathPyqSection";
 import { useApp } from "@/context/AppContext";
-import { subjectById } from "@/data/subjects";
+import { hasPyqData, subjectById } from "@/data/subjects";
 import type { ResourceType } from "@/lib/types";
 import { cn, fmtDuration, RESOURCE_TYPES, subjectIcon, TONES } from "@/lib/utils";
+
+/* ── Lazy-loaded PYQ sections (code-split ~8 MB of question data) ── */
+const PhysicsPyqSection = lazy(() => import("@/components/PhysicsPyqSection"));
+const ChemistryPyqSection = lazy(() => import("@/components/ChemistryPyqSection"));
+const BiologyPyqSection = lazy(() => import("@/components/BiologyPyqSection"));
+const MathPyqSection = lazy(() => import("@/components/MathPyqSection"));
+const CsPyqSection = lazy(() => import("@/components/CsPyqSection"));
+const BstPyqSection = lazy(() => import("@/components/BstPyqSection"));
+const AccPyqSection = lazy(() => import("@/components/AccPyqSection"));
+const GeographyPyqSection = lazy(() => import("@/components/GeographyPyqSection"));
+const PolPyqSection = lazy(() => import("@/components/PolPyqSection"));
+const IpPyqSection = lazy(() => import("@/components/IpPyqSection"));
+const EcoPyqSection = lazy(() => import("@/components/EcoPyqSection"));
+const HistoryPyqSection = lazy(() => import("@/components/HistoryPyqSection"));
+const SociologyPyqSection = lazy(() => import("@/components/SociologyPyqSection"));
+const PsychologyPyqSection = lazy(() => import("@/components/PsychologyPyqSection"));
+const EnglishPyqSection = lazy(() => import("@/components/EnglishPyqSection"));
+
+function PyqLoadingFallback() {
+  return (
+    <div className="flex items-center justify-center gap-3 rounded-xl border border-inkline bg-navy-50/50 p-12">
+      <Loader2 className="h-5 w-5 animate-spin text-navy-400" />
+      <p className="text-sm font-bold text-navy-500">Loading PYQ bank…</p>
+    </div>
+  );
+}
 
 function Crumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
   return (
@@ -53,6 +76,7 @@ function Crumbs({ items }: { items: Array<{ label: string; to?: string }> }) {
 
 export function SubjectPage() {
   const { subjectId } = useParams();
+  const [searchParams] = useSearchParams();
   const { resources, completed, isChapterDone, toggleChapter } = useApp();
   const subject = subjectById(subjectId);
 
@@ -60,6 +84,20 @@ export function SubjectPage() {
   const [selectedChapterFilter, setSelectedChapterFilter] = useState<string>("all");
   const [selectedFormatFilter, setSelectedFormatFilter] = useState<string>("all");
   const [selectedEducatorFilter, setSelectedEducatorFilter] = useState<string>("all");
+
+  useEffect(() => {
+    const sec = searchParams.get("section");
+    if (sec) {
+      const timer = setTimeout(() => {
+        document.getElementById(sec)?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const subjectResources = useMemo(
     () => resources.filter((r) => r.subjectId === subjectId),
@@ -194,72 +232,52 @@ export function SubjectPage() {
             </div>
           ) : null}
 
-          {/* Quick Navigation Anchors */}
+          {/* Quick Navigation Buttons */}
           <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-inkline pt-6">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-navy-400">Jump to section:</span>
-            <a
-              href="#chapters"
-              className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950"
+            <button
+              type="button"
+              onClick={() => scrollToSection("chapters")}
+              className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950 active:scale-[.98]"
             >
               <Library className="h-3.5 w-3.5 text-navy-400" />
               Syllabus Chapters ({subject.chapters.length})
-            </a>
+            </button>
             {allLectures.length > 0 ? (
-              <a
-                href="#lectures"
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-gold-300 bg-gradient-to-r from-gold-50 to-gold-100/80 px-3.5 py-1.5 text-xs font-extrabold text-gold-900 shadow-sm transition-all hover:border-gold-400 hover:from-gold-100 hover:to-gold-200"
+              <button
+                type="button"
+                onClick={() => scrollToSection("lectures")}
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-gold-300 bg-gradient-to-r from-gold-50 to-gold-100/80 px-3.5 py-1.5 text-xs font-extrabold text-gold-900 shadow-sm transition-all hover:border-gold-400 hover:from-gold-100 hover:to-gold-200 active:scale-[.98]"
               >
                 <Video className="h-3.5 w-3.5 text-gold-600" />
                 Video Lectures Hub
                 <span className="rounded-full bg-gold-200 px-1.5 py-0.2 text-[10px] font-extrabold text-gold-800">
                   {coveredChaptersCount}/{subject.chapters.length} Chapters
                 </span>
-              </a>
+              </button>
             ) : null}
-            {subject.id === "phy" ? (
-              <a
-                href="#physics-pyqs"
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-emerald-300 bg-gradient-to-r from-emerald-50 to-emerald-100/80 px-3.5 py-1.5 text-xs font-extrabold text-emerald-900 shadow-sm transition-all hover:border-emerald-400 hover:from-emerald-100 hover:to-emerald-200"
-              >
-                <FileCheck2 className="h-3.5 w-3.5 text-emerald-700" />
-                Chapterwise PYQ Bank (700 Qs)
-                <span className="rounded-full bg-emerald-200 px-1.5 py-0.2 text-[10px] font-extrabold text-emerald-800">
-                  50 Qs / Ch
-                </span>
-              </a>
-            ) : null}
-            {subject.id === "chem" ? (
-              <a
-                href="#chemistry-pyqs"
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-teal-300 bg-gradient-to-r from-teal-50 to-emerald-100/80 px-3.5 py-1.5 text-xs font-extrabold text-teal-900 shadow-sm transition-all hover:border-teal-400 hover:from-teal-100 hover:to-emerald-200"
-              >
-                <FileCheck2 className="h-3.5 w-3.5 text-teal-700" />
-                Chapterwise PYQ Bank (500 Qs)
-                <span className="rounded-full bg-teal-200 px-1.5 py-0.2 text-[10px] font-extrabold text-teal-800">
-                  50 Qs / Ch
-                </span>
-              </a>
-            ) : null}
-            {subject.id === "math" ? (
-              <a
-                href="#math-pyqs"
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-indigo-300 bg-gradient-to-r from-indigo-50 to-blue-100/80 px-3.5 py-1.5 text-xs font-extrabold text-indigo-950 shadow-sm transition-all hover:border-indigo-400 hover:from-indigo-100 hover:to-blue-200"
+            {hasPyqData(subject.id) ? (
+              <button
+                type="button"
+                onClick={() => scrollToSection("pyqs")}
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-indigo-300 bg-gradient-to-r from-indigo-50 to-blue-100/80 px-3.5 py-1.5 text-xs font-extrabold text-indigo-950 shadow-sm transition-all hover:border-indigo-400 hover:from-indigo-100 hover:to-blue-200 active:scale-[.98]"
               >
                 <FileCheck2 className="h-3.5 w-3.5 text-indigo-700" />
-                Chapterwise PYQ Bank (650 Qs)
+                Chapterwise Board PYQs (50 Qs / Ch)
                 <span className="rounded-full bg-indigo-200 px-1.5 py-0.2 text-[10px] font-extrabold text-indigo-800">
-                  50 Qs / Ch
+                  {subject.chapters.length * 50} Qs
                 </span>
-              </a>
+              </button>
             ) : null}
             {topLevel.length > 0 ? (
-              <a
-                href="#full-subject"
-                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950"
+              <button
+                type="button"
+                onClick={() => scrollToSection("full-subject")}
+                className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-inkline bg-white px-3 py-1.5 text-xs font-bold text-navy-700 shadow-sm transition-all hover:border-navy-300 hover:text-navy-950 active:scale-[.98]"
               >
                 <Layers className="h-3.5 w-3.5 text-navy-400" />
                 Full-Subject Material ({topLevel.length})
-              </a>
+              </button>
             ) : null}
           </div>
         </div>
@@ -302,11 +320,16 @@ export function SubjectPage() {
                     <p className={cn("truncate font-display text-sm font-bold", done ? "text-green-900" : "text-navy-900")}>
                       {ch.name}
                     </p>
-                    <p className="mt-0.5 flex items-center gap-2 text-[11px] font-bold text-navy-400">
+                    <p className="mt-0.5 flex flex-wrap items-center gap-2 text-[11px] font-bold text-navy-400">
                       <span className="inline-flex items-center gap-1">
                         <Library className="h-3 w-3" />
                         {count} {count === 1 ? "resource" : "resources"}
                       </span>
+                      {hasPyqData(subject.id) ? (
+                        <span className="inline-flex items-center gap-1 rounded bg-indigo-50 border border-indigo-200/80 px-1.5 py-0.2 text-[10px] font-extrabold text-indigo-800">
+                          50 Board PYQs
+                        </span>
+                      ) : null}
                       {done ? <span className="text-green-600">Completed</span> : null}
                     </p>
                   </div>
@@ -379,7 +402,7 @@ export function SubjectPage() {
                     value={lectureSearch}
                     onChange={(e) => setLectureSearch(e.target.value)}
                     placeholder={`Search ${subject.short} lectures (e.g. Gauss, LCR, Optics)...`}
-                    className="focus-ring w-full rounded-xl border border-inkline bg-navy-50/50 py-2.5 pl-9 pr-3 text-sm font-medium text-navy-900 placeholder:text-navy-400 focus:bg-white"
+                    className="focus-ring w-full rounded-xl border border-inkline bg-navy-50/50 py-2.5 pl-9 pr-3 text-base sm:text-sm font-medium text-navy-900 placeholder:text-navy-400 focus:bg-white"
                   />
                   {lectureSearch ? (
                     <button
@@ -466,7 +489,7 @@ export function SubjectPage() {
               </div>
 
               {/* Scrollable Chapter Quick Pills */}
-              <div className="no-scrollbar mt-3 flex items-center gap-1.5 overflow-x-auto border-t border-inkline/60 pt-3 pb-1">
+              <div className="no-scrollbar touch-scroll mt-3 flex items-center gap-1.5 overflow-x-auto border-t border-inkline/60 pt-3 pb-1">
                 <button
                   type="button"
                   onClick={() => setSelectedChapterFilter("all")}
@@ -563,30 +586,52 @@ export function SubjectPage() {
         </section>
       ) : null}
 
-      {/* ===================== PHYSICS MASTER PYQ BANK ===================== */}
-      {subject.id === "phy" ? (
-        <section id="physics-pyqs" className="container-x py-12 border-t border-inkline">
-          <Reveal>
-            <PhysicsPyqSection />
-          </Reveal>
-        </section>
-      ) : null}
+      {/* ===================== CHAPTERWISE BOARD PYQ BANK ===================== */}
+      {hasPyqData(subject.id) ? (
+        <section id="pyqs" className="border-t border-inkline bg-slate-50/50 py-14 lg:py-20">
+          <div className="container-x">
+            <Reveal>
+              <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-indigo-700">
+                      <FileCheck2 className="h-3.5 w-3.5" />
+                      CBSE Board Exam Preparation
+                    </span>
+                    <span className="rounded-full bg-navy-100 px-2.5 py-0.5 text-[11px] font-bold text-navy-700">
+                      50 Questions per Chapter · Chapterwise Practice
+                    </span>
+                  </div>
+                  <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+                    Chapterwise Board Previous Year Questions
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy-600 sm:text-base">
+                    Interactive chapter-by-chapter practice with verified marking schemes, MCQs, Assertion-Reasons, and numerical steps directly on the website. Select any chapter below to explore questions.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
 
-      {/* ===================== CHEMISTRY MASTER PYQ BANK ===================== */}
-      {subject.id === "chem" ? (
-        <section id="chemistry-pyqs" className="container-x py-12 border-t border-inkline">
-          <Reveal>
-            <ChemistryPyqSection />
-          </Reveal>
-        </section>
-      ) : null}
-
-      {/* ===================== MATHEMATICS MASTER PYQ BANK ===================== */}
-      {subject.id === "math" ? (
-        <section id="math-pyqs" className="container-x py-12 border-t border-inkline">
-          <Reveal>
-            <MathPyqSection />
-          </Reveal>
+            <ErrorBoundary>
+              <Suspense fallback={<PyqLoadingFallback />}>
+                {subject.id === "phy" ? <PhysicsPyqSection defaultOpen={true} /> : null}
+                {subject.id === "chem" ? <ChemistryPyqSection defaultOpen={true} /> : null}
+                {subject.id === "bio" ? <BiologyPyqSection defaultOpen={true} /> : null}
+                {subject.id === "math" ? <MathPyqSection defaultOpen={true} /> : null}
+                {subject.id === "cs" ? <CsPyqSection defaultOpen={true} /> : null}
+                {subject.id === "bst" ? <BstPyqSection defaultOpen={true} /> : null}
+                {subject.id === "acc" ? <AccPyqSection defaultOpen={true} /> : null}
+                {subject.id === "geo" ? <GeographyPyqSection defaultOpen={true} /> : null}
+                {subject.id === "pol" ? <PolPyqSection defaultOpen={true} /> : null}
+                {subject.id === "ip" ? <IpPyqSection defaultOpen={true} /> : null}
+                {subject.id === "eco" ? <EcoPyqSection defaultOpen={true} /> : null}
+                {subject.id === "his" ? <HistoryPyqSection defaultOpen={true} /> : null}
+                {subject.id === "soc" ? <SociologyPyqSection defaultOpen={true} /> : null}
+                {subject.id === "psy" ? <PsychologyPyqSection defaultOpen={true} /> : null}
+                {subject.id === "eng" ? <EnglishPyqSection defaultOpen={true} /> : null}
+              </Suspense>
+            </ErrorBoundary>
+          </div>
         </section>
       ) : null}
 
@@ -642,6 +687,11 @@ export function ChapterPage() {
     items: chapterResources.filter((r) => r.type === t.id),
   })).filter((g) => g.items.length > 0);
 
+  const lectureGroupIds = new Set(["yt-lectures", "detailed-lectures", "one-shot"]);
+  const lectureGroups = groups.filter((g) => lectureGroupIds.has(g.type.id));
+  const otherGroups = groups.filter((g) => !lectureGroupIds.has(g.type.id));
+  const hasPyq = hasPyqData(subject.id);
+
   return (
     <>
       <section className={cn("relative overflow-hidden border-b", tone.border, tone.soft)}>
@@ -656,7 +706,7 @@ export function ChapterPage() {
             items={[
               { label: "Subjects", to: "/subjects" },
               { label: subject.name, to: `/subjects/${subject.id}` },
-              { label: "Lectures Hub", to: `/subjects/${subject.id}#lectures` },
+              { label: "Lectures Hub", to: `/subjects/${subject.id}?section=lectures` },
               { label: `Chapter ${index + 1}` },
             ]}
           />
@@ -688,8 +738,20 @@ export function ChapterPage() {
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2.5">
+              {hasPyq ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    document.getElementById("chapter-pyqs")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="focus-ring inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50/90 px-3.5 py-2.5 text-xs font-extrabold text-indigo-950 shadow-sm transition-all hover:bg-indigo-100 hover:text-indigo-900 active:scale-[.98]"
+                >
+                  <FileCheck2 className="h-4 w-4 text-indigo-600" />
+                  Chapter PYQs (50 Qs)
+                </button>
+              ) : null}
               <Link
-                to={`/subjects/${subject.id}#lectures`}
+                to={`/subjects/${subject.id}?section=lectures`}
                 className="focus-ring inline-flex w-fit shrink-0 items-center gap-1.5 rounded-lg border border-inkline bg-white/90 px-4 py-2.5 text-xs font-extrabold text-navy-800 shadow-sm transition-all hover:bg-white hover:text-navy-950 active:scale-[.98]"
               >
                 <Video className="h-4 w-4 text-rose-500" />
@@ -715,43 +777,10 @@ export function ChapterPage() {
       </section>
 
       <section className="container-x py-12">
-        {subject.id === "phy" ? (
-          <div className="mb-12">
-            <PhysicsPyqSection initialChapterNum={index + 1} lockChapter={true} />
-          </div>
-        ) : null}
-
-        {subject.id === "chem" ? (
-          <div className="mb-12">
-            <ChemistryPyqSection initialChapterNum={index + 1} lockChapter={true} />
-          </div>
-        ) : null}
-
-        {subject.id === "math" ? (
-          <div className="mb-12">
-            <MathPyqSection initialChapterNum={index + 1} lockChapter={true} />
-          </div>
-        ) : null}
-
-        {groups.length === 0 ? (
-          <EmptyState
-            title={`No resources for this chapter yet`}
-            body="This is a demo directory, and this chapter hasn't been stocked with sample resources. Check full-subject material or browse everything available."
-            action={
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link to={`/subjects/${subject.id}`} className="btn-navy">
-                  <ChevronLeft className="h-4 w-4" />
-                  Back to {subject.name}
-                </Link>
-                <Link to={`/resources?subject=${subject.id}`} className="btn-ghost">
-                  All {subject.short} resources
-                </Link>
-              </div>
-            }
-          />
-        ) : (
+        {/* 1. Chapter Video Lectures (First) */}
+        {lectureGroups.length > 0 ? (
           <div className="space-y-12">
-            {groups.map((g) => (
+            {lectureGroups.map((g) => (
               <Reveal key={g.type.id}>
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
@@ -777,7 +806,101 @@ export function ChapterPage() {
               </Reveal>
             ))}
           </div>
-        )}
+        ) : null}
+
+        {/* 2. Chapter Board PYQ Interactive Practice (Directly Below the Lectures) */}
+        {hasPyq ? (
+          <div id="chapter-pyqs" className={cn(lectureGroups.length > 0 ? "mt-14 mb-14" : "mb-12")}>
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-indigo-700">
+                    <FileCheck2 className="h-3.5 w-3.5" />
+                    Chapter {index + 1} Board Practice
+                  </span>
+                  <span className="rounded-full bg-navy-100 px-2 py-0.5 text-[11px] font-bold text-navy-700">
+                    50 PYQs Below Lectures
+                  </span>
+                </div>
+                <h2 className="mt-1 font-display text-2xl font-extrabold tracking-tight text-navy-900">
+                  Chapter Previous Year Questions (PYQs)
+                </h2>
+                <p className="mt-0.5 text-xs text-navy-500 font-medium">
+                  Practice board exam questions for {chapter.name} directly with MCQs, Assertion-Reasons, and full marking schemes.
+                </p>
+              </div>
+            </div>
+
+            <ErrorBoundary>
+              <Suspense fallback={<PyqLoadingFallback />}>
+                {subject.id === "phy" ? <PhysicsPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "chem" ? <ChemistryPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "bio" ? <BiologyPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "math" ? <MathPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "cs" ? <CsPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "bst" ? <BstPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "acc" ? <AccPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "geo" ? <GeographyPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "pol" ? <PolPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "ip" ? <IpPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "eco" ? <EcoPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "his" ? <HistoryPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "soc" ? <SociologyPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "psy" ? <PsychologyPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+                {subject.id === "eng" ? <EnglishPyqSection initialChapterNum={index + 1} lockChapter={true} defaultOpen={true} /> : null}
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        ) : null}
+
+        {/* 3. Notes, NCERT & Other Chapter Study Resources */}
+        {otherGroups.length > 0 ? (
+          <div className="space-y-12">
+            {otherGroups.map((g) => (
+              <Reveal key={g.type.id}>
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className={cn("flex h-9 w-9 items-center justify-center rounded-lg border", TONES[g.type.tone].chip)}>
+                      <g.type.icon className="h-4.5 w-4.5" />
+                    </span>
+                    <h2 className="font-display text-xl font-extrabold tracking-tight text-navy-900">{g.type.label}</h2>
+                    <span className="rounded-full bg-navy-100 px-2.5 py-0.5 text-xs font-extrabold text-navy-700">{g.items.length}</span>
+                    <Link
+                      to={`/resources?subject=${subject.id}&chapter=${chapter.id}&types=${g.type.id}`}
+                      className="focus-ring ml-auto inline-flex items-center gap-1 rounded-md text-xs font-bold text-navy-500 transition-colors hover:text-navy-900"
+                    >
+                      Filter view
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                  <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {g.items.map((r) => (
+                      <ResourceCard key={r.id} resource={r} />
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        ) : null}
+
+        {groups.length === 0 && !hasPyq ? (
+          <EmptyState
+            title={`No resources for this chapter yet`}
+            body="Resources for this chapter are being indexed. In the meantime, explore full-subject notes, videos, or browse the master directory."
+            action={
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link to={`/subjects/${subject.id}`} className="btn-navy">
+                  <ChevronLeft className="h-4 w-4" />
+                  Back to {subject.name}
+                </Link>
+                <Link to={`/resources?subject=${subject.id}`} className="btn-ghost">
+                  All {subject.short} resources
+                </Link>
+              </div>
+            }
+          />
+        ) : null}
 
         {/* prev / next */}
         <div className="mt-14 grid grid-cols-1 gap-3 border-t border-inkline pt-8 sm:grid-cols-2">

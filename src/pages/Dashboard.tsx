@@ -46,7 +46,7 @@ export default function Dashboard() {
       <section className="border-b border-inkline bg-white">
         <div className="container-x py-10">
           <DashboardHeader />
-          <div className="mt-7 flex gap-1.5 overflow-x-auto no-scrollbar" role="tablist" aria-label="Dashboard sections">
+          <div className="mt-7 flex gap-1.5 overflow-x-auto no-scrollbar touch-scroll" role="tablist" aria-label="Dashboard sections">
             {TABS.map((t) => (
               <button
                 key={t.id}
@@ -251,7 +251,7 @@ function Overview() {
               <Bot className="h-5.5 w-5.5" />
             </span>
             <div>
-              <h2 className="font-display text-lg font-bold text-white">StudyNest Intelligence</h2>
+              <h2 className="font-display text-lg font-bold text-white">StudyBust Intelligence</h2>
               <p className="text-xs font-semibold text-navy-300">AI tools wired into your bookmarks, progress and planner — coming soon.</p>
             </div>
           </div>

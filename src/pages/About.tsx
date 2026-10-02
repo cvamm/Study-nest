@@ -27,7 +27,7 @@ const ROADMAP = [
 
 const FAQS = [
   {
-    q: "Are the resources on StudyNest 12 verified?",
+    q: "Are the resources on StudyBust 12 verified?",
     a: "Not yet. This is a demo directory with realistic sample data. External links open official sites (NCERT, CBSE Academic, DIKSHA, ExamFear) or a YouTube search for the topic — nothing is claimed as curated or verified until real links replace the placeholders.",
   },
   {
@@ -52,14 +52,14 @@ export default function About() {
         <div className="container-x relative py-16 lg:py-20">
           <p className="inline-flex items-center gap-2 rounded-full border border-navy-700 bg-navy-900/70 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.16em] text-gold-300">
             <Compass className="h-3.5 w-3.5" />
-            About StudyNest 12
+            About StudyBust 12
           </p>
           <h1 className="mt-5 max-w-2xl font-display text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">
             One nest for every lecture, note and paper you'll ever need.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-navy-200">
             Class 12 preparation is scattered across dozens of YouTube channels, PDF drives and
-            coaching sites. StudyNest 12 aggregates it into one organised, searchable directory —
+            coaching sites. StudyBust 12 aggregates it into one organised, searchable directory —
             by subject, by chapter, by exactly what you need next.
           </p>
         </div>
@@ -162,7 +162,7 @@ export default function About() {
             <div className="min-w-0 flex-1">
               <h2 className="font-display text-lg font-bold text-navy-900">A note on data honesty</h2>
               <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-navy-600">
-                StudyNest 12 does not claim any resource has been verified, curated or affiliated with its
+                StudyBust 12 does not claim any resource has been verified, curated or affiliated with its
                 source. The current directory holds sample entries; links point to official education sites
                 or YouTube topic searches until real curation replaces them. CBSE and NCERT are the
                 authoritative sources for syllabus and papers.

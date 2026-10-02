@@ -12,6 +12,14 @@ import type { BrokenReport, PlannerTask, Resource, User } from "@/lib/types";
 import { SEED_RESOURCES } from "@/data/resources";
 import { SUBJECTS } from "@/data/subjects";
 import { todayISO, uid } from "@/lib/utils";
+import {
+  decodeFromStorage,
+  encodeForStorage,
+  isValidReport,
+  isValidResource,
+  isValidTask,
+  sanitizeText,
+} from "@/lib/security";
 
 interface ToastItem {
   id: string;
@@ -32,7 +40,7 @@ interface Persisted {
   reports: BrokenReport[];
 }
 
-const KEY = "studynest12:v1";
+const KEY = "studybust12:v1";
 
 const addDays = (n: number) => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
 
@@ -57,18 +65,35 @@ function loadState(): Persisted {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return DEFAULTS;
-    const parsed = JSON.parse(raw) as Partial<Persisted>;
+
+    let jsonStr = raw;
+    // Attempt decoding if obfuscated
+    if (!raw.startsWith("{")) {
+      const decoded = decodeFromStorage(raw);
+      if (decoded.startsWith("{")) {
+        jsonStr = decoded;
+      }
+    }
+
+    const parsed = JSON.parse(jsonStr) as Partial<Persisted>;
+    const tasks = Array.isArray(parsed.tasks) ? parsed.tasks.filter(isValidTask) : DEFAULTS.tasks;
+    const custom = Array.isArray(parsed.custom) ? parsed.custom.filter(isValidResource) : DEFAULTS.custom;
+    const reports = Array.isArray(parsed.reports) ? parsed.reports.filter(isValidReport) : DEFAULTS.reports;
+
     return {
-      user: parsed.user ?? DEFAULTS.user,
-      bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks : DEFAULTS.bookmarks,
-      completed: Array.isArray(parsed.completed) ? parsed.completed : DEFAULTS.completed,
-      recent: Array.isArray(parsed.recent) ? parsed.recent : DEFAULTS.recent,
-      tasks: Array.isArray(parsed.tasks) ? parsed.tasks : DEFAULTS.tasks,
-      custom: Array.isArray(parsed.custom) ? parsed.custom : DEFAULTS.custom,
+      user: parsed.user && typeof parsed.user === "object" ? {
+        name: sanitizeText(parsed.user.name || ""),
+        email: sanitizeText(parsed.user.email || "")
+      } : DEFAULTS.user,
+      bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks.filter((b): b is string => typeof b === "string") : DEFAULTS.bookmarks,
+      completed: Array.isArray(parsed.completed) ? parsed.completed.filter((c): c is string => typeof c === "string") : DEFAULTS.completed,
+      recent: Array.isArray(parsed.recent) ? parsed.recent.filter((r): r is string => typeof r === "string") : DEFAULTS.recent,
+      tasks: tasks.length > 0 ? tasks : DEFAULTS.tasks,
+      custom,
       edited: parsed.edited && typeof parsed.edited === "object" ? parsed.edited : DEFAULTS.edited,
-      deleted: Array.isArray(parsed.deleted) ? parsed.deleted : DEFAULTS.deleted,
+      deleted: Array.isArray(parsed.deleted) ? parsed.deleted.filter((d): d is string => typeof d === "string") : DEFAULTS.deleted,
       recOverride: parsed.recOverride && typeof parsed.recOverride === "object" ? parsed.recOverride : DEFAULTS.recOverride,
-      reports: Array.isArray(parsed.reports) ? parsed.reports : DEFAULTS.reports,
+      reports,
     };
   } catch {
     return DEFAULTS;
@@ -108,7 +133,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem(KEY, JSON.stringify(state));
+      localStorage.setItem(KEY, encodeForStorage(JSON.stringify(state)));
     } catch {
       /* storage unavailable — demo continues in memory */
     }

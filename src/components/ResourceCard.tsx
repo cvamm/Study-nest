@@ -13,9 +13,29 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
   const tone = TONES[meta.tone];
   const saved = isBookmarked(resource.id);
 
+  const isInternal =
+    resource.type === "pyq" ||
+    resource.url.startsWith("/") ||
+    resource.url.includes("example.com") ||
+    Boolean(
+      resource.sourceKind === "website" &&
+        (resource.source.includes("StudyNest") || resource.source.includes("StudyBust")),
+    );
+
   const contextLink = chapter
     ? `/subjects/${subject?.id}/${chapter.id}`
-    : `/subjects/${subject?.id ?? resource.subjectId}`;
+    : resource.type === "pyq"
+      ? `/subjects/${subject?.id ?? resource.subjectId}?section=pyqs`
+      : `/subjects/${subject?.id ?? resource.subjectId}`;
+
+  const targetLink =
+    resource.type === "pyq"
+      ? chapter
+        ? `/subjects/${subject?.id}/${chapter.id}`
+        : `/subjects/${subject?.id ?? resource.subjectId}?section=pyqs`
+      : resource.url.startsWith("/")
+        ? resource.url
+        : contextLink;
 
   return (
     <article
@@ -119,16 +139,31 @@ export default function ResourceCard({ resource }: { resource: Resource }) {
             Report
           </button>
         </div>
-        <a
-          href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => addRecent(resource.id)}
-          className="focus-ring group/open inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-b from-navy-800 to-navy-950 px-3.5 py-2 text-xs font-extrabold text-white transition-all duration-200 hover:from-navy-700 hover:to-navy-900 active:scale-[.97]"
-        >
-          Open Resource
-          <ArrowGlyph />
-        </a>
+        {isInternal ? (
+          <Link
+            to={targetLink}
+            onClick={() => addRecent(resource.id)}
+            className="focus-ring group/open inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-b from-navy-800 to-navy-950 px-3.5 py-2 text-xs font-extrabold text-white transition-all duration-200 hover:from-navy-700 hover:to-navy-900 active:scale-[.97]"
+          >
+            {resource.type === "pyq" ? (
+              chapter ? "Chapter PYQs" : "Show Chapters & PYQs"
+            ) : (
+              "Open Resource"
+            )}
+            <ArrowGlyph />
+          </Link>
+        ) : (
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => addRecent(resource.id)}
+            className="focus-ring group/open inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-b from-navy-800 to-navy-950 px-3.5 py-2 text-xs font-extrabold text-white transition-all duration-200 hover:from-navy-700 hover:to-navy-900 active:scale-[.97]"
+          >
+            Open Resource
+            <ArrowGlyph />
+          </a>
+        )}
       </div>
     </article>
   );
